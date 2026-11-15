@@ -14,6 +14,7 @@
     --bg: #f4f4f2; --surface: #ffffff; --surface-2: #eef3ef; --text: #1d2a22; --muted: #5d6b62;
     --border: #d6ded8; --accent: #2d7a4f; --accent-ink: #ffffff; --warn-bg: #fff4e0; --warn: #8a5300;
     --bad-bg: #fde8e8; --bad: #9b1c1c;
+    --tex: rgba(29,42,34,.045); --pick-line: rgba(45,122,79,.35); --toast-bg: #1d2a22; --toast-ink: #eef3ef;
     --s0: #2d7a4f; --s1: #b7a000; --s2: #d97706; --s3: #c2410c; --s4: #6b7280;
     --radius: 10px;
   }
@@ -22,6 +23,7 @@
       --bg: #121714; --surface: #1b221e; --surface-2: #222c26; --text: #e5ece7; --muted: #9aa8a0;
       --border: #2f3a33; --accent: #4fae78; --accent-ink: #0d1510; --warn-bg: #3a2b10; --warn: #f5c46b;
       --bad-bg: #3b1717; --bad: #fca5a5;
+      --tex: rgba(229,236,231,.035); --pick-line: rgba(79,174,120,.4); --toast-bg: #0d1510; --toast-ink: #e5ece7;
       --s0: #4fae78; --s1: #d8c33a; --s2: #f59e0b; --s3: #fb7f45; --s4: #9ca3af;
     }
   }
@@ -29,6 +31,7 @@
     --bg: #121714; --surface: #1b221e; --surface-2: #222c26; --text: #e5ece7; --muted: #9aa8a0;
     --border: #2f3a33; --accent: #4fae78; --accent-ink: #0d1510; --warn-bg: #3a2b10; --warn: #f5c46b;
     --bad-bg: #3b1717; --bad: #fca5a5;
+    --tex: rgba(229,236,231,.035); --pick-line: rgba(79,174,120,.4); --toast-bg: #0d1510; --toast-ink: #e5ece7;
     --s0: #4fae78; --s1: #d8c33a; --s2: #f59e0b; --s3: #fb7f45; --s4: #9ca3af;
   }
   * { box-sizing: border-box; }
@@ -105,21 +108,39 @@
   .kpi div { background: var(--surface-2); border-radius: 8px; padding: 10px; }
   .kpi b { display: block; font-size: 1.4rem; font-variant-numeric: tabular-nums; }
   svg.chart { width: 100%; height: auto; display: block; margin-top: 8px; }
-  #toast { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); background: var(--text); color: var(--bg);
-    padding: 10px 14px; border-radius: 10px; display: none; gap: 10px; align-items: center; z-index: 10; max-width: calc(100% - 32px); }
+  /* update toast (EM Brew style) */
+  #toast { position: fixed; z-index: 10; left: 50%; transform: translateX(-50%);
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: calc(100% - 32px); max-width: 420px;
+    display: none; align-items: center; gap: 10px; background: var(--toast-bg); color: var(--toast-ink);
+    border: 1.5px solid var(--accent); border-radius: var(--radius); padding: 10px 10px 10px 15px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.3); font-size: .9rem; font-weight: 700; line-height: 1.35;
+    animation: toastin .25s ease-out; }
   #toast.show { display: flex; }
-  #toast button { font: inherit; font-weight: 700; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
-  #toast button.x { background: transparent; color: var(--bg); opacity: .75; padding: 4px 6px; }
-  #langpick { position: fixed; inset: 0; z-index: 20; background: var(--bg); display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 12px; padding: 24px 16px; text-align: center; }
+  #toast > span { flex: 1; min-width: 0; }
+  #toast button { flex: none; border: 0; border-radius: 9px; cursor: pointer; font: inherit; font-weight: 800; }
+  #toast-reload { background: var(--accent); color: var(--accent-ink); padding: 10px 14px; }
+  #toast button.x { background: transparent; color: var(--toast-ink); opacity: .75; padding: 10px 8px; font-size: 1rem; }
+  @keyframes toastin { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+  /* first-launch language picker (EM Brew style) */
+  #langpick { position: fixed; inset: 0; z-index: 20; overflow: auto;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+    padding: calc(24px + env(safe-area-inset-top, 0px)) 16px calc(24px + env(safe-area-inset-bottom, 0px));
+    background-color: var(--bg);
+    background-image:
+      repeating-linear-gradient(90deg, var(--tex) 0 1px, transparent 1px 4px),
+      repeating-linear-gradient(0deg, var(--tex) 0 1px, transparent 1px 4px); }
   #langpick[hidden] { display: none; }
   #langpick:focus { outline: 0; }
-  #langpick img { width: 84px; height: 84px; border-radius: 20px; box-shadow: 0 6px 18px rgba(0,0,0,.2); }
-  #langpick .lptitle { margin: 4px 0 10px; font-size: 1.25rem; font-weight: 800; }
-  #langpick .lptitle span { display: block; margin-top: 4px; font-size: .85rem; font-weight: 500; color: var(--muted); }
-  #langpick button { width: min(320px, 100%); font: inherit; font-size: 1.1rem; font-weight: 700; padding: 14px; border-radius: 12px;
-    border: 2px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
-  #langpick button:hover, #langpick button:focus-visible { border-color: var(--accent); }
+  #langpick img { width: 84px; height: 84px; border-radius: 22px; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+  .lptitle { font-size: 26px; font-weight: 800; line-height: 1.1; text-align: center; letter-spacing: -.02em; margin: 0 0 8px; }
+  .lptitle span { display: block; font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--accent); margin-top: 8px; }
+  #langpick button { width: min(18rem, 84vw); min-height: 58px; border: 2px solid var(--pick-line); border-radius: 16px;
+    background: var(--surface); color: var(--text); font: inherit; font-size: 19px; font-weight: 800; line-height: 1;
+    cursor: pointer; transition: transform .15s, border-color .15s; }
+  #langpick button:active { transform: scale(.97); border-color: var(--accent); }
+  #langpick button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   body.picking { overflow: hidden; }
   @media print {
     header, nav, .btn, .no-print, #toast { display: none !important; }
@@ -263,7 +284,7 @@
 <!-- first-launch language picker (onboarding) -->
 <div id="langpick" role="dialog" aria-modal="true" aria-label="English · Bahasa Melayu · 中文" tabindex="-1" hidden>
   <img src="icon-192.png" alt="">
-  <p class="lptitle">Ganoderma BSR Manager<span>Pengurus Reput Pangkal Batang · 灵芝茎基腐病管理</span></p>
+  <p class="lptitle">Ganoderma<span>BSR Manager · 灵芝病</span></p>
   <button type="button" data-lang="en" lang="en">English</button>
   <button type="button" data-lang="ms" lang="ms">Bahasa Melayu</button>
   <button type="button" data-lang="zh" lang="zh-Hans">中文</button>

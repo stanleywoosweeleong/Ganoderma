@@ -51,6 +51,9 @@ Netlify).
 launch, and whenever the app comes back to the foreground, the service
 worker re-checks every app file on the server. If anything changed, the
 app shows a "new version is ready" notice with **Reload** and ✕.
+After each change, just push: there is no version to bump. GitHub Pages
+takes a minute or two to publish. The app always opens the saved copy
+instantly (good on weak signal) and offers the new version a moment later.
 
 **First launch** shows a language picker (English / Bahasa Melayu / 中文).
 The choice is remembered on the device, and the language menu in the
