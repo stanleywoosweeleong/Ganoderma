@@ -184,6 +184,7 @@
     'ev.level.2': { en: 'Nursery / glasshouse', ms: 'Semaian / rumah kaca', zh: '苗圃 / 温室' },
     'ev.level.1': { en: 'Lab or related host only', ms: 'Makmal atau perumah lain sahaja', zh: '仅实验室或近缘寄主' },
     'ev.level.0': { en: 'No evidence found', ms: 'Tiada bukti', zh: '未找到证据' },
+    'ev.weak': { en: '⚠ Weak evidence', ms: '⚠ Bukti lemah', zh: '⚠ 证据薄弱' },
     'ev.setting': { en: 'Setting', ms: 'Keadaan', zh: '条件' },
     'ev.result': { en: 'Result', ms: 'Keputusan', zh: '结果' },
     'ev.reviews': { en: 'Reviews', ms: 'Ulasan', zh: '综述' },

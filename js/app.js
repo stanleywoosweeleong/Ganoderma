@@ -339,6 +339,7 @@
     const list = G.EVIDENCE.slice().sort(function (a, b) { return b.level - a.level; });
     $('e-out').innerHTML = list.map(function (e) {
       return '<div class="card ev"><h3>' + esc(loc(e.agent)) + '</h3><span class="level lv' + e.level + '">' + esc(t('ev.level.' + e.level)) + '</span>' +
+        (e.weak ? ' <span class="level weak">' + esc(t('ev.weak')) + '</span>' : '') +
         '<p><b>' + esc(t('ev.setting')) + ':</b> ' + esc(loc(e.setting)) + '</p><p><b>' + esc(t('ev.result')) + ':</b> ' + esc(loc(e.result)) + '</p>' +
         (loc(e.note) ? '<p class="muted">' + esc(loc(e.note)) + '</p>' : '') +
         '<p>' + e.sources.map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(loc(s.label)) + '</a>'; }).join(' · ') + '</p>' +

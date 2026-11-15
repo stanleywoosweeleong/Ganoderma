@@ -339,3 +339,11 @@ test('products: items not tested against Ganoderma are flagged and listed last',
   ['im_bioguard', 'embio_actinoplus', 'trichoshield'].forEach(id =>
     assert.ok(!G.PRODUCTS.find(p => p.id === id).untested, id));
 });
+
+test('evidence: weak-evidence badge on the thinly supported entries only', () => {
+  const weak = G.EVIDENCE.filter(e => e.weak).map(e => e.id).sort();
+  assert.deepEqual(weak, ['bamyloliquefaciens', 'bvelezensis', 'ganoef']);
+  // the field-trial-backed entries are never marked weak
+  ['pseudomonas_amf', 'ganocare', 'trichoderma_mix'].forEach(id =>
+    assert.ok(!G.EVIDENCE.find(e => e.id === id).weak, id));
+});

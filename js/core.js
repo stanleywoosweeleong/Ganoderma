@@ -401,6 +401,9 @@
   // Evidence library (from the literature search, Nov 2026)
   // level: 3 = field / bait-seedling field trial · 2 = nursery / glasshouse
   //        1 = lab plate or related host only
+  // weak: true → shown with a "Weak evidence" badge (single unreplicated
+  //        study, abstract-only data, related host only, or developer-only
+  //        figures).
   // ───────────────────────────────────────────────────────────────────────
   // Text fields are { en, ms, zh }. Scientific names stay in Latin; paper
   // titles / journal names stay as published.
@@ -577,6 +580,7 @@
     },
     {
       id: 'bvelezensis',
+      weak: true,
       agent: { en: 'Bacillus velezensis', ms: 'Bacillus velezensis', zh: '贝莱斯芽孢杆菌 (Bacillus velezensis)' },
       level: 1,
       setting: {
@@ -600,6 +604,7 @@
     },
     {
       id: 'bamyloliquefaciens',
+      weak: true,
       agent: {
         en: 'Bacillus amyloliquefaciens (EB13, SAHA 12.07)',
         ms: 'Bacillus amyloliquefaciens (EB13, SAHA 12.07)',
@@ -629,6 +634,7 @@
     },
     {
       id: 'ganoef',
+      weak: true,
       agent: {
         en: 'GanoEF — Hendersonia GanoEF1 (endophytic fungus) in fertiliser',
         ms: 'GanoEF — Hendersonia GanoEF1 (kulat endofit) dalam baja',
