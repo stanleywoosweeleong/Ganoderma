@@ -400,7 +400,7 @@
   // ───────────────────────────────────────────────────────────────────────
   // Evidence library (from the literature search, Nov 2026)
   // level: 3 = field / bait-seedling field trial · 2 = nursery / glasshouse
-  //        1 = lab plate or related host only · 0 = no evidence found
+  //        1 = lab plate or related host only
   // ───────────────────────────────────────────────────────────────────────
   const EVIDENCE = [
     {
@@ -498,17 +498,6 @@
       note: 'No direct data on G. boninense in oil palm found.',
       sources: [
         { label: 'J Integr Agric 2024', url: 'https://www.chinaagrisci.com/Jwk_zgnykxen/EN/10.1016/j.jia.2024.09.027' }
-      ]
-    },
-    {
-      id: 'pythium',
-      agent: 'Pythium oligandrum',
-      level: 0,
-      setting: '—',
-      result: 'No Ganoderma study found',
-      note: 'Do not rely on it for BSR.',
-      sources: [
-        { label: 'Wikipedia overview', url: 'https://en.wikipedia.org/wiki/Pythium_oligandrum' }
       ]
     },
     {

@@ -278,6 +278,6 @@ test('evidence: every entry has a level 0–3 and https sources', () => {
   }
 });
 
-test('evidence: Pythium oligandrum is marked as no evidence', () => {
-  assert.equal(G.EVIDENCE.find(e => e.id === 'pythium').level, 0);
+test('evidence: Pythium oligandrum is not listed (no Ganoderma study found)', () => {
+  assert.ok(!G.EVIDENCE.some(e => /pythium/i.test(e.id + e.agent)));
 });
