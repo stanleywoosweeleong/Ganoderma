@@ -37,3 +37,20 @@ test('i18n: parameters are substituted and language switch works', () => {
   I.setLang('en');
   assert.equal(I.t('no.such.key'), 'no.such.key');
 });
+
+test('i18n: every error code from core.js has a translated message', () => {
+  G.ERROR_CODES.forEach(c => assert.ok(I.STRINGS['err.' + c], 'missing err.' + c));
+});
+
+test('core errors carry a code and value for translation', () => {
+  let e;
+  try { G.buildPlan({ setting: 'nursery', startDate: 'bad' }); } catch (x) { e = x; }
+  assert.equal(e.code, 'date');
+  assert.equal(e.value, 'bad');
+  try { G.planBrews(G.buildPlan({ setting: 'nursery', startDate: '2027-01-04' }), 0); } catch (x) { e = x; }
+  assert.equal(e.code, 'palms');
+  assert.ok(G.ERROR_CODES.includes(e.code));
+  I.setLang('zh');
+  assert.equal(I.t('err.date', { v: 'bad' }), '日期无效:"bad"。请使用 年-月-日 格式,例如 2027-02-15。');
+  I.setLang('en');
+});

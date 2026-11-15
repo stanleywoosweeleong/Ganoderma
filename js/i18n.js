@@ -189,6 +189,25 @@
     'ev.reviews': { en: 'Reviews', ms: 'Ulasan', zh: '综述' },
     'ev.checked': { en: 'Literature search: November 2026. Check original papers before relying on figures.', ms: 'Carian literatur: November 2026. Semak kertas asal sebelum bergantung pada angka.', zh: '文献检索:2026 年 11 月。引用数据前请核对原文。' },
 
+    'lang.label': { en: 'Language', ms: 'Bahasa', zh: '语言' },
+    'plan.chem.ph': { en: 'e.g. 2027-02-15, 2027-08-15', ms: 'cth. 2027-02-15, 2027-08-15', zh: '例如 2027-02-15, 2027-08-15' },
+    'track.deleteCensus': { en: 'Delete this census', ms: 'Padam bancian ini', zh: '删除此次普查' },
+
+    // Errors (codes come from core.js)
+    'err.generic': { en: 'Something went wrong. Check the values and try again.', ms: 'Ada masalah. Semak nilai dan cuba lagi.', zh: '出错了。请检查输入后重试。' },
+    'err.lesion': { en: 'Rotten part must be between 0 and 100%.', ms: 'Bahagian reput mesti antara 0 dan 100%.', zh: '腐烂比例必须在 0 到 100% 之间。' },
+    'err.foliar': { en: 'Choose a leaf-symptom option.', ms: 'Pilih satu pilihan simptom daun.', zh: '请选择一个叶部症状选项。' },
+    'err.counts': { en: 'Enter whole numbers (0 or more) for every class.', ms: 'Masukkan nombor bulat (0 atau lebih) untuk setiap kelas.', zh: '每个等级请输入 0 或以上的整数。' },
+    'err.reduction': { en: 'Disease values must be 0 or more.', ms: 'Nilai penyakit mesti 0 atau lebih.', zh: '病害数值必须为 0 或以上。' },
+    'err.setting': { en: 'Choose a situation.', ms: 'Pilih satu situasi.', zh: '请选择一种情况。' },
+    'err.stage': { en: 'Choose the palm stage (0–4).', ms: 'Pilih peringkat pokok (0–4).', zh: '请选择棕树病级(0–4)。' },
+    'err.horizon': { en: 'Plan length must be a whole number of weeks from 1 to 520.', ms: 'Tempoh pelan mesti nombor bulat minggu antara 1 hingga 520.', zh: '方案时长必须是 1 到 520 之间的整数周。' },
+    'err.palms': { en: 'Number of palms must be a whole number of 1 or more.', ms: 'Bilangan pokok mesti nombor bulat 1 atau lebih.', zh: '棕树数量必须是 1 或以上的整数。' },
+    'err.batchKg': { en: 'Rice per brew must be more than 0 kg.', ms: 'Nasi setiap kelompok mesti lebih daripada 0 kg.', zh: '每批熟米必须大于 0 kg。' },
+    'err.failureRate': { en: 'Failure rate must be from 0 to 99%.', ms: 'Kadar kegagalan mesti antara 0 hingga 99%.', zh: '失败率必须在 0 到 99% 之间。' },
+    'err.leadDays': { en: 'Brewing lead time must be shorter than the shelf life.', ms: 'Masa penyediaan mesti lebih pendek daripada jangka hayat simpanan.', zh: '制作提前期必须短于保质期。' },
+    'err.date': { en: 'Not a valid date: "{v}". Use the format YYYY-MM-DD, e.g. 2027-02-15.', ms: 'Tarikh tidak sah: "{v}". Guna format TTTT-BB-HH, cth. 2027-02-15.', zh: '日期无效:"{v}"。请使用 年-月-日 格式,例如 2027-02-15。' },
+
     'update.ready': { en: 'A new version is ready.', ms: 'Versi baharu sedia.', zh: '新版本已就绪。' },
     'update.reload': { en: 'Reload', ms: 'Muat semula', zh: '重新加载' }
   };

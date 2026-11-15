@@ -56,6 +56,11 @@
     a.click();
     setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 0);
   }
+  // Translated error text for errors thrown by core.js (they carry a `code`).
+  function errText(e) {
+    if (e && e.code) return t('err.' + e.code, { v: e.value == null ? '' : e.value });
+    return t('err.generic');
+  }
   function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
 
   // ── i18n ──
@@ -63,6 +68,8 @@
     document.documentElement.lang = state.lang === 'zh' ? 'zh-Hans' : state.lang;
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t(el.dataset.i18n); });
     document.title = t('app.title');
+    document.querySelectorAll('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+    document.querySelectorAll('[data-i18n-ph]').forEach(function (el) { el.setAttribute('placeholder', t(el.dataset.i18nPh)); });
     $('lang').value = state.lang;
     // stage select
     const sel = $('p-stage');
@@ -96,7 +103,7 @@
       });
       $('a-result').innerHTML = esc(t('assess.result')) + ': ' + stagePill(lastClass);
     } catch (e) {
-      $('a-result').innerHTML = '<div class="bad">' + esc(e.message) + '</div>';
+      $('a-result').innerHTML = '<div class="bad">' + esc(errText(e)) + '</div>';
     }
   }
 
@@ -122,7 +129,7 @@
       renderPlan();
     } catch (e) {
       state.plan = null;
-      $('p-out').innerHTML = '<div class="bad">' + esc(e.message) + '</div>';
+      $('p-out').innerHTML = '<div class="bad">' + esc(errText(e)) + '</div>';
     }
   }
 
@@ -168,7 +175,7 @@
       });
       out.innerHTML = html + '</tbody></table></div></div>';
     } catch (e) {
-      out.innerHTML = '<div class="bad">' + esc(e.message) + '</div>';
+      out.innerHTML = '<div class="bad">' + esc(errText(e)) + '</div>';
     }
   }
 
@@ -218,7 +225,7 @@
           const c = b.censuses.find(function (x) { return x.date === r.date; });
           html += '<tr><td>' + esc(r.date) + '</td>' + c.counts.map(function (n) { return '<td class="num">' + n + '</td>'; }).join('') +
             '<td class="num">' + r.n + '</td><td class="num">' + fmt(r.incidence) + '</td><td class="num">' + fmt(r.dsi) +
-            '</td><td><button class="btn danger" style="margin:0;padding:2px 8px" data-del-census="' + esc(r.date) + '" aria-label="delete">✕</button></td></tr>';
+            '</td><td><button class="btn danger" style="margin:0;padding:2px 8px" data-del-census="' + esc(r.date) + '" aria-label="' + esc(t('track.deleteCensus')) + '">✕</button></td></tr>';
         });
         html += '</tbody></table></div>' + chart(s.rows) +
           '<p class="muted">' + esc(t('track.audpc')) + ': ' + fmt(s.audpcDsi) + '</p>';

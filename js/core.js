@@ -53,11 +53,11 @@
     const o = obs || {};
     const lesion = o.lesionPct == null ? 0 : Number(o.lesionPct);
     if (!Number.isFinite(lesion) || lesion < 0 || lesion > 100) {
-      throw new RangeError('lesionPct must be between 0 and 100');
+      throw fail('lesion', 'lesionPct must be between 0 and 100');
     }
     const foliar = o.foliar || 'none';
     if (!['none', 'mild', 'severe'].includes(foliar)) {
-      throw new RangeError('foliar must be none, mild or severe');
+      throw fail('foliar', 'foliar must be none, mild or severe');
     }
     if (o.dead) return 4;
     if (foliar === 'severe' || lesion >= 50) return 3;
@@ -71,10 +71,10 @@
   // ───────────────────────────────────────────────────────────────────────
   function validateCounts(counts) {
     if (!Array.isArray(counts) || counts.length !== MAX_CLASS + 1) {
-      throw new RangeError('counts must be an array of 5 numbers (classes 0–4)');
+      throw fail('counts', 'counts must be an array of 5 numbers (classes 0–4)');
     }
     counts.forEach(function (c) {
-      if (!Number.isInteger(c) || c < 0) throw new RangeError('counts must be non-negative integers');
+      if (!Number.isInteger(c) || c < 0) throw fail('counts', 'counts must be non-negative integers');
     });
   }
 
@@ -125,7 +125,7 @@
    */
   function diseaseReduction(control, treated) {
     if (!Number.isFinite(control) || !Number.isFinite(treated) || control < 0 || treated < 0) {
-      throw new RangeError('control and treated must be non-negative numbers');
+      throw fail('reduction', 'control and treated must be non-negative numbers');
     }
     if (control === 0) return null;
     return round((control - treated) / control * 100, 2);
@@ -274,20 +274,20 @@
    */
   function buildPlan(opts) {
     const o = opts || {};
-    if (!SETTINGS.includes(o.setting)) throw new RangeError('setting must be mature, replant or nursery');
+    if (!SETTINGS.includes(o.setting)) throw fail('setting', 'setting must be mature, replant or nursery');
     let tpl = TEMPLATES[o.setting];
     let stage = null;
     if (o.setting === 'mature') {
       stage = Number(o.stage);
       if (!Number.isInteger(stage) || stage < 0 || stage > MAX_CLASS) {
-        throw new RangeError('stage must be an integer 0–4 for mature palms');
+        throw fail('stage', 'stage must be an integer 0–4 for mature palms');
       }
       tpl = tpl[stage];
     }
     const start = parseDate(o.startDate);
     const horizon = o.horizonWeeks == null ? DEFAULT_HORIZON[o.setting] : Number(o.horizonWeeks);
     if (!Number.isInteger(horizon) || horizon < 1 || horizon > 520) {
-      throw new RangeError('horizonWeeks must be an integer 1–520');
+      throw fail('horizon', 'horizonWeeks must be an integer 1–520');
     }
 
     // week -> { steps:Set, kinds:Set }
@@ -373,10 +373,10 @@
    */
   function planBrews(plan, palms, opts) {
     const o = Object.assign({ batchKg: 2, failureRate: 0.3, leadDays: 14, shelfDays: 60 }, opts || {});
-    if (!Number.isInteger(palms) || palms < 1) throw new RangeError('palms must be a positive integer');
-    if (!(o.batchKg > 0)) throw new RangeError('batchKg must be > 0');
-    if (!(o.failureRate >= 0 && o.failureRate < 1)) throw new RangeError('failureRate must be in [0, 1)');
-    if (o.leadDays >= o.shelfDays) throw new RangeError('leadDays must be shorter than shelfDays');
+    if (!Number.isInteger(palms) || palms < 1) throw fail('palms', 'palms must be a positive integer');
+    if (!(o.batchKg > 0)) throw fail('batchKg', 'batchKg must be > 0');
+    if (!(o.failureRate >= 0 && o.failureRate < 1)) throw fail('failureRate', 'failureRate must be in [0, 1)');
+    if (o.leadDays >= o.shelfDays) throw fail('leadDays', 'leadDays must be shorter than shelfDays');
 
     return plan.batches
       .filter(function (b) { return b.steps.some(isTricho); })
@@ -661,11 +661,25 @@
   // ───────────────────────────────────────────────────────────────────────
   const DAY_MS = 86400000;
 
+  /**
+   * RangeError with a stable `code` (and the offending `value`) so the UI can
+   * show a translated message: i18n key 'err.<code>'. The English message is
+   * kept for developers and tests.
+   */
+  function fail(code, message, value) {
+    const e = new RangeError(message);
+    e.code = code;
+    if (value !== undefined) e.value = value;
+    return e;
+  }
+  const ERROR_CODES = ['lesion', 'foliar', 'counts', 'reduction', 'setting', 'stage', 'horizon',
+    'palms', 'batchKg', 'failureRate', 'leadDays', 'date'];
+
   function parseDate(s) {
     const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || ''));
-    if (!m) throw new RangeError('date must be YYYY-MM-DD: ' + s);
+    if (!m) throw fail('date', 'date must be YYYY-MM-DD: ' + s, s);
     const t = Date.UTC(+m[1], +m[2] - 1, +m[3]);
-    if (formatDate(new Date(t)) !== s) throw new RangeError('invalid calendar date: ' + s);
+    if (formatDate(new Date(t)) !== s) throw fail('date', 'invalid calendar date: ' + s, s);
     return t;
   }
 
@@ -677,6 +691,7 @@
 
   return {
     STAGES: STAGES,
+    ERROR_CODES: ERROR_CODES,
     TRICHO_KG: TRICHO_KG,
     EVIDENCE: EVIDENCE,
     REVIEWS: REVIEWS,
