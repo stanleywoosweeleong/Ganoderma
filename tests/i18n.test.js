@@ -66,3 +66,8 @@ test('safety: P. aeruginosa product and plan steps carry a translated safety not
   G.buildPlan({ setting: 'nursery', startDate: '2027-01-04' }).batches.forEach(b => b.steps.forEach(s => steps.add(s)));
   assert.ok(steps.has('bact.drench') && steps.has('bact.drench.nursery'));
 });
+
+test('restore: every error code parseBackup can return has a message', () => {
+  ['json', 'noBlocks', 'block', 'name', 'role', 'censuses', 'date', 'dupDate', 'counts']
+    .forEach(c => assert.ok(I.STRINGS['restore.err.' + c], 'missing restore.err.' + c));
+});

@@ -291,27 +291,48 @@
     function update() {
       const tb = state.blocks.find(function (b) { return b.id === $('cmp-t').value; });
       const cb = state.blocks.find(function (b) { return b.id === $('cmp-c').value; });
-      const r = G.compareTrial(cb, tb).reduction;
+      const cmp = G.compareTrial(cb, tb);
+      const r = cmp.reduction, al = cmp.aligned;
       const items = [['track.latestInc', r.incidence], ['track.latestDsi', r.dsi], ['track.audpcInc', r.audpcIncidence], ['track.audpcDsi', r.audpcDsi]];
+      // Comparisons only use dates both blocks share — say which ones.
+      const notes = [
+        al.latestDate ? t('track.comparedOn', { d: al.latestDate }) : t('track.noSharedDate'),
+        al.from ? t('track.overPeriod', { a: al.from, b: al.to }) : t('track.noOverlap')
+      ];
       $('cmp-out').innerHTML = '<p class="muted">' + esc(t('track.reduction')) + '</p><div class="kpi">' +
-        items.map(function (it) { return '<div>' + esc(t(it[0])) + '<b>' + fmt(it[1], it[1] == null ? '' : '%') + '</b></div>'; }).join('') + '</div>';
+        items.map(function (it) { return '<div>' + esc(t(it[0])) + '<b>' + fmt(it[1], it[1] == null ? '' : '%') + '</b></div>'; }).join('') + '</div>' +
+        '<p class="muted">' + notes.map(esc).join('<br>') + '</p>';
     }
     $('cmp-t').onchange = update; $('cmp-c').onchange = update;
     update();
   }
 
+  // Restore is all-or-nothing: the whole file is validated first; if any
+  // block is invalid nothing changes and every problem is listed. Existing
+  // records are only replaced after the user confirms.
   function restore(file) {
     const reader = new FileReader();
     reader.onload = function () {
-      try {
-        const d = JSON.parse(reader.result);
-        const blocks = (d.blocks || []).filter(validBlock).map(function (b) {
-          return { id: b.id || uid(), name: b.name, role: ['treated', 'control', 'monitor'].includes(b.role) ? b.role : 'monitor', censuses: b.censuses };
+      const res = G.parseBackup(String(reader.result));
+      if (!res.ok) {
+        const lines = res.errors.slice(0, 12).map(function (e) {
+          const what = t('restore.err.' + e.code, { v: e.detail });
+          return e.index == null ? '• ' + what : '• ' + t('restore.block', { n: e.index, name: e.name || '—' }) + ': ' + what;
         });
-        if (!blocks.length) throw new Error('empty');
-        state.blocks = blocks;
-        save(); renderTrack();
-      } catch (e) { alert(t('track.restoreBad')); }
+        if (res.errors.length > 12) lines.push('• … +' + (res.errors.length - 12));
+        alert(t('track.restoreBad') + '\n' + t('track.restoreNothingChanged') + '\n\n' + lines.join('\n'));
+        return;
+      }
+      const existing = state.blocks.length;
+      if (existing && !confirm(t('track.restoreConfirm', { n: res.blocks.length, m: existing }))) return;
+      const ids = {};
+      state.blocks = res.blocks.map(function (b) {
+        const id = b.id && !ids[b.id] ? b.id : uid();
+        ids[id] = true;
+        return { id: id, name: b.name, role: b.role, censuses: b.censuses };
+      });
+      save(); renderTrack();
+      alert(t('track.restored', { n: state.blocks.length }));
     };
     reader.readAsText(file);
   }

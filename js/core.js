@@ -153,21 +153,78 @@
   }
 
   /**
-   * Compare a treated block against an untreated control block.
-   * Uses the latest census of each block plus AUDPC over all censuses.
+   * AUDPC restricted to [from, to] (dates YYYY-MM-DD). Values at the two
+   * boundaries are linearly interpolated from the neighbouring censuses, so
+   * blocks observed over different periods can be compared like for like.
+   * @returns {number|null} null if the points do not cover the whole interval
+   */
+  function audpcBetween(points, from, to) {
+    const a = parseDate(from), b = parseDate(to);
+    if (!(b > a)) return null;
+    const pts = points
+      .filter(function (p) { return p && p.value != null && Number.isFinite(Number(p.value)); })
+      .map(function (p) { return { t: parseDate(p.date), v: Number(p.value) }; })
+      .sort(function (x, y) { return x.t - y.t; });
+    if (!pts.length || pts[0].t > a || pts[pts.length - 1].t < b) return null;
+    function at(t) {
+      for (let i = 0; i < pts.length; i++) {
+        if (pts[i].t === t) return pts[i].v;
+        if (pts[i].t > t) {
+          const p0 = pts[i - 1], p1 = pts[i];
+          return p0.v + (p1.v - p0.v) * (t - p0.t) / (p1.t - p0.t);
+        }
+      }
+      return null;
+    }
+    const inside = pts.filter(function (p) { return p.t > a && p.t < b; });
+    const seq = [{ t: a, v: at(a) }].concat(inside, [{ t: b, v: at(b) }]);
+    let area = 0;
+    for (let i = 1; i < seq.length; i++) area += (seq[i].v + seq[i - 1].v) / 2 * (seq[i].t - seq[i - 1].t) / DAY_MS;
+    return round(area, 2);
+  }
+
+  /**
+   * Compare a treated block against an untreated control block, on the
+   * SAME dates only (review fix):
+   *  - latest incidence / DSI: the latest census date both blocks share
+   *    (null if they share no date);
+   *  - AUDPC: over the period both blocks were observed — from the later
+   *    first census to the earlier last census (null if that period has no
+   *    length).
+   * `aligned` reports the dates used so the UI can show them.
    */
   function compareTrial(controlBlock, treatedBlock) {
     const c = summariseBlock(controlBlock);
     const t = summariseBlock(treatedBlock);
     function red(a, b) { return a == null || b == null ? null : diseaseReduction(a, b); }
+
+    const tByDate = {};
+    t.rows.forEach(function (r) { tByDate[r.date] = r; });
+    const shared = c.rows.filter(function (r) { return tByDate[r.date]; });
+    const cLatest = shared.length ? shared[shared.length - 1] : null;
+    const tLatest = cLatest ? tByDate[cLatest.date] : null;
+
+    let from = null, to = null;
+    if (c.rows.length && t.rows.length) {
+      const f = [c.rows[0].date, t.rows[0].date].sort()[1];
+      const l = [c.rows[c.rows.length - 1].date, t.rows[t.rows.length - 1].date].sort()[0];
+      if (parseDate(l) > parseDate(f)) { from = f; to = l; }
+    }
+    function areaOf(rows, key) {
+      return from ? audpcBetween(rows.map(function (r) { return { date: r.date, value: r[key] }; }), from, to) : null;
+    }
+    const cInc = areaOf(c.rows, 'incidence'), tInc = areaOf(t.rows, 'incidence');
+    const cDsi = areaOf(c.rows, 'dsi'), tDsi = areaOf(t.rows, 'dsi');
+
     return {
       control: c,
       treated: t,
+      aligned: { latestDate: cLatest ? cLatest.date : null, from: from, to: to },
       reduction: {
-        incidence: red(c.latest && c.latest.incidence, t.latest && t.latest.incidence),
-        dsi: red(c.latest && c.latest.dsi, t.latest && t.latest.dsi),
-        audpcIncidence: red(c.audpcIncidence, t.audpcIncidence),
-        audpcDsi: red(c.audpcDsi, t.audpcDsi)
+        incidence: red(cLatest && cLatest.incidence, tLatest && tLatest.incidence),
+        dsi: red(cLatest && cLatest.dsi, tLatest && tLatest.dsi),
+        audpcIncidence: red(cInc, tInc),
+        audpcDsi: red(cDsi, tDsi)
       }
     };
   }
@@ -945,6 +1002,50 @@
     return lines.join('\n') + '\n';
   }
 
+  /**
+   * Validate a whole backup file BEFORE anything is changed (review fix).
+   * All-or-nothing: if any block or census is invalid, `ok` is false,
+   * `blocks` is empty and `errors` lists every problem, so the caller can
+   * report them and leave saved records untouched.
+   * @param {string} text  file contents
+   * @returns {{ok:boolean, blocks:object[], errors:{index:number|null, name:string, code:string, detail:string}[]}}
+   */
+  function parseBackup(text) {
+    const errors = [];
+    function err(index, name, code, detail) { errors.push({ index: index, name: name || '', code: code, detail: detail == null ? '' : String(detail) }); }
+    let d;
+    try { d = JSON.parse(text); } catch (e) { err(null, '', 'json'); return { ok: false, blocks: [], errors: errors }; }
+    if (!d || !Array.isArray(d.blocks) || d.blocks.length === 0) {
+      err(null, '', 'noBlocks');
+      return { ok: false, blocks: [], errors: errors };
+    }
+    const ROLES = ['treated', 'control', 'monitor'];
+    const blocks = [];
+    d.blocks.forEach(function (b, i) {
+      const n = i + 1;
+      if (!b || typeof b !== 'object') { err(n, '', 'block'); return; }
+      const name = typeof b.name === 'string' ? b.name.trim() : '';
+      if (!name) err(n, '', 'name');
+      if (b.role != null && !ROLES.includes(b.role)) err(n, name, 'role', b.role);
+      if (!Array.isArray(b.censuses)) { err(n, name, 'censuses'); return; }
+      const seen = {};
+      b.censuses.forEach(function (c, j) {
+        const date = c && c.date;
+        try { parseDate(date); } catch (e) { err(n, name, 'date', date == null ? '#' + (j + 1) : date); return; }
+        if (seen[date]) err(n, name, 'dupDate', date);
+        seen[date] = true;
+        try { summariseCensus(c.counts); } catch (e) { err(n, name, 'counts', date); }
+      });
+      blocks.push({
+        id: typeof b.id === 'string' && b.id ? b.id : null,
+        name: name,
+        role: b.role == null ? 'monitor' : b.role,
+        censuses: b.censuses.map(function (c) { return { date: c && c.date, counts: c && c.counts }; })
+      });
+    });
+    return errors.length ? { ok: false, blocks: [], errors: errors } : { ok: true, blocks: blocks, errors: [] };
+  }
+
   function csvCell(s) {
     const str = String(s);
     return /[",\n]/.test(str) ? '"' + str.replace(/"/g, '""') + '"' : str;
@@ -995,6 +1096,7 @@
     classifyPalm: classifyPalm,
     summariseCensus: summariseCensus,
     audpc: audpc,
+    audpcBetween: audpcBetween,
     diseaseReduction: diseaseReduction,
     summariseBlock: summariseBlock,
     compareTrial: compareTrial,
@@ -1002,6 +1104,7 @@
     findChemicalConflicts: findChemicalConflicts,
     planBrews: planBrews,
     blocksToCsv: blocksToCsv,
+    parseBackup: parseBackup,
     parseDate: parseDate,
     formatDate: formatDate
   };

@@ -347,3 +347,74 @@ test('evidence: weak-evidence badge on the thinly supported entries only', () =>
   ['pseudomonas_amf', 'ganocare', 'trichoderma_mix'].forEach(id =>
     assert.ok(!G.EVIDENCE.find(e => e.id === id).weak, id));
 });
+
+// ── Trial comparison on aligned dates (review P2) ────────────────────────
+test('compareTrial: same disease over 10 days vs 1 day is 0%, not 90% (review P2)', () => {
+  const c = { name: 'C', censuses: [{ date: '2026-01-01', counts: [9, 1, 0, 0, 0] }, { date: '2026-01-11', counts: [9, 1, 0, 0, 0] }] };
+  const t = { name: 'T', censuses: [{ date: '2026-01-01', counts: [9, 1, 0, 0, 0] }, { date: '2026-01-02', counts: [9, 1, 0, 0, 0] }] };
+  const r = G.compareTrial(c, t);
+  assert.deepEqual(r.reduction, { incidence: 0, dsi: 0, audpcIncidence: 0, audpcDsi: 0 });
+  assert.deepEqual(r.aligned, { latestDate: '2026-01-01', from: '2026-01-01', to: '2026-01-02' });
+});
+
+test('compareTrial: AUDPC over the shared period, boundary value interpolated', () => {
+  // control incidence 0% → 20% over 20 days (10% interpolated at day 10);
+  // treated 0% → 5% over 10 days. Shared period: days 0–10.
+  const c = { name: 'C', censuses: [{ date: '2026-01-01', counts: [20, 0, 0, 0, 0] }, { date: '2026-01-21', counts: [16, 4, 0, 0, 0] }] };
+  const t = { name: 'T', censuses: [{ date: '2026-01-01', counts: [20, 0, 0, 0, 0] }, { date: '2026-01-11', counts: [19, 1, 0, 0, 0] }] };
+  const r = G.compareTrial(c, t);
+  assert.equal(r.aligned.to, '2026-01-11');
+  assert.equal(r.reduction.audpcIncidence, 50); // control 50 %·days vs treated 25
+  assert.equal(r.reduction.incidence, null, 'only shared date is day 0, where the control has no disease yet');
+});
+
+test('compareTrial: latest figures use the latest shared date, not each block\'s own latest', () => {
+  const c = { name: 'C', censuses: [{ date: '2026-03-01', counts: [5, 5, 0, 0, 0] }, { date: '2026-09-01', counts: [0, 10, 0, 0, 0] }] };
+  const t = { name: 'T', censuses: [{ date: '2026-03-01', counts: [5, 5, 0, 0, 0] }] };
+  const r = G.compareTrial(c, t);
+  assert.equal(r.aligned.latestDate, '2026-03-01');
+  assert.equal(r.reduction.incidence, 0); // not 50% from comparing Sept vs March
+  assert.equal(r.reduction.audpcIncidence, null, 'no overlapping period');
+});
+
+test('compareTrial: blocks with no shared date and no overlap give nulls', () => {
+  const c = { name: 'C', censuses: [{ date: '2026-01-01', counts: [5, 5, 0, 0, 0] }, { date: '2026-02-01', counts: [4, 6, 0, 0, 0] }] };
+  const t = { name: 'T', censuses: [{ date: '2026-03-01', counts: [5, 5, 0, 0, 0] }, { date: '2026-04-01', counts: [5, 5, 0, 0, 0] }] };
+  const r = G.compareTrial(c, t);
+  assert.deepEqual(r.aligned, { latestDate: null, from: null, to: null });
+  assert.deepEqual(r.reduction, { incidence: null, dsi: null, audpcIncidence: null, audpcDsi: null });
+});
+
+test('audpcBetween: needs points covering the whole interval', () => {
+  const pts = [{ date: '2026-01-01', value: 0 }, { date: '2026-01-11', value: 10 }];
+  assert.equal(G.audpcBetween(pts, '2026-01-01', '2026-01-11'), 50);
+  assert.equal(G.audpcBetween(pts, '2026-01-01', '2026-01-06'), 12.5); // 0→5 over 5 days
+  assert.equal(G.audpcBetween(pts, '2025-12-31', '2026-01-11'), null);
+  assert.equal(G.audpcBetween(pts, '2026-01-05', '2026-01-05'), null);
+});
+
+// ── Backup restore validation (review P2) ────────────────────────────────
+const goodBlock = (name, role) => ({ id: 'b-' + name, name, role, censuses: [{ date: '2026-01-01', counts: [9, 1, 0, 0, 0] }] });
+
+test('parseBackup: valid backup returns all blocks', () => {
+  const r = G.parseBackup(JSON.stringify({ blocks: [goodBlock('A', 'treated'), goodBlock('B', 'control'), { name: 'C', censuses: [] }] }));
+  assert.equal(r.ok, true);
+  assert.deepEqual(r.blocks.map(b => [b.name, b.role]), [['A', 'treated'], ['B', 'control'], ['C', 'monitor']]);
+});
+
+test('parseBackup: one bad block rejects the whole file and names every problem (review P2)', () => {
+  const bad = { name: 'North', role: 'treated', censuses: [{ date: '2026-02-30', counts: [1, 0, 0, 0, 0] }, { date: '2026-03-01', counts: [1, -2, 0, 0, 0] }] };
+  const r = G.parseBackup(JSON.stringify({ blocks: [goodBlock('A', 'treated'), bad, { censuses: [] }] }));
+  assert.equal(r.ok, false);
+  assert.deepEqual(r.blocks, [], 'nothing usable is returned, so nothing can be partially restored');
+  assert.deepEqual(r.errors.map(e => [e.index, e.code]), [[2, 'date'], [2, 'counts'], [3, 'name']]);
+  assert.equal(r.errors[0].name, 'North');
+});
+
+test('parseBackup: duplicate census dates, unknown role, bad JSON and empty file are rejected', () => {
+  const dup = { name: 'D', censuses: [{ date: '2026-01-01', counts: [1, 0, 0, 0, 0] }, { date: '2026-01-01', counts: [1, 0, 0, 0, 0] }] };
+  assert.deepEqual(G.parseBackup(JSON.stringify({ blocks: [dup] })).errors.map(e => e.code), ['dupDate']);
+  assert.deepEqual(G.parseBackup(JSON.stringify({ blocks: [goodBlock('E', 'boss')] })).errors.map(e => e.code), ['role']);
+  assert.deepEqual(G.parseBackup('{not json').errors.map(e => e.code), ['json']);
+  assert.deepEqual(G.parseBackup(JSON.stringify({ blocks: [] })).errors.map(e => e.code), ['noBlocks']);
+});
