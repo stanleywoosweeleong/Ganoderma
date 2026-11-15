@@ -845,6 +845,7 @@
     },
     {
       id: 'snt_probiotein',
+      untested: true,
       name: 'SNT Super Probiotein Plus',
       for: ['bvelezensis', 'bamyloliquefaciens'],
       strainMatch: false,
@@ -860,6 +861,7 @@
     },
     {
       id: 'lvlong_velezensis',
+      untested: true,
       name: 'LV LONG (绿陇) Bacillus velezensis product',
       for: ['bvelezensis'],
       strainMatch: false,
@@ -875,6 +877,7 @@
     },
     {
       id: 'serenade_sc',
+      untested: true,
       name: 'Serenade® SC (Bayer)',
       for: ['bamyloliquefaciens'],
       strainMatch: false,
@@ -913,7 +916,10 @@
   /** Products that match one evidence entry (strain matches first). */
   function productsFor(evidenceId) {
     return PRODUCTS.filter(function (p) { return p.for.includes(evidenceId); })
-      .sort(function (a, b) { return Number(b.strainMatch) - Number(a.strainMatch); });
+      .sort(function (a, b) {
+        // same-strain products first, products not tested on Ganoderma last
+        return (Number(b.strainMatch) - Number(a.strainMatch)) || (Number(!!a.untested) - Number(!!b.untested));
+      });
   }
 
   // ───────────────────────────────────────────────────────────────────────

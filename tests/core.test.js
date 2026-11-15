@@ -326,3 +326,16 @@ test('evidence: GanoEF is listed with a buyable product', () => {
   assert.ok(e);
   assert.equal(G.productsFor('ganoef')[0].id, 'ganoef_product');
 });
+
+test('products: items not tested against Ganoderma are flagged and listed last', () => {
+  ['snt_probiotein', 'lvlong_velezensis', 'serenade_sc'].forEach(id =>
+    assert.equal(G.PRODUCTS.find(p => p.id === id).untested, true, id));
+  for (const e of G.EVIDENCE) {
+    const list = G.productsFor(e.id);
+    const firstUntested = list.findIndex(p => p.untested);
+    if (firstUntested >= 0) assert.ok(list.slice(firstUntested).every(p => p.untested), e.id);
+  }
+  // Evidence-backed products are never flagged
+  ['im_bioguard', 'embio_actinoplus', 'trichoshield'].forEach(id =>
+    assert.ok(!G.PRODUCTS.find(p => p.id === id).untested, id));
+});

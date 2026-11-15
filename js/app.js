@@ -325,6 +325,7 @@
     html += items.map(function (p) {
       return '<div class="product"><b>' + esc(p.name) + '</b>' +
         (p.strainMatch ? ' <span class="level lv3">' + esc(t('buy.strainMatch')) + '</span>' : '') +
+        (p.untested ? ' <span class="level lv1">' + esc(t('buy.untested')) + '</span>' : '') +
         '<div class="muted">' + esc(p.company) + (p.mpob ? ' · ' + esc(t('buy.withMpob')) : '') + '</div>' +
         '<div>' + esc(loc(p.price)) + '</div>' +
         (p.contact ? '<div>' + esc(t('buy.contact')) + ': ' + esc(p.contact) + '</div>' : '') +

@@ -86,14 +86,14 @@
       zh: '木霉:每个育苗袋约 50 g 菌种,拌入表土。'
     },
     'step.bact.drench': {
-      en: 'Bacterial drench around the trunk base: Pseudomonas / Bacillus / Streptomyces product at label rate, ~5–10 L per palm. Do not mix with copper or fungicides.',
-      ms: 'Siram bakteria sekeliling pangkal batang: produk Pseudomonas / Bacillus / Streptomyces pada kadar label, ~5–10 L setiap pokok. Jangan campur dengan kuprum atau racun kulat.',
-      zh: '细菌灌根:假单胞菌 / 芽孢杆菌 / 链霉菌产品按标签用量,每棵约 5–10 L,灌于树干基部。不可与铜制剂或杀菌剂混用。'
+      en: 'Bacterial treatment around the trunk base, at label rate: iM-bioGuard (Pseudomonas + Bacillus, liquid drench ~5–10 L per palm) or EMBIO actinoPLUS (Streptomyces granules, buried near the base). Other Bacillus soil boosters are not proven against Ganoderma — use only as an extra, never instead. Do not mix with copper or fungicides.',
+      ms: 'Rawatan bakteria sekeliling pangkal batang, pada kadar label: iM-bioGuard (Pseudomonas + Bacillus, siraman cecair ~5–10 L setiap pokok) atau EMBIO actinoPLUS (butiran Streptomyces, ditanam berhampiran pangkal). Penggalak tanah Bacillus lain belum terbukti terhadap Ganoderma — guna sebagai tambahan sahaja, bukan pengganti. Jangan campur dengan kuprum atau racun kulat.',
+      zh: '树干基部细菌处理,按标签用量:iM-bioGuard(假单胞菌 + 芽孢杆菌,液体灌根,每棵约 5–10 L)或 EMBIO actinoPLUS(链霉菌颗粒,埋于树基附近)。其他芽孢杆菌土壤增强剂未被证实可防治灵芝病 — 只能作为额外补充,不可替代。不可与铜制剂或杀菌剂混用。'
     },
     'step.bact.drench.nursery': {
-      en: 'Bacterial drench: Pseudomonas / Bacillus product at label rate, ~0.5 L per polybag.',
-      ms: 'Siram bakteria: produk Pseudomonas / Bacillus pada kadar label, ~0.5 L setiap polibag.',
-      zh: '细菌灌根:假单胞菌 / 芽孢杆菌产品按标签用量,每袋约 0.5 L。'
+      en: 'Bacterial treatment at label rate: iM-bioGuard (~0.5 L drench per polybag) or EMBIO actinoPLUS (~50 g per polybag). Other Bacillus boosters are extras only.',
+      ms: 'Rawatan bakteria pada kadar label: iM-bioGuard (siraman ~0.5 L setiap polibag) atau EMBIO actinoPLUS (~50 g setiap polibag). Penggalak Bacillus lain sebagai tambahan sahaja.',
+      zh: '按标签用量进行细菌处理:iM-bioGuard(每袋灌根约 0.5 L)或 EMBIO actinoPLUS(每袋约 50 g)。其他芽孢杆菌增强剂只作额外补充。'
     },
     'step.amf.hole': { en: 'Mycorrhiza (AMF, e.g. Glomus): label rate into the planting hole, touching the roots.', ms: 'Mikoriza (AMF, cth. Glomus): kadar label ke dalam lubang tanam, bersentuhan dengan akar.', zh: '菌根真菌(AMF,如球囊霉):按标签用量放入种植穴,接触根系。' },
     'step.amf.nursery': { en: 'Mycorrhiza (AMF): ~5 g per polybag at transplanting.', ms: 'Mikoriza (AMF): ~5 g setiap polibag semasa pindah tanam.', zh: '菌根真菌(AMF):移栽时每袋约 5 g。' },
@@ -212,6 +212,7 @@
     'buy.none': { en: 'No product found for sale in Malaysia (Nov 2026).', ms: 'Tiada produk ditemui untuk dijual di Malaysia (Nov 2026).', zh: '未找到在马来西亚销售的产品(2026 年 11 月)。' },
     'buy.strainMatch': { en: 'Same strain', ms: 'Strain sama', zh: '相同菌株' },
     'buy.withMpob': { en: 'developed with MPOB', ms: 'dibangunkan bersama MPOB', zh: '与 MPOB 联合开发' },
+    'buy.untested': { en: 'Not tested against Ganoderma', ms: 'Belum diuji terhadap Ganoderma', zh: '未针对灵芝病测试' },
     'buy.contact': { en: 'Contact', ms: 'Hubungi', zh: '联系' },
     'buy.disclaimer': {
       en: 'Products and prices from a web search in November 2026 and may change. This app is not linked to any seller. Before buying, ask for the product registration number and spore/CFU count.',
