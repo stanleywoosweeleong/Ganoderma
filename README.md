@@ -4,9 +4,8 @@ An offline web app (PWA) for managing **basal stem rot (BSR)**, also known as
 Ganoderma disease (灵芝病 / 茎基腐病), caused by ***Ganoderma boninense*** in oil
 palm and coconut. Available in English, Bahasa Melayu and 中文.
 
-It grew out of [AMIS](https://github.com/stanleywoosweeleong/AMIS). AMIS
-ranks the microbes that may help; this app turns them into a
-**multi-batch treatment programme** backed by the published research.
+It turns the microbes that may help into a **multi-batch treatment
+programme** backed by the published research.
 
 > **Limits.** Biocontrol prevents BSR and slows it down. No study we found
 > cured an established infection in a mature palm with microbes, so the app
