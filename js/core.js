@@ -402,122 +402,236 @@
   // level: 3 = field / bait-seedling field trial · 2 = nursery / glasshouse
   //        1 = lab plate or related host only
   // ───────────────────────────────────────────────────────────────────────
+  // Text fields are { en, ms, zh }. Scientific names stay in Latin; paper
+  // titles / journal names stay as published.
   const EVIDENCE = [
     {
       id: 'pseudomonas_amf',
-      agent: 'Pseudomonas aeruginosa UPMP3 + Glomus intraradices / G. clarum (AMF)',
+      agent: {
+        en: 'Pseudomonas aeruginosa UPMP3 + Glomus intraradices / G. clarum (AMF)',
+        ms: 'Pseudomonas aeruginosa UPMP3 + Glomus intraradices / G. clarum (AMF)',
+        zh: '铜绿假单胞菌 (Pseudomonas aeruginosa) UPMP3 + 根内球囊霉 / 明球囊霉 (AMF 菌根真菌)'
+      },
       level: 3,
-      setting: 'Nursery + 20-month bait-seedling field trial',
-      result: 'BSR reduced by 57% (nursery) and 80% (field)',
-      note: 'Best field result found for a microbial combination. P. aeruginosa is an opportunistic human pathogen — use only registered products, wear gloves/mask.',
+      setting: {
+        en: 'Nursery + 20-month bait-seedling field trial',
+        ms: 'Tapak semaian + percubaan ladang anak benih umpan selama 20 bulan',
+        zh: '苗圃 + 为期 20 个月的田间诱饵苗试验'
+      },
+      result: {
+        en: 'BSR reduced by 57% (nursery) and 80% (field)',
+        ms: 'BSR berkurang 57% (tapak semaian) dan 80% (ladang)',
+        zh: '茎基腐病减少 57%(苗圃)和 80%(田间)'
+      },
+      note: {
+        en: 'Best field result found for a microbial combination. P. aeruginosa is an opportunistic human pathogen — use only registered products, wear gloves/mask.',
+        ms: 'Keputusan ladang terbaik bagi gabungan mikrob. P. aeruginosa ialah patogen oportunis manusia — guna produk berdaftar sahaja, pakai sarung tangan/topeng.',
+        zh: '目前微生物组合中最好的田间结果。铜绿假单胞菌是人类机会性病原菌 — 只使用已登记产品,并戴手套/口罩。'
+      },
       sources: [
-        { label: 'Sundram et al. 2015 (AGRIS)', url: 'https://agris.fao.org/search/en/records/65de6bf2b766d82b18fd663f' },
-        { label: 'MPOB iM-bioGuard field trial news', url: 'https://prestasisawit.mpob.gov.my/en/palmnews/news/36479' }
+        { label: { en: 'Sundram et al. 2015 (AGRIS)', ms: 'Sundram et al. 2015 (AGRIS)', zh: 'Sundram 等 2015 (AGRIS)' }, url: 'https://agris.fao.org/search/en/records/65de6bf2b766d82b18fd663f' },
+        { label: { en: 'MPOB iM-bioGuard field trial news', ms: 'Berita percubaan ladang iM-bioGuard MPOB', zh: 'MPOB iM-bioGuard 田间试验新闻' }, url: 'https://prestasisawit.mpob.gov.my/en/palmnews/news/36479' }
       ]
     },
     {
       id: 'trichoderma_mix',
-      agent: 'Trichoderma harzianum + T. asperellum + T. virens (mixture)',
+      agent: {
+        en: 'Trichoderma harzianum + T. asperellum + T. virens (mixture)',
+        ms: 'Trichoderma harzianum + T. asperellum + T. virens (campuran)',
+        zh: '哈茨木霉 + 棘孢木霉 + 绿木霉(混合剂)'
+      },
       level: 2,
-      setting: 'Seedlings, glasshouse',
-      result: 'Foliar symptoms −83%, bole symptoms −89%',
-      note: 'Most-studied BCA group. Protects only at very early infection; field results inconsistent.',
+      setting: { en: 'Seedlings, glasshouse', ms: 'Anak benih, rumah kaca', zh: '幼苗,温室' },
+      result: {
+        en: 'Foliar symptoms −83%, bole symptoms −89%',
+        ms: 'Simptom daun −83%, simptom pangkal batang −89%',
+        zh: '叶部症状减少 83%,茎基症状减少 89%'
+      },
+      note: {
+        en: 'Most-studied BCA group. Protects only at very early infection; field results inconsistent.',
+        ms: 'Kumpulan agen kawalan biologi paling banyak dikaji. Melindungi hanya pada jangkitan sangat awal; keputusan ladang tidak konsisten.',
+        zh: '研究最多的生防菌类群。仅在感染极早期有保护作用;田间结果不稳定。'
+      },
       sources: [
-        { label: 'JOPR 2018, 30(3):403–415', url: 'https://jopr.mpob.gov.my/?p=8761' },
-        { label: 'JOPR (Habu) — early-stage only', url: 'https://jopr.mpob.gov.my/wp-content/uploads/2018/09/jopr2018inpress-habu.pdf' }
+        { label: { en: 'JOPR 2018, 30(3):403–415', ms: 'JOPR 2018, 30(3):403–415', zh: 'JOPR 2018, 30(3):403–415' }, url: 'https://jopr.mpob.gov.my/?p=8761' },
+        { label: { en: 'JOPR (Habu) — early-stage only', ms: 'JOPR (Habu) — peringkat awal sahaja', zh: 'JOPR (Habu) — 仅早期有效' }, url: 'https://jopr.mpob.gov.my/wp-content/uploads/2018/09/jopr2018inpress-habu.pdf' }
       ]
     },
     {
       id: 'trichoderma_local',
-      agent: 'Local T. virens / T. asperellum isolates (singly or combined)',
+      agent: {
+        en: 'Local T. virens / T. asperellum isolates (singly or combined)',
+        ms: 'Isolat tempatan T. virens / T. asperellum (tunggal atau gabungan)',
+        zh: '本地绿木霉 / 棘孢木霉菌株(单用或混用)'
+      },
       level: 2,
-      setting: 'Seedlings',
-      result: 'Disease reduced 42–58%, comparable to two commercial biocontrol products',
-      note: 'Isolates T4RH (T. virens) and T8R (T. asperellum) selected from 20.',
+      setting: { en: 'Seedlings', ms: 'Anak benih', zh: '幼苗' },
+      result: {
+        en: 'Disease reduced 42–58%, comparable to two commercial biocontrol products',
+        ms: 'Penyakit berkurang 42–58%, setanding dengan dua produk kawalan biologi komersial',
+        zh: '病害减少 42–58%,与两种商业生防产品相当'
+      },
+      note: {
+        en: 'Isolates T4RH (T. virens) and T8R (T. asperellum) selected from 20.',
+        ms: 'Isolat T4RH (T. virens) dan T8R (T. asperellum) dipilih daripada 20 isolat.',
+        zh: '菌株 T4RH(绿木霉)和 T8R(棘孢木霉)从 20 个菌株中筛选而出。'
+      },
       sources: [
-        { label: 'JOPR 2025', url: 'https://jopr.mpob.gov.my/?p=14135' },
-        { label: 'UMS eprint 43960', url: 'https://eprints.ums.edu.my/id/eprint/43960' },
-        { label: 'Sarhad J Agric 2024 (UMS)', url: 'https://eprints.ums.edu.my/id/eprint/42344' }
+        { label: { en: 'JOPR 2025', ms: 'JOPR 2025', zh: 'JOPR 2025' }, url: 'https://jopr.mpob.gov.my/?p=14135' },
+        { label: { en: 'UMS eprint 43960', ms: 'UMS eprint 43960', zh: 'UMS 论文库 43960' }, url: 'https://eprints.ums.edu.my/id/eprint/43960' },
+        { label: { en: 'Sarhad J Agric 2024 (UMS)', ms: 'Sarhad J Agric 2024 (UMS)', zh: 'Sarhad J Agric 2024 (UMS)' }, url: 'https://eprints.ums.edu.my/id/eprint/42344' }
       ]
     },
     {
       id: 'trichoderma_harzianum',
-      agent: 'Trichoderma harzianum (FA 1132, T32) ± AMF, in compost',
+      agent: {
+        en: 'Trichoderma harzianum (FA 1132, T32) ± AMF, in compost',
+        ms: 'Trichoderma harzianum (FA 1132, T32) ± AMF, dalam kompos',
+        zh: '哈茨木霉 (FA 1132, T32) ± 菌根真菌,施于堆肥中'
+      },
       level: 2,
-      setting: 'Glasshouse; field trial measured growth only',
-      result: 'T32: 60% seedling survival vs 0% control; T. harzianum compost: 100% BSR reduction (glasshouse)',
-      note: 'EFB compost and bran recommended as field carriers.',
+      setting: {
+        en: 'Glasshouse; field trial measured growth only',
+        ms: 'Rumah kaca; percubaan ladang hanya mengukur pertumbuhan',
+        zh: '温室;田间试验只测量了生长'
+      },
+      result: {
+        en: 'T32: 60% seedling survival vs 0% control; T. harzianum compost: 100% BSR reduction (glasshouse)',
+        ms: 'T32: 60% anak benih hidup berbanding 0% kawalan; kompos T. harzianum: BSR berkurang 100% (rumah kaca)',
+        zh: 'T32:幼苗存活 60%,对照为 0%;哈茨木霉堆肥:茎基腐病减少 100%(温室)'
+      },
+      note: {
+        en: 'EFB compost and bran recommended as field carriers.',
+        ms: 'Kompos TKS (tandan kosong sawit) dan dedak disyorkan sebagai pembawa di ladang.',
+        zh: '推荐以空果串 (EFB) 堆肥和米糠作为田间载体。'
+      },
       sources: [
-        { label: 'UPM eprint 9095', url: 'https://libmast.utm.my/Record/upm.eprints-9095/Description' },
-        { label: 'UPM eprint 32011', url: 'https://libmast.utm.my/Record/upm.eprints-32011/Description' },
-        { label: 'Trichoderma + mycorrhizae (ResearchGate)', url: 'https://www.researchgate.net/publication/358340736_Potential_of_Trichoderma_and_mycorrhizae_as_biological_agents_for_controlling_Ganoderma_boninense_in_oil_palm' }
+        { label: { en: 'UPM eprint 9095', ms: 'UPM eprint 9095', zh: 'UPM 论文库 9095' }, url: 'https://libmast.utm.my/Record/upm.eprints-9095/Description' },
+        { label: { en: 'UPM eprint 32011', ms: 'UPM eprint 32011', zh: 'UPM 论文库 32011' }, url: 'https://libmast.utm.my/Record/upm.eprints-32011/Description' },
+        { label: { en: 'Trichoderma + mycorrhizae (ResearchGate)', ms: 'Trichoderma + mikoriza (ResearchGate)', zh: '木霉 + 菌根真菌 (ResearchGate)' }, url: 'https://www.researchgate.net/publication/358340736_Potential_of_Trichoderma_and_mycorrhizae_as_biological_agents_for_controlling_Ganoderma_boninense_in_oil_palm' }
       ]
     },
     {
       id: 'streptomyces',
-      agent: 'Streptomyces spp. (AGA347, S. palmae CMU-AB204T, GanoSA1)',
+      agent: {
+        en: 'Streptomyces spp. (AGA347, S. palmae CMU-AB204T, GanoSA1)',
+        ms: 'Streptomyces spp. (AGA347, S. palmae CMU-AB204T, GanoSA1)',
+        zh: '链霉菌属 Streptomyces(AGA347、S. palmae CMU-AB204T、GanoSA1)'
+      },
       level: 2,
-      setting: 'Glasshouse seedlings',
-      result: 'AGA347 formulation reduced BSR 73.1%; GanoSA1 induces defence enzymes (PAL, POX, PPO, β-glucanase)',
-      note: 'Shelf life of formulations still a problem. Not S. griseus specifically.',
+      setting: { en: 'Glasshouse seedlings', ms: 'Anak benih rumah kaca', zh: '温室幼苗' },
+      result: {
+        en: 'AGA347 formulation reduced BSR 73.1%; GanoSA1 induces defence enzymes (PAL, POX, PPO, β-glucanase)',
+        ms: 'Formulasi AGA347 mengurangkan BSR 73.1%; GanoSA1 merangsang enzim pertahanan (PAL, POX, PPO, β-glukanase)',
+        zh: 'AGA347 制剂使茎基腐病减少 73.1%;GanoSA1 诱导防御酶(PAL、POX、PPO、β-葡聚糖酶)'
+      },
+      note: {
+        en: 'Shelf life of formulations still a problem. Not S. griseus specifically.',
+        ms: 'Jangka hayat simpanan formulasi masih menjadi masalah. Bukan S. griseus secara khusus.',
+        zh: '制剂货架期仍是问题。并非专指灰色链霉菌 (S. griseus)。'
+      },
       sources: [
-        { label: 'World J Microbiol Biotechnol 2017', url: 'https://springerlink.bibliotecabuap.elogim.com/doi/10.1007/s11274-017-2396-1' },
-        { label: 'JOPR 2023 (GanoSA1)', url: 'https://jopr.mpob.gov.my/?p=12357' },
-        { label: 'Japanis et al. 2021 (combinations)', url: 'https://libmast.utm.my/Record/ums.eprints-26711/Description' }
+        { label: { en: 'World J Microbiol Biotechnol 2017', ms: 'World J Microbiol Biotechnol 2017', zh: 'World J Microbiol Biotechnol 2017' }, url: 'https://springerlink.bibliotecabuap.elogim.com/doi/10.1007/s11274-017-2396-1' },
+        { label: { en: 'JOPR 2023 (GanoSA1)', ms: 'JOPR 2023 (GanoSA1)', zh: 'JOPR 2023 (GanoSA1)' }, url: 'https://jopr.mpob.gov.my/?p=12357' },
+        { label: { en: 'Japanis et al. 2021 (combinations)', ms: 'Japanis et al. 2021 (gabungan)', zh: 'Japanis 等 2021(组合制剂)' }, url: 'https://libmast.utm.my/Record/ums.eprints-26711/Description' }
       ]
     },
     {
       id: 'bsubtilis_amf',
-      agent: 'Bacillus subtilis B10 + AMF',
+      agent: { en: 'Bacillus subtilis B10 + AMF', ms: 'Bacillus subtilis B10 + AMF', zh: '枯草芽孢杆菌 (Bacillus subtilis) B10 + 菌根真菌' },
       level: 2,
-      setting: 'Greenhouse seedlings (Indonesia)',
-      result: 'Lower BSR incidence, better height and P uptake',
-      note: '',
+      setting: { en: 'Greenhouse seedlings (Indonesia)', ms: 'Anak benih rumah hijau (Indonesia)', zh: '温室幼苗(印度尼西亚)' },
+      result: {
+        en: 'Lower BSR incidence, better height and P uptake',
+        ms: 'Insiden BSR lebih rendah, ketinggian dan pengambilan P lebih baik',
+        zh: '茎基腐发病率降低,株高和磷吸收改善'
+      },
+      note: { en: '', ms: '', zh: '' },
       sources: [
-        { label: 'IPB repository', url: 'https://repository.ipb.ac.id/handle/123456789/52916' },
-        { label: 'Microbiology Indonesia 2013', url: 'https://doaj.org/article/22447d82b6214e18b10240625461e83e' }
+        { label: { en: 'IPB repository', ms: 'Repositori IPB', zh: 'IPB 论文库' }, url: 'https://repository.ipb.ac.id/handle/123456789/52916' },
+        { label: { en: 'Microbiology Indonesia 2013', ms: 'Microbiology Indonesia 2013', zh: 'Microbiology Indonesia 2013' }, url: 'https://doaj.org/article/22447d82b6214e18b10240625461e83e' }
       ]
     },
     {
       id: 'amf',
-      agent: 'Arbuscular mycorrhizal fungi (Glomus spp.) alone',
+      agent: {
+        en: 'Arbuscular mycorrhizal fungi (Glomus spp.) alone',
+        ms: 'Kulat mikoriza arbuskular (Glomus spp.) sahaja',
+        zh: '丛枝菌根真菌(球囊霉属 Glomus)单独使用'
+      },
       level: 2,
-      setting: 'Nursery (24 months)',
-      result: 'Lowest DSI 51% at 5 g AMF/bag; growth differences not significant early on',
-      note: 'Works better in combinations than alone.',
+      setting: { en: 'Nursery (24 months)', ms: 'Tapak semaian (24 bulan)', zh: '苗圃(24 个月)' },
+      result: {
+        en: 'Lowest DSI 51% at 5 g AMF/bag; growth differences not significant early on',
+        ms: 'DSI terendah 51% pada 5 g AMF/beg; perbezaan pertumbuhan tidak ketara pada awalnya',
+        zh: '每袋 5 g 菌根真菌时病情指数最低,为 51%;前期生长差异不显著'
+      },
+      note: {
+        en: 'Works better in combinations than alone.',
+        ms: 'Lebih berkesan dalam gabungan berbanding digunakan sendiri.',
+        zh: '组合使用比单独使用效果更好。'
+      },
       sources: [
-        { label: 'MPOB — Ganoderma versus mycorrhiza', url: 'https://opb.mpob.gov.my/ganoderma-versus-mycorrhiza/' }
+        { label: { en: 'MPOB — Ganoderma versus mycorrhiza', ms: 'MPOB — Ganoderma lawan mikoriza', zh: 'MPOB — 灵芝 vs 菌根真菌' }, url: 'https://opb.mpob.gov.my/ganoderma-versus-mycorrhiza/' }
       ]
     },
     {
       id: 'bvelezensis',
-      agent: 'Bacillus velezensis',
+      agent: { en: 'Bacillus velezensis', ms: 'Bacillus velezensis', zh: '贝莱斯芽孢杆菌 (Bacillus velezensis)' },
       level: 1,
-      setting: 'Rubber tree (related pathogen G. pseudoferreum)',
-      result: 'SF305: ~70% curative, >90% preventive efficacy against red root rot',
-      note: 'No direct data on G. boninense in oil palm found.',
+      setting: {
+        en: 'Rubber tree (related pathogen G. pseudoferreum)',
+        ms: 'Pokok getah (patogen berkaitan G. pseudoferreum)',
+        zh: '橡胶树(近缘病原菌 G. pseudoferreum)'
+      },
+      result: {
+        en: 'SF305: ~70% curative, >90% preventive efficacy against red root rot',
+        ms: 'SF305: keberkesanan ~70% merawat, >90% mencegah penyakit reput akar merah',
+        zh: 'SF305:对红根腐病治疗效果约 70%,预防效果超过 90%'
+      },
+      note: {
+        en: 'No direct data on G. boninense in oil palm found.',
+        ms: 'Tiada data langsung tentang G. boninense pada kelapa sawit.',
+        zh: '未找到针对油棕博宁灵芝 (G. boninense) 的直接数据。'
+      },
       sources: [
-        { label: 'J Integr Agric 2024', url: 'https://www.chinaagrisci.com/Jwk_zgnykxen/EN/10.1016/j.jia.2024.09.027' }
+        { label: { en: 'J Integr Agric 2024', ms: 'J Integr Agric 2024', zh: 'J Integr Agric 2024(中国农业科学英文版)' }, url: 'https://www.chinaagrisci.com/Jwk_zgnykxen/EN/10.1016/j.jia.2024.09.027' }
       ]
     },
     {
       id: 'ganocare',
-      agent: 'GanoCare® (EFB-based mineral product — not a microbe)',
+      agent: {
+        en: 'GanoCare® (EFB-based mineral product — not a microbe)',
+        ms: 'GanoCare® (produk mineral berasaskan TKS — bukan mikrob)',
+        zh: 'GanoCare®(以空果串为基础的矿物产品 — 非微生物)'
+      },
       level: 3,
-      setting: 'Nursery + 21-month bait-seedling field trial',
-      result: 'Field incidence 26.7% vs 100% control; dead seedlings 6.7% vs 93.3%; AUDPC reduction 82%',
-      note: 'Useful nutrition-only comparison arm. Applied 30 g every 3 months.',
+      setting: {
+        en: 'Nursery + 21-month bait-seedling field trial',
+        ms: 'Tapak semaian + percubaan ladang anak benih umpan selama 21 bulan',
+        zh: '苗圃 + 为期 21 个月的田间诱饵苗试验'
+      },
+      result: {
+        en: 'Field incidence 26.7% vs 100% control; dead seedlings 6.7% vs 93.3%; AUDPC reduction 82%',
+        ms: 'Insiden ladang 26.7% berbanding 100% kawalan; anak benih mati 6.7% berbanding 93.3%; pengurangan AUDPC 82%',
+        zh: '田间发病率 26.7%,对照为 100%;幼苗死亡 6.7%,对照为 93.3%;AUDPC 减少 82%'
+      },
+      note: {
+        en: 'Useful nutrition-only comparison arm. Applied 30 g every 3 months.',
+        ms: 'Berguna sebagai rawatan perbandingan nutrisi sahaja. Diberi 30 g setiap 3 bulan.',
+        zh: '可作为仅营养处理的对比组。每 3 个月施用 30 g。'
+      },
       sources: [
-        { label: 'Rebitanim et al. 2020, BioMed Res Int', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7204346/' }
+        { label: { en: 'Rebitanim et al. 2020, BioMed Res Int', ms: 'Rebitanim et al. 2020, BioMed Res Int', zh: 'Rebitanim 等 2020, BioMed Res Int' }, url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7204346/' }
       ]
     }
   ];
 
   const REVIEWS = [
-    { label: 'Plant Disease 2022 — BSR pathogen, incidence and control', url: 'https://apsjournals.apsnet.org/doi/10.1094/PDIS-02-22-0358-FE' },
-    { label: 'J Fungi 2024 — phytopathogenic Ganoderma review', url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC11204718/' },
-    { label: 'JOPR review — BSR via biological control agents', url: 'https://jopr.mpob.gov.my/?p=2029' },
-    { label: 'Siddiqui et al. 2021 (Warwick)', url: 'https://wrap.warwick.ac.uk/160161/' }
+    { label: { en: 'Plant Disease 2022 — BSR pathogen, incidence and control', ms: 'Plant Disease 2022 — patogen, insiden dan kawalan BSR', zh: 'Plant Disease 2022 — 茎基腐病病原、发病情况与防治' }, url: 'https://apsjournals.apsnet.org/doi/10.1094/PDIS-02-22-0358-FE' },
+    { label: { en: 'J Fungi 2024 — phytopathogenic Ganoderma review', ms: 'J Fungi 2024 — ulasan Ganoderma patogen tumbuhan', zh: 'J Fungi 2024 — 植物病原灵芝综述' }, url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC11204718/' },
+    { label: { en: 'JOPR review — BSR via biological control agents', ms: 'Ulasan JOPR — kawalan BSR dengan agen kawalan biologi', zh: 'JOPR 综述 — 以生防菌防治茎基腐病' }, url: 'https://jopr.mpob.gov.my/?p=2029' },
+    { label: { en: 'Siddiqui et al. 2021 (Warwick)', ms: 'Siddiqui et al. 2021 (Warwick)', zh: 'Siddiqui 等 2021 (Warwick)' }, url: 'https://wrap.warwick.ac.uk/160161/' }
   ];
 
   // ───────────────────────────────────────────────────────────────────────

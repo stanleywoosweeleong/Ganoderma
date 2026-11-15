@@ -279,5 +279,19 @@ test('evidence: every entry has a level 0–3 and https sources', () => {
 });
 
 test('evidence: Pythium oligandrum is not listed (no Ganoderma study found)', () => {
-  assert.ok(!G.EVIDENCE.some(e => /pythium/i.test(e.id + e.agent)));
+  assert.ok(!G.EVIDENCE.some(e => /pythium/i.test(e.id + e.agent.en)));
+});
+
+test('evidence: every text field and source label is in en, ms and zh', () => {
+  const langs = ['en', 'ms', 'zh'];
+  const check = (v, where) => langs.forEach(l => assert.equal(typeof v[l], 'string', `${where} missing ${l}`));
+  for (const e of G.EVIDENCE) {
+    for (const f of ['agent', 'setting', 'result', 'note']) {
+      check(e[f], `${e.id}.${f}`);
+      // filled in all languages, or empty in all (optional note)
+      assert.equal(langs.every(l => e[f][l].trim()), !!e[f].en.trim(), `${e.id}.${f} partly translated`);
+    }
+    e.sources.forEach((s, i) => { check(s.label, `${e.id}.sources[${i}]`); langs.forEach(l => assert.ok(s.label[l].trim())); });
+  }
+  G.REVIEWS.forEach((r, i) => { check(r.label, `review ${i}`); assert.match(r.url, /^https:\/\//); });
 });

@@ -308,16 +308,19 @@
   }
 
   // ── Evidence ──
+  // Pick the current language from a { en, ms, zh } object (or pass a string through).
+  function loc(v) { return v && typeof v === 'object' ? (v[state.lang] || v.en || '') : (v || ''); }
+
   function renderEvidence() {
     const list = G.EVIDENCE.slice().sort(function (a, b) { return b.level - a.level; });
     $('e-out').innerHTML = list.map(function (e) {
-      return '<div class="card ev"><h3>' + esc(e.agent) + '</h3><span class="level lv' + e.level + '">' + esc(t('ev.level.' + e.level)) + '</span>' +
-        '<p><b>' + esc(t('ev.setting')) + ':</b> ' + esc(e.setting) + '</p><p><b>' + esc(t('ev.result')) + ':</b> ' + esc(e.result) + '</p>' +
-        (e.note ? '<p class="muted">' + esc(e.note) + '</p>' : '') +
-        '<p>' + e.sources.map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.label) + '</a>'; }).join(' · ') + '</p></div>';
+      return '<div class="card ev"><h3>' + esc(loc(e.agent)) + '</h3><span class="level lv' + e.level + '">' + esc(t('ev.level.' + e.level)) + '</span>' +
+        '<p><b>' + esc(t('ev.setting')) + ':</b> ' + esc(loc(e.setting)) + '</p><p><b>' + esc(t('ev.result')) + ':</b> ' + esc(loc(e.result)) + '</p>' +
+        (loc(e.note) ? '<p class="muted">' + esc(loc(e.note)) + '</p>' : '') +
+        '<p>' + e.sources.map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(loc(s.label)) + '</a>'; }).join(' · ') + '</p></div>';
     }).join('') +
       '<div class="card ev"><h3>' + esc(t('ev.reviews')) + '</h3><ul>' + G.REVIEWS.map(function (r) {
-        return '<li><a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(r.label) + '</a></li>';
+        return '<li><a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(loc(r.label)) + '</a></li>';
       }).join('') + '</ul><p class="muted">' + esc(t('ev.checked')) + '</p></div>';
   }
 
