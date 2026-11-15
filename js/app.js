@@ -41,6 +41,8 @@
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
+  // Escape, then italicise scientific names (for visible text, never attributes).
+  function sci(str) { return G.italicizeSci(esc(str)); }
   function today() { return G.formatDate(new Date(Date.now() - new Date().getTimezoneOffset() * 60000)); }
   function fmt(v, unit) { return v == null ? t('track.na') : v.toLocaleString(undefined, { maximumFractionDigits: 2 }) + (unit || ''); }
   function stagePill(cls) {
@@ -66,7 +68,10 @@
   // ── i18n ──
   function applyI18n() {
     document.documentElement.lang = state.lang === 'zh' ? 'zh-Hans' : state.lang;
-    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.textContent = t(el.dataset.i18n); });
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      const txt = t(el.dataset.i18n);
+      if (el.tagName === 'OPTION' || el.tagName === 'TITLE') el.textContent = txt; else el.innerHTML = sci(txt);
+    });
     document.title = t('app.title');
     document.querySelectorAll('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
     document.querySelectorAll('[data-i18n-ph]').forEach(function (el) { el.setAttribute('placeholder', t(el.dataset.i18nPh)); });
@@ -139,7 +144,7 @@
   function basisHtml(step) {
     const b = G.stepBasis(step);
     if (!b) return '';
-    return '<div class="basis basis-' + b.kind + '"><span class="tag">' + esc(t('basis.' + b.kind)) + '</span> ' + esc(loc(b.text)) +
+    return '<div class="basis basis-' + b.kind + '"><span class="tag">' + esc(t('basis.' + b.kind)) + '</span> ' + sci(loc(b.text)) +
       (b.sources.length ? ' ' + b.sources.map(function (src) { return '<a href="' + esc(src.url) + '" target="_blank" rel="noopener">' + esc(src.label) + '</a>'; }).join(' · ') : '') + '</div>';
   }
 
@@ -149,8 +154,8 @@
     const conflicts = G.findChemicalConflicts(p, state.chem || []);
     let html = '<div class="card"><h3>' + esc(t('setting.' + p.setting)) +
       (p.stage != null ? ' — ' + stagePill(p.stage) : '') + '</h3>';
-    html += '<div class="provisional"><b>' + esc(t('plan.provisional.h')) + '</b> ' + esc(t('plan.provisional')) + '</div>';
-    p.warnings.forEach(function (w) { html += '<div class="warn">' + esc(t(w)) + '</div>'; });
+    html += '<div class="provisional"><b>' + esc(t('plan.provisional.h')) + '</b> ' + sci(t('plan.provisional')) + '</div>';
+    p.warnings.forEach(function (w) { html += '<div class="warn">' + sci(t(w)) + '</div>'; });
     conflicts.forEach(function (c) {
       html += '<div class="bad">' + esc(t('plan.conflict')) + ' ' + esc(c.batchDate) + ' ↔ ' + esc(c.chemDate) +
         ' (' + c.daysApart + ' ' + esc(t('plan.days')) + ')</div>';
@@ -159,7 +164,7 @@
       const title = b.number != null ? t('plan.batch', { n: b.number }) : t('kind.census');
       html += '<div class="batch ' + b.kind + '"><div class="head"><span>' + esc(title) + '</span><span>' +
         esc(b.date) + '</span><span class="kind">' + esc(t('plan.week', { n: b.week })) + ' · ' + esc(t('kind.' + b.kind)) +
-        '</span></div><ul>' + b.steps.map(function (s) { return '<li>' + esc(t('step.' + s)) + (s.indexOf('bact.drench') === 0 ? '<div class="warn safety">' + esc(t('safety.pseudomonas')) + '</div>' : '') + basisHtml(s) + '</li>'; }).join('') + '</ul></div>';
+        '</span></div><ul>' + b.steps.map(function (s) { return '<li>' + sci(t('step.' + s)) + (s.indexOf('bact.drench') === 0 ? '<div class="warn safety">' + sci(t('safety.pseudomonas')) + '</div>' : '') + basisHtml(s) + '</li>'; }).join('') + '</ul></div>';
     });
     html += '</div>';
     $('p-out').innerHTML = html;
@@ -355,14 +360,14 @@
     let html = '<div class="buy"><h4>' + esc(t('buy.h')) + '</h4>';
     if (!items.length) return html + '<p class="muted">' + esc(t('buy.none')) + '</p></div>';
     html += items.map(function (p) {
-      return '<div class="product"><b>' + esc(p.name) + '</b>' +
+      return '<div class="product"><b>' + sci(p.name) + '</b>' +
         (p.strainMatch ? ' <span class="level lv3">' + esc(t('buy.strainMatch')) + '</span>' : '') +
-        (p.untested ? ' <span class="level lv1">' + esc(t('buy.untested')) + '</span>' : '') +
+        (p.untested ? ' <span class="level lv1">' + sci(t('buy.untested')) + '</span>' : '') +
         '<div class="muted">' + esc(p.company) + (p.mpob ? ' · ' + esc(t('buy.withMpob')) : '') + '</div>' +
-        '<div>' + esc(loc(p.price)) + '</div>' +
+        '<div>' + sci(loc(p.price)) + '</div>' +
         (p.contact ? '<div>' + esc(t('buy.contact')) + ': ' + esc(p.contact) + '</div>' : '') +
-        '<div class="muted">' + esc(loc(p.note)) + '</div>' +
-        (p.safety ? '<div class="warn safety">' + esc(t('safety.' + p.safety)) + '</div>' : '') +
+        '<div class="muted">' + sci(loc(p.note)) + '</div>' +
+        (p.safety ? '<div class="warn safety">' + sci(t('safety.' + p.safety)) + '</div>' : '') +
         (p.links.length ? '<div>' + p.links.map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + '</a>'; }).join(' · ') + '</div>' : '') + '</div>';
     }).join('');
     return html + '</div>';
@@ -371,15 +376,15 @@
   function renderEvidence() {
     const list = G.EVIDENCE.slice().sort(function (a, b) { return b.level - a.level; });
     $('e-out').innerHTML = list.map(function (e) {
-      return '<div class="card ev"><h3>' + esc(loc(e.agent)) + '</h3><span class="level lv' + e.level + '">' + esc(t('ev.level.' + e.level)) + '</span>' +
+      return '<div class="card ev"><h3>' + sci(loc(e.agent)) + '</h3><span class="level lv' + e.level + '">' + esc(t('ev.level.' + e.level)) + '</span>' +
         (e.weak ? ' <span class="level weak">' + esc(t('ev.weak')) + '</span>' : '') +
-        '<p><b>' + esc(t('ev.setting')) + ':</b> ' + esc(loc(e.setting)) + '</p><p><b>' + esc(t('ev.result')) + ':</b> ' + esc(loc(e.result)) + '</p>' +
-        (loc(e.note) ? '<p class="muted">' + esc(loc(e.note)) + '</p>' : '') +
-        '<p>' + e.sources.map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(loc(s.label)) + '</a>'; }).join(' · ') + '</p>' +
+        '<p><b>' + esc(t('ev.setting')) + ':</b> ' + sci(loc(e.setting)) + '</p><p><b>' + esc(t('ev.result')) + ':</b> ' + sci(loc(e.result)) + '</p>' +
+        (loc(e.note) ? '<p class="muted">' + sci(loc(e.note)) + '</p>' : '') +
+        '<p>' + e.sources.map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + sci(loc(s.label)) + '</a>'; }).join(' · ') + '</p>' +
         renderBuy(e.id) + '</div>';
     }).join('') +
       '<div class="card ev"><h3>' + esc(t('ev.reviews')) + '</h3><ul>' + G.REVIEWS.map(function (r) {
-        return '<li><a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(loc(r.label)) + '</a></li>';
+        return '<li><a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + sci(loc(r.label)) + '</a></li>';
       }).join('') + '</ul><p class="muted">' + esc(t('ev.checked')) + '</p><p class="muted">' + esc(t('buy.disclaimer')) + '</p></div>';
   }
 

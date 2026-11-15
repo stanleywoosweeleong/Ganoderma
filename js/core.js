@@ -1171,8 +1171,35 @@
   function pad(n) { return n < 10 ? '0' + n : String(n); }
   function round(v, dp) { const f = Math.pow(10, dp); return Math.round(v * f) / f; }
 
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Scientific names in italics (botanical/bacteriological convention):
+  // genus and species epithets italic; "sp./spp.", strain codes (T32,
+  // UPMP3), product names (GanoEF, GanoCare) and Chinese/Malay common
+  // names stay upright. Works on ALREADY-ESCAPED HTML text and only adds
+  // <i> tags, so it is safe to use on user-facing strings.
+  // ───────────────────────────────────────────────────────────────────────
+  const SCI_GENERA = ['Trichoderma', 'Ganoderma', 'Pseudomonas', 'Bacillus', 'Streptomyces', 'Glomus',
+    'Hendersonia', 'Rigidoporus', 'Pythium', 'Elaeis', 'Serratia', 'Margalitia', 'Gigaspora', 'Acaulospora',
+    'Scutellospora', 'Phlebia', 'Scytalidium', 'Burkholderia'];
+  // Epithets are listed explicitly so ordinary words after a genus
+  // ("Trichoderma rice-grain", "Bacillus product") are never italicised.
+  const SCI_EPITHETS = ['harzianum', 'asperellum', 'virens', 'viride', 'boninense', 'pseudoferreum', 'zonatum',
+    'aeruginosa', 'fluorescens', 'intraradices', 'clarum', 'etunicatum', 'subtilis', 'velezensis',
+    'amyloliquefaciens', 'palmae', 'griseus', 'nigrogriseolus', 'oligandrum', 'lignosus', 'guineensis',
+    'marcescens', 'shackletonii', 'parasiticum', 'rosea', 'morrowiae', 'heterogama'];
+  const SCI_RE = new RegExp(
+    '\\b(?:(?:' + SCI_GENERA.join('|') + ')(?: (?:' + SCI_EPITHETS.join('|') + ')\\b)?' +
+    '|[A-Z]\\. (?:' + SCI_EPITHETS.join('|') + ')\\b)', 'g');
+
+  /** Wrap scientific names in <i>…</i>. Input must already be HTML-escaped. */
+  function italicizeSci(escapedHtml) {
+    return String(escapedHtml).replace(SCI_RE, function (m) { return '<i>' + m + '</i>'; });
+  }
+
   return {
     STAGES: STAGES,
+    italicizeSci: italicizeSci,
     ERROR_CODES: ERROR_CODES,
     TRICHO_KG: TRICHO_KG,
     EVIDENCE: EVIDENCE,

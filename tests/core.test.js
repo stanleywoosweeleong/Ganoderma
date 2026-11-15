@@ -436,3 +436,26 @@ test('every step any plan can produce has a stated basis with all three language
 test('Trichoderma dose steps are labelled as app assumptions, not study results', () => {
   ['tricho.ring', 'tricho.nursery', 'tricho.site', 'tricho.hole'].forEach(s => assert.equal(G.stepBasis(s).kind, 'assumption', s));
 });
+
+// ── Scientific names in italics ──────────────────────────────────────────
+test('italicizeSci: genus + species italic; strains, spp., products and ordinary words upright', () => {
+  const f = G.italicizeSci;
+  assert.equal(f('Trichoderma harzianum T32'), '<i>Trichoderma harzianum</i> T32');
+  assert.equal(f('T. virens and B. velezensis'), '<i>T. virens</i> and <i>B. velezensis</i>');
+  assert.equal(f('Streptomyces spp. (AGA347, S. palmae CMU-AB204T)'), '<i>Streptomyces</i> spp. (AGA347, <i>S. palmae</i> CMU-AB204T)');
+  assert.equal(f('Trichoderma rice-grain inoculant'), '<i>Trichoderma</i> rice-grain inoculant');
+  assert.equal(f('GanoEF and GanoCare against Ganoderma boninense'), 'GanoEF and GanoCare against <i>Ganoderma boninense</i>');
+  assert.equal(f('铜绿假单胞菌 (Pseudomonas aeruginosa) UPMP3'), '铜绿假单胞菌 (<i>Pseudomonas aeruginosa</i>) UPMP3');
+  assert.equal(f('Pseudomonas / Bacillus product'), '<i>Pseudomonas</i> / <i>Bacillus</i> product');
+});
+
+test('italicizeSci: only adds <i> tags to escaped text, never un-escapes', () => {
+  assert.equal(G.italicizeSci('&lt;b&gt; Glomus &amp; x'), '&lt;b&gt; <i>Glomus</i> &amp; x');
+});
+
+test('every scientific name in the evidence library gets italicised somewhere', () => {
+  const text = G.EVIDENCE.map(e => e.agent.en).join(' ');
+  const out = G.italicizeSci(text);
+  for (const name of ['Pseudomonas aeruginosa', 'Glomus intraradices', 'Trichoderma harzianum', 'T. asperellum', 'T. virens', 'Bacillus velezensis', 'Bacillus amyloliquefaciens', 'Hendersonia'])
+    assert.ok(out.includes('<i>' + name), name);
+});
