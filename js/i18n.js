@@ -3,6 +3,7 @@
   'use strict';
   const T = {
     'app.title': { en: 'Ganoderma BSR Manager', ms: 'Pengurus Reput Pangkal Batang Ganoderma', zh: '灵芝茎基腐病管理' },
+    'app.short': { en: 'BSR Manager', ms: 'Pengurus BSR', zh: '灵芝茎基腐病管理' },
     'app.tagline': {
       en: 'Basal stem rot (Ganoderma boninense) — assess palms, plan multi-batch biocontrol, brew Trichoderma, track trials.',
       ms: 'Reput pangkal batang (Ganoderma boninense) — nilai pokok, rancang kawalan biologi berperingkat, hasilkan Trichoderma, jejak percubaan.',

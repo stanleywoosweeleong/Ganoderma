@@ -70,7 +70,9 @@
     document.title = t('app.title');
     document.querySelectorAll('[data-i18n-aria]').forEach(function (el) { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
     document.querySelectorAll('[data-i18n-ph]').forEach(function (el) { el.setAttribute('placeholder', t(el.dataset.i18nPh)); });
-    $('lang').value = state.lang;
+    document.querySelectorAll('#langs [data-lang]').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.lang === state.lang));
+    });
     // stage select
     const sel = $('p-stage');
     const cur = sel.value;
@@ -369,7 +371,10 @@
     renderAll();
     showTab(state.tab);
 
-    $('lang').addEventListener('change', function () { setLanguage(this.value); });
+    $('langs').addEventListener('click', function (e) {
+      const b = e.target.closest('[data-lang]');
+      if (b) setLanguage(b.dataset.lang);
+    });
     $('langpick').addEventListener('click', function (e) {
       const b = e.target.closest('[data-lang]');
       if (!b) return;

@@ -28,3 +28,12 @@ test('first-launch language picker offers exactly en, ms and zh', () => {
   const langs = [...pick.matchAll(/data-lang="(\w+)"/g)].map(m => m[1]).sort();
   assert.deepEqual(langs, ['en', 'ms', 'zh']);
 });
+
+test('header language toggle offers en, ms and zh as pressable buttons', () => {
+  const html = read('index.html');
+  const start = html.indexOf('id="langs"');
+  const block = html.slice(start, html.indexOf('</div>', start));
+  const langs = [...block.matchAll(/class="langbtn"[^>]*data-lang="(\w+)"/g)].map(m => m[1]);
+  assert.deepEqual(langs, ['en', 'ms', 'zh']);
+  assert.ok(!/<select id="lang"/.test(html), 'old dropdown removed');
+});

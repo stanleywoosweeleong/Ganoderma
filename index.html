@@ -14,6 +14,7 @@
     --bg: #f4f4f2; --surface: #ffffff; --surface-2: #eef3ef; --text: #1d2a22; --muted: #5d6b62;
     --border: #d6ded8; --accent: #2d7a4f; --accent-ink: #ffffff; --warn-bg: #fff4e0; --warn: #8a5300;
     --bad-bg: #fde8e8; --bad: #9b1c1c;
+    --head-bg: #163323; --head-ink: #eef3ef; --head-muted: rgba(238,243,239,.78); --brand: #c8702f; --brand-lite: #e8a050;
     --tex: rgba(29,42,34,.045); --pick-line: rgba(45,122,79,.35); --toast-bg: #1d2a22; --toast-ink: #eef3ef;
     --s0: #2d7a4f; --s1: #b7a000; --s2: #d97706; --s3: #c2410c; --s4: #6b7280;
     --radius: 10px;
@@ -23,6 +24,7 @@
       --bg: #121714; --surface: #1b221e; --surface-2: #222c26; --text: #e5ece7; --muted: #9aa8a0;
       --border: #2f3a33; --accent: #4fae78; --accent-ink: #0d1510; --warn-bg: #3a2b10; --warn: #f5c46b;
       --bad-bg: #3b1717; --bad: #fca5a5;
+      --head-bg: #0f2117; --head-ink: #e5ece7; --head-muted: rgba(229,236,231,.72); --brand: #c8702f; --brand-lite: #e8a050;
       --tex: rgba(229,236,231,.035); --pick-line: rgba(79,174,120,.4); --toast-bg: #0d1510; --toast-ink: #e5ece7;
       --s0: #4fae78; --s1: #d8c33a; --s2: #f59e0b; --s3: #fb7f45; --s4: #9ca3af;
     }
@@ -31,6 +33,7 @@
     --bg: #121714; --surface: #1b221e; --surface-2: #222c26; --text: #e5ece7; --muted: #9aa8a0;
     --border: #2f3a33; --accent: #4fae78; --accent-ink: #0d1510; --warn-bg: #3a2b10; --warn: #f5c46b;
     --bad-bg: #3b1717; --bad: #fca5a5;
+    --head-bg: #0f2117; --head-ink: #e5ece7; --head-muted: rgba(229,236,231,.72); --brand: #c8702f; --brand-lite: #e8a050;
     --tex: rgba(229,236,231,.035); --pick-line: rgba(79,174,120,.4); --toast-bg: #0d1510; --toast-ink: #e5ece7;
     --s0: #4fae78; --s1: #d8c33a; --s2: #f59e0b; --s3: #fb7f45; --s4: #9ca3af;
   }
@@ -40,11 +43,21 @@
     background: var(--bg); color: var(--text);
     font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Noto Sans SC", "PingFang SC", sans-serif;
   }
-  header { background: var(--accent); color: var(--accent-ink); padding: 14px 16px 10px; }
-  header .row { display: flex; align-items: center; gap: 12px; justify-content: space-between; max-width: 900px; margin: 0 auto; }
-  header h1 { font-size: 1.15rem; margin: 0; line-height: 1.25; }
-  header p { margin: 4px auto 0; max-width: 900px; font-size: .85rem; opacity: .9; }
-  header select { font: inherit; font-size: .9rem; padding: 4px 6px; border-radius: 6px; border: 0; }
+  /* header (EM Brew style: dark band, accent stripe, pill language toggle) */
+  header { background: var(--head-bg); color: var(--head-ink);
+    padding: calc(18px + env(safe-area-inset-top, 0px)) 16px 16px; border-bottom: 4px solid var(--brand); }
+  header .row { display: flex; align-items: flex-start; gap: 12px; justify-content: space-between; max-width: 900px; margin: 0 auto; }
+  header h1 { font-size: 30px; line-height: 1.05; margin: 0; font-weight: 800; letter-spacing: -.02em; }
+  header h1 .en { display: block; font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
+    color: var(--brand-lite); margin-top: 7px; }
+  header p { margin: 10px auto 0; max-width: 900px; font-size: .82rem; font-weight: 500; color: var(--head-muted); }
+  .langs { flex: none; display: flex; gap: 2px; padding: 2px; border-radius: 999px;
+    background: rgba(232,160,80,.14); border: 1.5px solid var(--brand); }
+  .langbtn { background: transparent; color: var(--brand-lite); border: 0; border-radius: 999px; cursor: pointer;
+    font: inherit; font-size: 13px; font-weight: 800; line-height: 1; padding: 8px 11px; letter-spacing: .05em; }
+  .langbtn:active { background: rgba(255,255,255,.12); }
+  .langbtn[aria-pressed="true"] { background: var(--brand-lite); color: var(--head-bg); }
+  .langbtn:focus-visible { outline: 3px solid var(--brand-lite); outline-offset: 2px; }
   nav { position: sticky; top: 0; z-index: 5; background: var(--surface); border-bottom: 1px solid var(--border); }
   nav .tabs { display: flex; max-width: 900px; margin: 0 auto; overflow-x: auto; }
   nav button {
@@ -153,12 +166,12 @@
 <body>
 <header>
   <div class="row">
-    <h1 data-i18n="app.title">Ganoderma BSR Manager</h1>
-    <select id="lang" aria-label="Language" data-i18n-aria="lang.label">
-      <option value="en">English</option>
-      <option value="ms">Bahasa Melayu</option>
-      <option value="zh">中文</option>
-    </select>
+    <h1>Ganoderma<span class="en" data-i18n="app.short">BSR Manager</span></h1>
+    <div class="langs" id="langs" role="group" aria-label="Language · Bahasa · 语言">
+      <button class="langbtn" type="button" data-lang="en" lang="en">EN</button>
+      <button class="langbtn" type="button" data-lang="ms" lang="ms">BM</button>
+      <button class="langbtn" type="button" data-lang="zh" lang="zh-Hans">中文</button>
+    </div>
   </div>
   <p data-i18n="app.tagline"></p>
 </header>
