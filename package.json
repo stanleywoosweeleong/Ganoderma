@@ -1,0 +1,12 @@
+{
+  "name": "ganoderma-bsr-manager",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Offline PWA for managing Ganoderma basal stem rot (BSR) in oil palm with multi-batch biocontrol.",
+  "scripts": {
+    "test": "node --test",
+    "start": "python3 -m http.server 8080"
+  },
+  "engines": { "node": ">=18" },
+  "license": "UNLICENSED"
+}

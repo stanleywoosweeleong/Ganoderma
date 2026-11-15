@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ganoderma BSR Manager</title>
+<meta name="description" content="Assess oil palms for Ganoderma basal stem rot, plan multi-batch biocontrol, schedule Trichoderma brewing and track field trials.">
+<meta name="theme-color" content="#2d7a4f">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+  :root {
+    --bg: #f4f4f2; --surface: #ffffff; --surface-2: #eef3ef; --text: #1d2a22; --muted: #5d6b62;
+    --border: #d6ded8; --accent: #2d7a4f; --accent-ink: #ffffff; --warn-bg: #fff4e0; --warn: #8a5300;
+    --bad-bg: #fde8e8; --bad: #9b1c1c;
+    --s0: #2d7a4f; --s1: #b7a000; --s2: #d97706; --s3: #c2410c; --s4: #6b7280;
+    --radius: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #121714; --surface: #1b221e; --surface-2: #222c26; --text: #e5ece7; --muted: #9aa8a0;
+      --border: #2f3a33; --accent: #4fae78; --accent-ink: #0d1510; --warn-bg: #3a2b10; --warn: #f5c46b;
+      --bad-bg: #3b1717; --bad: #fca5a5;
+      --s0: #4fae78; --s1: #d8c33a; --s2: #f59e0b; --s3: #fb7f45; --s4: #9ca3af;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #121714; --surface: #1b221e; --surface-2: #222c26; --text: #e5ece7; --muted: #9aa8a0;
+    --border: #2f3a33; --accent: #4fae78; --accent-ink: #0d1510; --warn-bg: #3a2b10; --warn: #f5c46b;
+    --bad-bg: #3b1717; --bad: #fca5a5;
+    --s0: #4fae78; --s1: #d8c33a; --s2: #f59e0b; --s3: #fb7f45; --s4: #9ca3af;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", "Noto Sans SC", "PingFang SC", sans-serif;
+  }
+  header { background: var(--accent); color: var(--accent-ink); padding: 14px 16px 10px; }
+  header .row { display: flex; align-items: center; gap: 12px; justify-content: space-between; max-width: 900px; margin: 0 auto; }
+  header h1 { font-size: 1.15rem; margin: 0; line-height: 1.25; }
+  header p { margin: 4px auto 0; max-width: 900px; font-size: .85rem; opacity: .9; }
+  header select { font: inherit; font-size: .9rem; padding: 4px 6px; border-radius: 6px; border: 0; }
+  nav { position: sticky; top: 0; z-index: 5; background: var(--surface); border-bottom: 1px solid var(--border); }
+  nav .tabs { display: flex; max-width: 900px; margin: 0 auto; overflow-x: auto; }
+  nav button {
+    flex: 1 0 auto; background: none; border: 0; border-bottom: 3px solid transparent; color: var(--muted);
+    font: inherit; font-weight: 600; padding: 12px 14px; cursor: pointer;
+  }
+  nav button[aria-selected="true"] { color: var(--accent); border-bottom-color: var(--accent); }
+  main { max-width: 900px; margin: 0 auto; padding: 16px; }
+  section[hidden] { display: none; }
+  h2 { font-size: 1.15rem; margin: 4px 0 12px; }
+  h3 { font-size: 1rem; margin: 0 0 8px; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; margin-bottom: 14px; }
+  .muted { color: var(--muted); font-size: .9rem; }
+  .disclaimer { background: var(--warn-bg); color: var(--warn); border-radius: var(--radius); padding: 10px 12px; font-size: .9rem; margin-bottom: 14px; }
+  label { display: block; font-weight: 600; margin: 10px 0 4px; font-size: .95rem; }
+  label.check { display: flex; gap: 8px; align-items: flex-start; font-weight: 500; }
+  label.check input { margin-top: 4px; width: 18px; height: 18px; flex: none; }
+  input[type=number], input[type=date], input[type=text], select.field {
+    width: 100%; font: inherit; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px;
+    background: var(--surface); color: var(--text);
+  }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+  @media (max-width: 560px) { .grid2 { grid-template-columns: 1fr; } }
+  .btn {
+    display: inline-block; font: inherit; font-weight: 600; padding: 9px 14px; border-radius: 8px; cursor: pointer;
+    border: 1px solid var(--accent); background: var(--accent); color: var(--accent-ink); margin: 12px 8px 0 0;
+  }
+  .btn.secondary { background: transparent; color: var(--accent); }
+  .btn.danger { background: transparent; color: var(--bad); border-color: var(--bad); }
+  .stage-pill { display: inline-block; padding: 2px 10px; border-radius: 999px; color: #fff; font-weight: 700; font-size: .85rem; }
+  .s0 { background: var(--s0); } .s1 { background: var(--s1); color: #1d1d00; } .s2 { background: var(--s2); color: #1f1300; }
+  .s3 { background: var(--s3); } .s4 { background: var(--s4); }
+  .result { font-size: 1.1rem; margin-top: 12px; }
+  .warn { background: var(--warn-bg); color: var(--warn); border-radius: 8px; padding: 8px 10px; margin: 6px 0; font-size: .92rem; }
+  .bad { background: var(--bad-bg); color: var(--bad); border-radius: 8px; padding: 8px 10px; margin: 6px 0; font-size: .92rem; }
+  .batch { border-left: 4px solid var(--accent); padding: 8px 12px; margin: 10px 0; background: var(--surface-2); border-radius: 0 8px 8px 0; }
+  .batch.maintenance { border-left-color: var(--s1); }
+  .batch.census { border-left-color: var(--s4); }
+  .batch .head { display: flex; flex-wrap: wrap; gap: 4px 12px; font-weight: 700; }
+  .batch .head .kind { font-weight: 500; color: var(--muted); }
+  .batch ul { margin: 6px 0 0; padding-left: 20px; }
+  .table-wrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: .9rem; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  th { color: var(--muted); font-weight: 600; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .counts { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .counts label { font-size: .8rem; margin: 6px 0 2px; }
+  @media (max-width: 420px) { .counts { grid-template-columns: repeat(3, 1fr); } }
+  .level { display: inline-block; font-size: .8rem; font-weight: 700; border-radius: 6px; padding: 1px 8px; }
+  .lv3 { background: var(--s0); color: #fff; } .lv2 { background: var(--s1); color: #1d1d00; }
+  .lv1 { background: var(--s2); color: #1f1300; } .lv0 { background: var(--s4); color: #fff; }
+  .ev p { margin: 4px 0; }
+  .ev a { color: var(--accent); word-break: break-word; }
+  .kpi { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 10px; }
+  .kpi div { background: var(--surface-2); border-radius: 8px; padding: 10px; }
+  .kpi b { display: block; font-size: 1.4rem; font-variant-numeric: tabular-nums; }
+  svg.chart { width: 100%; height: auto; display: block; margin-top: 8px; }
+  #toast { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); background: var(--text); color: var(--bg);
+    padding: 10px 14px; border-radius: 10px; display: none; gap: 10px; align-items: center; z-index: 10; max-width: calc(100% - 32px); }
+  #toast.show { display: flex; }
+  #toast button { font: inherit; font-weight: 700; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 6px; padding: 4px 10px; }
+  @media print {
+    header, nav, .btn, .no-print, #toast { display: none !important; }
+    body { background: #fff; color: #000; }
+    .card { border: 0; padding: 0; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="row">
+    <h1 data-i18n="app.title">Ganoderma BSR Manager</h1>
+    <select id="lang" aria-label="Language">
+      <option value="en">English</option>
+      <option value="ms">Bahasa Melayu</option>
+      <option value="zh">中文</option>
+    </select>
+  </div>
+  <p data-i18n="app.tagline"></p>
+</header>
+
+<nav>
+  <div class="tabs" role="tablist">
+    <button role="tab" data-tab="assess" aria-selected="true" data-i18n="tab.assess">Assess</button>
+    <button role="tab" data-tab="plan" aria-selected="false" data-i18n="tab.plan">Plan</button>
+    <button role="tab" data-tab="brew" aria-selected="false" data-i18n="tab.brew">Brew</button>
+    <button role="tab" data-tab="track" aria-selected="false" data-i18n="tab.track">Track</button>
+    <button role="tab" data-tab="evidence" aria-selected="false" data-i18n="tab.evidence">Evidence</button>
+  </div>
+</nav>
+
+<main>
+  <div class="disclaimer" data-i18n="disclaimer"></div>
+
+  <!-- ASSESS -->
+  <section id="tab-assess">
+    <div class="card">
+      <h2 data-i18n="assess.h"></h2>
+      <label class="check"><input type="checkbox" id="a-dead"> <span data-i18n="assess.dead"></span></label>
+      <label class="check"><input type="checkbox" id="a-fruit"> <span data-i18n="assess.fruiting"></span></label>
+      <label for="a-lesion" data-i18n="assess.lesion"></label>
+      <input type="number" id="a-lesion" min="0" max="100" step="5" value="0" inputmode="decimal">
+      <label for="a-foliar" data-i18n="assess.foliar"></label>
+      <select id="a-foliar" class="field">
+        <option value="none" data-i18n="foliar.none"></option>
+        <option value="mild" data-i18n="foliar.mild"></option>
+        <option value="severe" data-i18n="foliar.severe"></option>
+      </select>
+      <div class="result" id="a-result" aria-live="polite"></div>
+      <button class="btn" id="a-toplan" data-i18n="assess.toPlan"></button>
+      <p class="muted" data-i18n="assess.scale"></p>
+    </div>
+  </section>
+
+  <!-- PLAN -->
+  <section id="tab-plan" hidden>
+    <div class="card no-print">
+      <h2 data-i18n="plan.h"></h2>
+      <div class="grid2">
+        <div>
+          <label for="p-setting" data-i18n="plan.setting"></label>
+          <select id="p-setting" class="field">
+            <option value="mature" data-i18n="setting.mature"></option>
+            <option value="replant" data-i18n="setting.replant"></option>
+            <option value="nursery" data-i18n="setting.nursery"></option>
+          </select>
+        </div>
+        <div id="p-stage-wrap">
+          <label for="p-stage" data-i18n="plan.stage"></label>
+          <select id="p-stage" class="field"></select>
+        </div>
+        <div>
+          <label for="p-start" data-i18n="plan.start"></label>
+          <input type="date" id="p-start">
+        </div>
+        <div>
+          <label for="p-horizon" data-i18n="plan.horizon"></label>
+          <input type="number" id="p-horizon" min="1" max="520" step="1">
+        </div>
+      </div>
+      <label for="p-chem" data-i18n="plan.chem"></label>
+      <input type="text" id="p-chem" placeholder="2027-02-15, 2027-08-15">
+      <button class="btn" id="p-make" data-i18n="plan.make"></button>
+      <button class="btn secondary" id="p-print" data-i18n="plan.print"></button>
+    </div>
+    <div id="p-out"></div>
+  </section>
+
+  <!-- BREW -->
+  <section id="tab-brew" hidden>
+    <div class="card">
+      <h2 data-i18n="brew.h"></h2>
+      <p class="muted" data-i18n="brew.intro"></p>
+      <div class="grid2">
+        <div><label for="b-palms" data-i18n="brew.palms"></label><input type="number" id="b-palms" min="1" step="1" value="50"></div>
+        <div><label for="b-kg" data-i18n="brew.batchKg"></label><input type="number" id="b-kg" min="0.5" step="0.5" value="2"></div>
+        <div><label for="b-fail" data-i18n="brew.failure"></label><input type="number" id="b-fail" min="0" max="90" step="5" value="30"></div>
+      </div>
+      <button class="btn" id="b-make" data-i18n="brew.make"></button>
+    </div>
+    <div id="b-out"></div>
+  </section>
+
+  <!-- TRACK -->
+  <section id="tab-track" hidden>
+    <div class="card">
+      <h2 data-i18n="track.h"></h2>
+      <p class="muted" data-i18n="track.intro"></p>
+      <div class="grid2">
+        <div><label for="t-name" data-i18n="track.new"></label><input type="text" id="t-name" maxlength="60"></div>
+        <div>
+          <label for="t-role" data-i18n="track.role"></label>
+          <select id="t-role" class="field">
+            <option value="monitor" data-i18n="role.monitor"></option>
+            <option value="treated" data-i18n="role.treated"></option>
+            <option value="control" data-i18n="role.control"></option>
+          </select>
+        </div>
+      </div>
+      <button class="btn" id="t-add" data-i18n="track.add"></button>
+      <button class="btn secondary" id="t-csv" data-i18n="track.export"></button>
+      <button class="btn secondary" id="t-backup" data-i18n="track.backup"></button>
+      <button class="btn secondary" id="t-restore-btn" data-i18n="track.restore"></button>
+      <input type="file" id="t-restore" accept="application/json,.json" hidden>
+      <p class="muted" data-i18n="track.storageNote"></p>
+    </div>
+    <div id="t-compare"></div>
+    <div id="t-blocks"></div>
+  </section>
+
+  <!-- EVIDENCE -->
+  <section id="tab-evidence" hidden>
+    <div class="card">
+      <h2 data-i18n="ev.h"></h2>
+      <p class="muted" data-i18n="ev.intro"></p>
+    </div>
+    <div id="e-out"></div>
+  </section>
+</main>
+
+<div id="toast" role="status"><span data-i18n="update.ready"></span><button id="toast-reload" data-i18n="update.reload"></button></div>
+
+<script src="js/core.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
