@@ -34,6 +34,18 @@ test('header language toggle offers en, ms and zh as pressable buttons', () => {
   const start = html.indexOf('id="langs"');
   const block = html.slice(start, html.indexOf('</div>', start));
   const langs = [...block.matchAll(/class="langbtn"[^>]*data-lang="(\w+)"/g)].map(m => m[1]);
-  assert.deepEqual(langs, ['en', 'ms', 'zh']);
+  assert.deepEqual(langs, ['en', 'zh', 'ms'], 'Chinese second (more Chinese readers)');
   assert.ok(!/<select id="lang"/.test(html), 'old dropdown removed');
+});
+
+test('first-launch picker order is English, 中文, Bahasa Melayu', () => {
+  const html = read('index.html');
+  const start = html.indexOf('id="langpick"');
+  const block = html.slice(start, html.indexOf('</div>', start));
+  assert.deepEqual([...block.matchAll(/data-lang="(\w+)"/g)].map(m => m[1]), ['en', 'zh', 'ms']);
+});
+
+test('back-to-top button exists, starts hidden and has a translated label', () => {
+  const html = read('index.html');
+  assert.match(html, /<button[^>]*id="totop"[^>]*data-i18n-aria="totop"[^>]*hidden>/);
 });

@@ -415,7 +415,11 @@
     // First launch (no saved language): ask before showing the app.
     if (!state.langSaved) { showLangPick(true); $('langpick').focus(); }
     document.querySelectorAll('nav [data-tab]').forEach(function (b) {
-      b.addEventListener('click', function () { showTab(b.dataset.tab); if (b.dataset.tab === 'brew') renderBrew(); });
+      b.addEventListener('click', function () {
+        showTab(b.dataset.tab);
+        if (b.dataset.tab === 'brew') renderBrew();
+        window.scrollTo(0, 0); // open each tab at the top
+      });
     });
     ['a-dead', 'a-fruit', 'a-lesion', 'a-foliar'].forEach(function (id) { $(id).addEventListener('input', renderAssess); });
     $('a-toplan').addEventListener('click', function () {
@@ -436,6 +440,18 @@
     });
     $('t-restore-btn').addEventListener('click', function () { $('t-restore').click(); });
     $('t-restore').addEventListener('change', function () { if (this.files[0]) restore(this.files[0]); this.value = ''; });
+
+    // Back-to-top button: shown once the page is scrolled past one screen.
+    const totop = $('totop');
+    function syncTotop() { totop.hidden = window.scrollY < window.innerHeight * 0.8; }
+    window.addEventListener('scroll', syncTotop, { passive: true });
+    totop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // keyboard / screen-reader users land back at the top too
+      const cur = document.querySelector('nav [aria-selected="true"]');
+      if (cur) cur.focus({ preventScroll: true });
+    });
+    syncTotop();
 
     registerSW();
   }
@@ -464,7 +480,7 @@
   // toast offering a reload.
   function registerSW() {
     $('toast-reload').addEventListener('click', function () { location.reload(); });
-    $('toast-close').addEventListener('click', function () { $('toast').classList.remove('show'); });
+    $('toast-close').addEventListener('click', function () { $('toast').classList.remove('show'); document.body.classList.remove('has-toast'); });
     if (!('serviceWorker' in navigator) || location.protocol === 'file:') return;
     function askForUpdate() {
       if (navigator.onLine === false) return;
@@ -474,7 +490,7 @@
     }
     navigator.serviceWorker.addEventListener('message', function (ev) {
       // 'updated' from the current worker; {type:'UPDATE_AVAILABLE'} from older installs
-      if (ev.data === 'updated' || (ev.data && ev.data.type === 'UPDATE_AVAILABLE')) $('toast').classList.add('show');
+      if (ev.data === 'updated' || (ev.data && ev.data.type === 'UPDATE_AVAILABLE')) { $('toast').classList.add('show'); document.body.classList.add('has-toast'); }
     });
     function register() {
       navigator.serviceWorker.register('./service-worker.js').then(askForUpdate).catch(function () { /* ignore */ });

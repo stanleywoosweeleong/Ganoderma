@@ -253,6 +253,7 @@
     },
 
     'update.ready': { en: 'A new version is ready.', ms: 'Versi baharu sedia.', zh: '新版本已就绪。' },
+    'totop': { en: 'Back to top', ms: 'Kembali ke atas', zh: '回到顶部' },
     'update.dismiss': { en: 'Dismiss', ms: 'Tutup', zh: '关闭' },
     'update.reload': { en: 'Reload', ms: 'Muat semula', zh: '重新加载' }
   };
