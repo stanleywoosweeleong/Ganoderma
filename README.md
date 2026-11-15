@@ -20,7 +20,7 @@ programme** backed by the published research.
 | **Plan** | Builds a dated **multi-batch plan** for planted palms (one per stage), replanting, or nursery. It covers sanitation, soil mounding, Trichoderma, bacterial drench, AMF, EFB compost, maintenance batches and census dates. It warns when a Trichoderma batch falls within 28 days of a hexaconazole trunk injection. |
 | **Brew** | Turns the plan into a **Trichoderma rice-grain brewing schedule**, using the AMIS recipe: when to start each brew, kg of rice, grams of starter, and the use-by date. It adds extra brews for the ~30% DIY failure rate. |
 | **Track** | Records a census per block and computes **disease incidence, disease severity index (DSI) and area under the disease progress curve (AUDPC)**, the same measures used in published trials. It compares a **treated** block with a **control** block (% disease reduction), and exports CSV or a JSON backup. |
-| **Evidence** | The literature summary (Nov 2026). Each agent shows its evidence level (field / nursery / lab / none), key results and links to the sources. |
+| **Evidence** | The literature summary (Nov 2026). Each agent shows its evidence level (field / nursery / lab), key results, links to the sources, and **where to buy** matching products in Malaysia (company, contact, listing price, Nov 2026). |
 
 ### What the plans contain (planted palms)
 

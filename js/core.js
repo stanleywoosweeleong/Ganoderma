@@ -599,6 +599,34 @@
       ]
     },
     {
+      id: 'ganoef',
+      agent: {
+        en: 'GanoEF — Hendersonia GanoEF1 (endophytic fungus) in fertiliser',
+        ms: 'GanoEF — Hendersonia GanoEF1 (kulat endofit) dalam baja',
+        zh: 'GanoEF — Hendersonia GanoEF1(内生真菌)复合肥'
+      },
+      level: 3,
+      setting: {
+        en: 'Field trial with treated seedlings, 36 months (MPOB)',
+        ms: 'Percubaan ladang dengan anak benih dirawat, 36 bulan (MPOB)',
+        zh: '处理幼苗的田间试验,36 个月(MPOB)'
+      },
+      result: {
+        en: 'Only 5% of treated palms died from Ganoderma after 36 months',
+        ms: 'Hanya 5% pokok dirawat mati akibat Ganoderma selepas 36 bulan',
+        zh: '36 个月后,处理过的棕树仅 5% 死于灵芝病'
+      },
+      note: {
+        en: 'Developed by MPOB with All Cosmos. Figures come from MPOB and the maker; no independent peer-reviewed field study found.',
+        ms: 'Dibangunkan oleh MPOB bersama All Cosmos. Angka daripada MPOB dan pengeluar; tiada kajian ladang bebas yang disemak rakan sebidang ditemui.',
+        zh: '由 MPOB 与 All Cosmos 联合开发。数据来自 MPOB 及厂商;未找到独立的同行评审田间研究。'
+      },
+      sources: [
+        { label: { en: 'MPOB SawitSecure — GanoEF', ms: 'MPOB SawitSecure — GanoEF', zh: 'MPOB SawitSecure — GanoEF' }, url: 'http://sawitsecure.mpob.gov.my/disease-control-and-management/commercial-product-for-preventive-treatment/ganoef-biofertilizer-2/' },
+        { label: { en: 'Sawit Indonesia article', ms: 'Artikel Sawit Indonesia', zh: 'Sawit Indonesia 报道' }, url: 'https://sawitindonesia.com/ganoef-biofertilizer-pelindung-akar-sawit-dari-ganoderma/' }
+      ]
+    },
+    {
       id: 'ganocare',
       agent: {
         en: 'GanoCare® (EFB-based mineral product — not a microbe)',
@@ -633,6 +661,166 @@
     { label: { en: 'JOPR review — BSR via biological control agents', ms: 'Ulasan JOPR — kawalan BSR dengan agen kawalan biologi', zh: 'JOPR 综述 — 以生防菌防治茎基腐病' }, url: 'https://jopr.mpob.gov.my/?p=2029' },
     { label: { en: 'Siddiqui et al. 2021 (Warwick)', ms: 'Siddiqui et al. 2021 (Warwick)', zh: 'Siddiqui 等 2021 (Warwick)' }, url: 'https://wrap.warwick.ac.uk/160161/' }
   ];
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Where to buy (Malaysia) — web search, November 2026.
+  // `for` lists the EVIDENCE ids a product matches. `strainMatch` is true
+  // only when the product contains the same strain as the evidence.
+  // Prices are listing snapshots and change; the app is not affiliated with
+  // any seller.
+  // ───────────────────────────────────────────────────────────────────────
+  const PRODUCTS = [
+    {
+      id: 'embio_actinoplus',
+      name: 'EMBIO® actinoPLUS',
+      for: ['streptomyces'],
+      strainMatch: true,
+      company: 'Pascal Biotech Sdn Bhd',
+      mpob: true,
+      price: { en: 'Lazada listing: RM60 for 6 × 300 g (Nov 2026) — confirm with seller', ms: 'Senarai Lazada: RM60 untuk 6 × 300 g (Nov 2026) — sahkan dengan penjual', zh: 'Lazada 标价:6 × 300 g 共 RM60(2026 年 11 月)— 请向卖家确认' },
+      contact: '',
+      note: {
+        en: 'Same strain as the evidence (Streptomyces GanoSA1). Label rates: 50 g per polybag at 3, 6 and 9 months; 250 g at transplanting; 300 g twice a year for palms 1 year and older.',
+        ms: 'Strain sama seperti dalam bukti (Streptomyces GanoSA1). Kadar label: 50 g setiap polibag pada umur 3, 6 dan 9 bulan; 250 g semasa pindah tanam; 300 g dua kali setahun untuk pokok berumur 1 tahun ke atas.',
+        zh: '与证据中相同的菌株(链霉菌 GanoSA1)。标签用量:3、6、9 月龄时每袋 50 g;移栽时 250 g;1 年以上棕树每年两次,每次 300 g。'
+      },
+      links: [
+        { label: 'Lazada', url: 'https://www.lazada.com.my/products/special-package-rawatan-ganodermakulat-sawit-terbaik-embio-actinoplus-300g-x-6-pack-free-postage-beli-5-percuma-1-i3372089697.html' },
+        { label: 'pascal-biotech.com', url: 'https://www.pascal-biotech.com/embio-actinoplus' }
+      ]
+    },
+    {
+      id: 'im_bioguard',
+      name: 'iM-bioGuard',
+      for: ['pseudomonas_amf', 'bsubtilis_amf'],
+      strainMatch: false,
+      company: 'IBG Manufacturing Sdn Bhd, Puchong, Selangor',
+      mpob: true,
+      price: { en: 'No online price — order direct', ms: 'Tiada harga dalam talian — pesan terus', zh: '无网上标价 — 请直接订购' },
+      contact: '+603-8066 2875 · info@ibgbiofert.com.my',
+      note: {
+        en: 'Liquid with Pseudomonas aeruginosa + Bacillus subtilis — the same two bacteria as the best field result. Pair with an AMF product.',
+        ms: 'Cecair mengandungi Pseudomonas aeruginosa + Bacillus subtilis — dua bakteria yang sama seperti keputusan ladang terbaik. Gandingkan dengan produk AMF.',
+        zh: '含铜绿假单胞菌 + 枯草芽孢杆菌的液剂 — 与最佳田间结果相同的两种细菌。建议搭配菌根 (AMF) 产品使用。'
+      },
+      links: [
+        { label: 'ibgbiofert.com.my', url: 'https://ibgbiofert.com.my/contact/' }
+      ]
+    },
+    {
+      id: 'mycogold',
+      name: 'MYCOgold®',
+      for: ['pseudomonas_amf', 'amf', 'bsubtilis_amf'],
+      strainMatch: false,
+      company: 'Malaysian Agri Care Sdn Bhd (MyAgri), Banting',
+      price: { en: '1 kg packs; ask for bulk price', ms: 'Pek 1 kg; tanya harga pukal', zh: '1 kg 装;批量请询价' },
+      contact: 'Tn Hj Zainal +60 16-223 5096 · Mr Subash +60 16-223 5092',
+      note: {
+        en: 'Mycorrhiza (AMF), at least 200 spores per 50 g. Used in a UiTM oil palm seedling study.',
+        ms: 'Mikoriza (AMF), sekurang-kurangnya 200 spora setiap 50 g. Digunakan dalam kajian anak benih kelapa sawit UiTM.',
+        zh: '菌根真菌 (AMF),每 50 g 至少 200 个孢子。曾用于 UiTM 油棕幼苗研究。'
+      },
+      links: [
+        { label: 'MyAgri', url: 'https://myagri2u.wixsite.com/myagri/mycogold-' }
+      ]
+    },
+    {
+      id: 'mycospora',
+      name: 'MYCOSPORA',
+      for: ['amf'],
+      strainMatch: false,
+      company: 'BPP Agraria',
+      price: { en: 'Alibaba listing: about US$15–20 per kg', ms: 'Senarai Alibaba: kira-kira US$15–20 sekilogram', zh: 'Alibaba 标价:约每公斤 15–20 美元' },
+      contact: '',
+      note: {
+        en: '12 AMF species plus other soil microbes. Listing only — not verified.',
+        ms: '12 spesies AMF serta mikrob tanah lain. Senarai sahaja — belum disahkan.',
+        zh: '12 种丛枝菌根真菌及其他土壤微生物。仅为网上列表 — 未经核实。'
+      },
+      links: [
+        { label: 'Alibaba', url: 'https://www.alibaba.com/mycorrhiza-malaysia-suppliers.html' }
+      ]
+    },
+    {
+      id: 'trichoshield',
+      name: 'TrichoShield',
+      for: ['trichoderma_mix'],
+      strainMatch: false,
+      company: 'True Trichoderma Technology Sdn Bhd',
+      mpob: true,
+      price: { en: 'No online price — ask the company or MPOB', ms: 'Tiada harga dalam talian — tanya syarikat atau MPOB', zh: '无网上标价 — 请询问厂商或 MPOB' },
+      contact: '',
+      note: {
+        en: 'MPOB strain Trichoderma virens 159c. MPOB rates: 100 g per hole in main nursery; 1 kg per hole at field planting; mature palms 5 kg of a 1:3 mix with compost every 6 months.',
+        ms: 'Strain MPOB Trichoderma virens 159c. Kadar MPOB: 100 g setiap lubang di tapak semaian utama; 1 kg setiap lubang semasa tanam di ladang; pokok matang 5 kg campuran 1:3 dengan kompos setiap 6 bulan.',
+        zh: 'MPOB 菌株绿木霉 159c。MPOB 用量:主苗圃每穴 100 g;田间定植每穴 1 kg;成龄棕树每 6 个月施 5 kg(与堆肥按 1:3 混合)。'
+      },
+      links: [
+        { label: 'trichoshield.com', url: 'http://trichoshield.com/company-background.html' },
+        { label: 'MPOB SawitSecure', url: 'http://sawitsecure.mpob.gov.my/disease-control-and-management/commercial-product-for-preventive-treatment/trichoshield/' }
+      ]
+    },
+    {
+      id: 'palmashield',
+      name: 'PalmaShield',
+      for: ['trichoderma_local'],
+      strainMatch: false,
+      company: 'FGV Agri Services Sdn Bhd',
+      price: { en: '10 kg pack; see FGV catalogue', ms: 'Pek 10 kg; lihat katalog FGV', zh: '10 kg 装;见 FGV 产品目录' },
+      contact: '',
+      note: {
+        en: 'Trichoderma asperellum M103 — a different isolate from the study (T8R). Lab tests: 93% inhibition of Ganoderma.',
+        ms: 'Trichoderma asperellum M103 — isolat berbeza daripada kajian (T8R). Ujian makmal: perencatan Ganoderma 93%.',
+        zh: '棘孢木霉 M103 — 与研究中的菌株 (T8R) 不同。实验室测试:对灵芝抑制率 93%。'
+      },
+      links: [
+        { label: 'fgvagri.com', url: 'https://www.fgvagri.com/product-catalogue/palmashield-10kg/' }
+      ]
+    },
+    {
+      id: 'ganovacc',
+      name: 'Ganovacc',
+      for: ['trichoderma_mix'],
+      strainMatch: false,
+      company: 'Arif Efektif Sdn Bhd',
+      price: { en: 'See Shopee listing', ms: 'Lihat senarai Shopee', zh: '见 Shopee 商品页' },
+      contact: '',
+      note: {
+        en: '"Endophytic Trichoderma" — species and spore count not stated; claims are the seller’s own.',
+        ms: '"Trichoderma endofit" — spesies dan kiraan spora tidak dinyatakan; dakwaan daripada penjual sendiri.',
+        zh: '「内生木霉」— 未注明菌种和孢子数;功效为卖家自述。'
+      },
+      links: [
+        { label: 'Shopee', url: 'https://shopee.com.my/product/713487412/26233535958' }
+      ]
+    },
+    {
+      id: 'ganoef_product',
+      name: 'GanoEF (Real Strong)',
+      for: ['ganoef'],
+      strainMatch: true,
+      company: 'All Cosmos Industries Sdn Bhd, Pasir Gudang, Johor',
+      mpob: true,
+      price: { en: 'Lazada listing: RM84 per 20 kg (Nov 2026)', ms: 'Senarai Lazada: RM84 setiap 20 kg (Nov 2026)', zh: 'Lazada 标价:每 20 kg RM84(2026 年 11 月)' },
+      contact: '+607-252 3788 · sales_marketing@allcosmos.com',
+      note: {
+        en: 'Also sold by Guan Chong Agro, Melaka.',
+        ms: 'Juga dijual oleh Guan Chong Agro, Melaka.',
+        zh: '马六甲 Guan Chong Agro 亦有售。'
+      },
+      links: [
+        { label: 'Lazada', url: 'https://www.lazada.com.my/products/real-strong-mpob-ganoef-20kg-oil-palm-ganoderma-solution-baja-kulat-untuk-penyakit-cendawan-kelapa-sawit-i2915933847.html' },
+        { label: 'Guan Chong Agro', url: 'https://www.guanchongagro.com/showproducts/productid/5392878/cid/563317/realstrong-gano-ef-20kg/' },
+        { label: 'allcosmos.com', url: 'https://allcosmos.com/en/bio-control-fertilisers/128-ganoef-4-in-1-biofertilizer' }
+      ]
+    }
+  ];
+
+  /** Products that match one evidence entry (strain matches first). */
+  function productsFor(evidenceId) {
+    return PRODUCTS.filter(function (p) { return p.for.includes(evidenceId); })
+      .sort(function (a, b) { return Number(b.strainMatch) - Number(a.strainMatch); });
+  }
 
   // ───────────────────────────────────────────────────────────────────────
   // Export
@@ -695,6 +883,8 @@
     TRICHO_KG: TRICHO_KG,
     EVIDENCE: EVIDENCE,
     REVIEWS: REVIEWS,
+    PRODUCTS: PRODUCTS,
+    productsFor: productsFor,
     classifyPalm: classifyPalm,
     summariseCensus: summariseCensus,
     audpc: audpc,

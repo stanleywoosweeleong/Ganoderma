@@ -318,17 +318,34 @@
   // Pick the current language from a { en, ms, zh } object (or pass a string through).
   function loc(v) { return v && typeof v === 'object' ? (v[state.lang] || v.en || '') : (v || ''); }
 
+  function renderBuy(evidenceId) {
+    const items = G.productsFor(evidenceId);
+    let html = '<div class="buy"><h4>' + esc(t('buy.h')) + '</h4>';
+    if (!items.length) return html + '<p class="muted">' + esc(t('buy.none')) + '</p></div>';
+    html += items.map(function (p) {
+      return '<div class="product"><b>' + esc(p.name) + '</b>' +
+        (p.strainMatch ? ' <span class="level lv3">' + esc(t('buy.strainMatch')) + '</span>' : '') +
+        '<div class="muted">' + esc(p.company) + (p.mpob ? ' · ' + esc(t('buy.withMpob')) : '') + '</div>' +
+        '<div>' + esc(loc(p.price)) + '</div>' +
+        (p.contact ? '<div>' + esc(t('buy.contact')) + ': ' + esc(p.contact) + '</div>' : '') +
+        '<div class="muted">' + esc(loc(p.note)) + '</div>' +
+        '<div>' + p.links.map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + '</a>'; }).join(' · ') + '</div></div>';
+    }).join('');
+    return html + '</div>';
+  }
+
   function renderEvidence() {
     const list = G.EVIDENCE.slice().sort(function (a, b) { return b.level - a.level; });
     $('e-out').innerHTML = list.map(function (e) {
       return '<div class="card ev"><h3>' + esc(loc(e.agent)) + '</h3><span class="level lv' + e.level + '">' + esc(t('ev.level.' + e.level)) + '</span>' +
         '<p><b>' + esc(t('ev.setting')) + ':</b> ' + esc(loc(e.setting)) + '</p><p><b>' + esc(t('ev.result')) + ':</b> ' + esc(loc(e.result)) + '</p>' +
         (loc(e.note) ? '<p class="muted">' + esc(loc(e.note)) + '</p>' : '') +
-        '<p>' + e.sources.map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(loc(s.label)) + '</a>'; }).join(' · ') + '</p></div>';
+        '<p>' + e.sources.map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(loc(s.label)) + '</a>'; }).join(' · ') + '</p>' +
+        renderBuy(e.id) + '</div>';
     }).join('') +
       '<div class="card ev"><h3>' + esc(t('ev.reviews')) + '</h3><ul>' + G.REVIEWS.map(function (r) {
         return '<li><a href="' + esc(r.url) + '" target="_blank" rel="noopener">' + esc(loc(r.label)) + '</a></li>';
-      }).join('') + '</ul><p class="muted">' + esc(t('ev.checked')) + '</p></div>';
+      }).join('') + '</ul><p class="muted">' + esc(t('ev.checked')) + '</p><p class="muted">' + esc(t('buy.disclaimer')) + '</p></div>';
   }
 
   function renderAll() {

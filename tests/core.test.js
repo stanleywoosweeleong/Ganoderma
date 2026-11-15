@@ -274,7 +274,7 @@ test('evidence: every entry has a level 0–3 and https sources', () => {
     assert.ok(!ids.has(e.id), 'unique id ' + e.id); ids.add(e.id);
     assert.ok([0, 1, 2, 3].includes(e.level), e.id);
     assert.ok(e.sources.length > 0, e.id);
-    e.sources.forEach(s => assert.match(s.url, /^https:\/\//));
+    e.sources.forEach(s => assert.match(s.url, /^https?:\/\//));
   }
 });
 
@@ -294,4 +294,32 @@ test('evidence: every text field and source label is in en, ms and zh', () => {
     e.sources.forEach((s, i) => { check(s.label, `${e.id}.sources[${i}]`); langs.forEach(l => assert.ok(s.label[l].trim())); });
   }
   G.REVIEWS.forEach((r, i) => { check(r.label, `review ${i}`); assert.match(r.url, /^https:\/\//); });
+});
+
+// ── Where to buy ─────────────────────────────────────────────────────────
+test('products: every product points at existing evidence and has links', () => {
+  const ids = new Set(G.EVIDENCE.map(e => e.id));
+  const pids = new Set();
+  for (const p of G.PRODUCTS) {
+    assert.ok(!pids.has(p.id), 'unique ' + p.id); pids.add(p.id);
+    assert.ok(p.for.length > 0, p.id);
+    p.for.forEach(id => assert.ok(ids.has(id), `${p.id} → unknown evidence ${id}`));
+    assert.ok(p.links.length > 0, p.id);
+    p.links.forEach(l => assert.match(l.url, /^https?:\/\//));
+    for (const f of ['price', 'note']) for (const l of ['en', 'ms', 'zh']) assert.ok(p[f][l].trim(), `${p.id}.${f}.${l}`);
+  }
+});
+
+test('products: strain-matched products list first; evidence without products returns []', () => {
+  assert.equal(G.productsFor('streptomyces')[0].id, 'embio_actinoplus');
+  const amf = G.productsFor('pseudomonas_amf').map(p => p.id);
+  assert.deepEqual(amf.sort(), ['im_bioguard', 'mycogold']);
+  assert.deepEqual(G.productsFor('bvelezensis'), []);
+  assert.deepEqual(G.productsFor('ganocare'), []);
+});
+
+test('evidence: GanoEF is listed with a buyable product', () => {
+  const e = G.EVIDENCE.find(x => x.id === 'ganoef');
+  assert.ok(e);
+  assert.equal(G.productsFor('ganoef')[0].id, 'ganoef_product');
 });

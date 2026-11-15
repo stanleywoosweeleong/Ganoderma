@@ -208,6 +208,17 @@
     'err.leadDays': { en: 'Brewing lead time must be shorter than the shelf life.', ms: 'Masa penyediaan mesti lebih pendek daripada jangka hayat simpanan.', zh: '制作提前期必须短于保质期。' },
     'err.date': { en: 'Not a valid date: "{v}". Use the format YYYY-MM-DD, e.g. 2027-02-15.', ms: 'Tarikh tidak sah: "{v}". Guna format TTTT-BB-HH, cth. 2027-02-15.', zh: '日期无效:"{v}"。请使用 年-月-日 格式,例如 2027-02-15。' },
 
+    'buy.h': { en: 'Where to buy (Malaysia)', ms: 'Tempat membeli (Malaysia)', zh: '购买渠道(马来西亚)' },
+    'buy.none': { en: 'No product found for sale in Malaysia (Nov 2026).', ms: 'Tiada produk ditemui untuk dijual di Malaysia (Nov 2026).', zh: '未找到在马来西亚销售的产品(2026 年 11 月)。' },
+    'buy.strainMatch': { en: 'Same strain', ms: 'Strain sama', zh: '相同菌株' },
+    'buy.withMpob': { en: 'developed with MPOB', ms: 'dibangunkan bersama MPOB', zh: '与 MPOB 联合开发' },
+    'buy.contact': { en: 'Contact', ms: 'Hubungi', zh: '联系' },
+    'buy.disclaimer': {
+      en: 'Products and prices from a web search in November 2026 and may change. This app is not linked to any seller. Before buying, ask for the product registration number and spore/CFU count.',
+      ms: 'Produk dan harga daripada carian web pada November 2026 dan mungkin berubah. Aplikasi ini tiada kaitan dengan mana-mana penjual. Sebelum membeli, minta nombor pendaftaran produk dan kiraan spora/CFU.',
+      zh: '产品与价格来自 2026 年 11 月的网络搜索,可能有变。本应用与任何卖家无关。购买前请索取产品登记号及孢子/菌落数 (CFU)。'
+    },
+
     'update.ready': { en: 'A new version is ready.', ms: 'Versi baharu sedia.', zh: '新版本已就绪。' },
     'update.reload': { en: 'Reload', ms: 'Muat semula', zh: '重新加载' }
   };
