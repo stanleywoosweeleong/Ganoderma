@@ -728,6 +728,7 @@
     },
     {
       id: 'im_bioguard',
+      safety: 'pseudomonas', // contains P. aeruginosa — UI shows the safety note
       name: 'iM-bioGuard',
       for: ['pseudomonas_amf', 'bsubtilis_amf'],
       strainMatch: false,

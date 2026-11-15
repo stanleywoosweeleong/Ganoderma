@@ -116,6 +116,12 @@
     'warn.replant': { en: 'Remove all old trunks and root masses before planting. Treat every planting hole.', ms: 'Buang semua batang dan akar lama sebelum menanam. Rawat setiap lubang tanam.', zh: '种植前清除所有旧树干和根团,每个种植穴都要处理。' },
     'warn.nursery': { en: 'Nursery pre-treatment gave the strongest results in trials (Trichoderma/AMF/Pseudomonas). Keep treating after field planting.', ms: 'Pra-rawatan di tapak semaian memberi keputusan terbaik dalam percubaan (Trichoderma/AMF/Pseudomonas). Teruskan rawatan selepas tanam di ladang.', zh: '苗圃预处理在试验中效果最好(木霉/菌根/假单胞菌)。定植田间后继续处理。' },
 
+    'safety.pseudomonas': {
+      en: '⚠ Safety: iM-bioGuard contains Pseudomonas aeruginosa, an opportunistic human pathogen. Soil drench only — never spray on leaves or food crops. Wear gloves and eye protection; cover any cuts first. People with weak immunity, lung disease or open wounds should not handle it. Never brew or multiply it at home. See a doctor if a wound or eye becomes red or swollen after use.',
+      ms: '⚠ Keselamatan: iM-bioGuard mengandungi Pseudomonas aeruginosa, patogen oportunis manusia. Siraman tanah sahaja — jangan sembur pada daun atau tanaman makanan. Pakai sarung tangan dan pelindung mata; tutup luka terlebih dahulu. Orang yang lemah imun, berpenyakit paru-paru atau mempunyai luka terbuka tidak patut mengendalikannya. Jangan sekali-kali membiak atau menghasilkannya sendiri. Jumpa doktor jika luka atau mata menjadi merah atau bengkak selepas penggunaan.',
+      zh: '⚠ 安全提示:iM-bioGuard 含铜绿假单胞菌,是人类机会性病原菌。仅限土壤灌根 — 切勿喷洒在叶面或食用作物上。请戴手套和护目镜,先包好伤口。免疫力低下、患肺病或有开放性伤口者不应接触。切勿自行培养或扩繁。使用后如伤口或眼睛红肿,请就医。'
+    },
+
     // Brew
     'brew.h': { en: 'Trichoderma brewing schedule', ms: 'Jadual penghasilan Trichoderma', zh: '木霉自制排程' },
     'brew.intro': {

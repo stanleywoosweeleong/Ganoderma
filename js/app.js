@@ -148,7 +148,7 @@
       const title = b.number != null ? t('plan.batch', { n: b.number }) : t('kind.census');
       html += '<div class="batch ' + b.kind + '"><div class="head"><span>' + esc(title) + '</span><span>' +
         esc(b.date) + '</span><span class="kind">' + esc(t('plan.week', { n: b.week })) + ' · ' + esc(t('kind.' + b.kind)) +
-        '</span></div><ul>' + b.steps.map(function (s) { return '<li>' + esc(t('step.' + s)) + '</li>'; }).join('') + '</ul></div>';
+        '</span></div><ul>' + b.steps.map(function (s) { return '<li>' + esc(t('step.' + s)) + (s.indexOf('bact.drench') === 0 ? '<div class="warn safety">' + esc(t('safety.pseudomonas')) + '</div>' : '') + '</li>'; }).join('') + '</ul></div>';
     });
     html += '</div>';
     $('p-out').innerHTML = html;
@@ -330,6 +330,7 @@
         '<div>' + esc(loc(p.price)) + '</div>' +
         (p.contact ? '<div>' + esc(t('buy.contact')) + ': ' + esc(p.contact) + '</div>' : '') +
         '<div class="muted">' + esc(loc(p.note)) + '</div>' +
+        (p.safety ? '<div class="warn safety">' + esc(t('safety.' + p.safety)) + '</div>' : '') +
         (p.links.length ? '<div>' + p.links.map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + '</a>'; }).join(' · ') + '</div>' : '') + '</div>';
     }).join('');
     return html + '</div>';

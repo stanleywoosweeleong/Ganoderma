@@ -54,3 +54,15 @@ test('core errors carry a code and value for translation', () => {
   assert.equal(I.t('err.date', { v: 'bad' }), '日期无效:"bad"。请使用 年-月-日 格式,例如 2027-02-15。');
   I.setLang('en');
 });
+
+test('safety: P. aeruginosa product and plan steps carry a translated safety note', () => {
+  const p = G.PRODUCTS.find(x => x.id === 'im_bioguard');
+  assert.equal(p.safety, 'pseudomonas');
+  const e = I.STRINGS['safety.pseudomonas'];
+  for (const l of ['en', 'ms', 'zh']) assert.match(e[l], /Pseudomonas aeruginosa|铜绿假单胞菌/);
+  // every plan that uses a bacterial step exists in both forms the UI attaches the note to
+  const steps = new Set();
+  [0, 1, 2].forEach(stage => G.buildPlan({ setting: 'mature', stage, startDate: '2027-01-04' }).batches.forEach(b => b.steps.forEach(s => steps.add(s))));
+  G.buildPlan({ setting: 'nursery', startDate: '2027-01-04' }).batches.forEach(b => b.steps.forEach(s => steps.add(s)));
+  assert.ok(steps.has('bact.drench') && steps.has('bact.drench.nursery'));
+});
