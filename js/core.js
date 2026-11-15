@@ -844,6 +844,51 @@
       ]
     },
     {
+      id: 'snt_probiotein',
+      name: 'SNT Super Probiotein Plus',
+      for: ['bvelezensis', 'bamyloliquefaciens'],
+      strainMatch: false,
+      company: 'TwinArrow / SNT (双箭肥料 · 先利德)',
+      price: { en: 'Ask your fertiliser shop or an SNT representative', ms: 'Tanya kedai baja anda atau wakil SNT', zh: '请向肥料店或 SNT 代表询问' },
+      contact: '',
+      note: {
+        en: 'Liquid microbial fertiliser (plant & soil booster) containing Bacillus velezensis + B. amyloliquefaciens. Strains and CFU not stated. Sold for soil health, not tested against Ganoderma. Source: local supplier information, not found online.',
+        ms: 'Baja mikrob cecair (penggalak tanaman & tanah) mengandungi Bacillus velezensis + B. amyloliquefaciens. Strain dan CFU tidak dinyatakan. Dijual untuk kesihatan tanah, belum diuji terhadap Ganoderma. Sumber: maklumat pembekal tempatan, tiada dalam talian.',
+        zh: '液体微生物肥料(植物与土壤增强剂),含贝莱斯芽孢杆菌 + 解淀粉芽孢杆菌。未注明菌株与菌落数。用于改良土壤,未针对灵芝病测试。来源:本地供应商信息,网上未查到。'
+      },
+      links: []
+    },
+    {
+      id: 'lvlong_velezensis',
+      name: 'LV LONG (绿陇) Bacillus velezensis product',
+      for: ['bvelezensis'],
+      strainMatch: false,
+      company: 'LV LONG (绿陇)',
+      price: { en: 'Ask your agrochemical or fertiliser shop', ms: 'Tanya kedai racun atau baja anda', zh: '请向农药/肥料店询问' },
+      contact: '',
+      note: {
+        en: 'Product name and strain not confirmed. Source: local supplier information, not found online.',
+        ms: 'Nama produk dan strain belum disahkan. Sumber: maklumat pembekal tempatan, tiada dalam talian.',
+        zh: '产品名称与菌株未确认。来源:本地供应商信息,网上未查到。'
+      },
+      links: []
+    },
+    {
+      id: 'serenade_sc',
+      name: 'Serenade® SC (Bayer)',
+      for: ['bamyloliquefaciens'],
+      strainMatch: false,
+      company: 'Bayer',
+      price: { en: 'Ask your agrochemical shop or Bayer Malaysia', ms: 'Tanya kedai racun anda atau Bayer Malaysia', zh: '请向农药店或 Bayer 马来西亚询问' },
+      contact: '',
+      note: {
+        en: 'B. amyloliquefaciens QST 713 (formerly B. subtilis), a registered biofungicide in many countries. Malaysian registration not confirmed online. Not tested against Ganoderma.',
+        ms: 'B. amyloliquefaciens QST 713 (dahulu B. subtilis), racun kulat biologi berdaftar di banyak negara. Pendaftaran Malaysia belum disahkan dalam talian. Belum diuji terhadap Ganoderma.',
+        zh: '解淀粉芽孢杆菌 QST 713(旧称枯草芽孢杆菌),多国登记的生物杀菌剂。网上未能确认马来西亚登记。未针对灵芝病测试。'
+      },
+      links: []
+    },
+    {
       id: 'ganoef_product',
       name: 'GanoEF (Real Strong)',
       for: ['ganoef'],

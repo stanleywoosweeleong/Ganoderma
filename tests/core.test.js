@@ -304,7 +304,9 @@ test('products: every product points at existing evidence and has links', () => 
     assert.ok(!pids.has(p.id), 'unique ' + p.id); pids.add(p.id);
     assert.ok(p.for.length > 0, p.id);
     p.for.forEach(id => assert.ok(ids.has(id), `${p.id} → unknown evidence ${id}`));
-    assert.ok(p.links.length > 0, p.id);
+    // Products known only from local suppliers may have no web link,
+    // but must then say where to ask (price text) and give a source note.
+    if (!p.links.length) assert.match(p.note.en, /local supplier|not confirmed online/i, p.id);
     p.links.forEach(l => assert.match(l.url, /^https?:\/\//));
     for (const f of ['price', 'note']) for (const l of ['en', 'ms', 'zh']) assert.ok(p[f][l].trim(), `${p.id}.${f}.${l}`);
   }
@@ -314,8 +316,8 @@ test('products: strain-matched products list first; evidence without products re
   assert.equal(G.productsFor('streptomyces')[0].id, 'embio_actinoplus');
   const amf = G.productsFor('pseudomonas_amf').map(p => p.id);
   assert.deepEqual(amf.sort(), ['im_bioguard', 'mycogold']);
-  assert.deepEqual(G.productsFor('bvelezensis'), []);
-  assert.deepEqual(G.productsFor('bamyloliquefaciens'), []);
+  assert.deepEqual(G.productsFor('bvelezensis').map(p => p.id).sort(), ['lvlong_velezensis', 'snt_probiotein']);
+  assert.deepEqual(G.productsFor('bamyloliquefaciens').map(p => p.id).sort(), ['serenade_sc', 'snt_probiotein']);
   assert.equal(G.productsFor('ganocare')[0].id, 'ganocare_enquiry');
 });
 

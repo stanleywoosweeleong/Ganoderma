@@ -329,7 +329,7 @@
         '<div>' + esc(loc(p.price)) + '</div>' +
         (p.contact ? '<div>' + esc(t('buy.contact')) + ': ' + esc(p.contact) + '</div>' : '') +
         '<div class="muted">' + esc(loc(p.note)) + '</div>' +
-        '<div>' + p.links.map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + '</a>'; }).join(' · ') + '</div></div>';
+        (p.links.length ? '<div>' + p.links.map(function (l) { return '<a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label) + '</a>'; }).join(' · ') + '</div>' : '') + '</div>';
     }).join('');
     return html + '</div>';
   }

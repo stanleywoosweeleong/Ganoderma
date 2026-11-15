@@ -4,7 +4,7 @@
  * refresh them in the background, and tell the page when index.html changed.
  * Bump CACHE_VERSION whenever you ship new files.
  */
-const CACHE_VERSION = 'gbsr-2026-11-15f';
+const CACHE_VERSION = 'gbsr-2026-11-15g';
 const CACHE_NAME = `gbsr-cache-${CACHE_VERSION}`;
 const PRECACHE_URLS = [
   './',
