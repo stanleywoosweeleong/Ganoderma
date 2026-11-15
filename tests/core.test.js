@@ -315,7 +315,8 @@ test('products: strain-matched products list first; evidence without products re
   const amf = G.productsFor('pseudomonas_amf').map(p => p.id);
   assert.deepEqual(amf.sort(), ['im_bioguard', 'mycogold']);
   assert.deepEqual(G.productsFor('bvelezensis'), []);
-  assert.deepEqual(G.productsFor('ganocare'), []);
+  assert.deepEqual(G.productsFor('bamyloliquefaciens'), []);
+  assert.equal(G.productsFor('ganocare')[0].id, 'ganocare_enquiry');
 });
 
 test('evidence: GanoEF is listed with a buyable product', () => {

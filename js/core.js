@@ -599,6 +599,35 @@
       ]
     },
     {
+      id: 'bamyloliquefaciens',
+      agent: {
+        en: 'Bacillus amyloliquefaciens (EB13, SAHA 12.07)',
+        ms: 'Bacillus amyloliquefaciens (EB13, SAHA 12.07)',
+        zh: '解淀粉芽孢杆菌 (Bacillus amyloliquefaciens)(EB13、SAHA 12.07)'
+      },
+      level: 2,
+      setting: {
+        en: 'Greenhouse seedlings (EB13); lab enzyme tests (SAHA 12.07)',
+        ms: 'Anak benih rumah hijau (EB13); ujian enzim makmal (SAHA 12.07)',
+        zh: '温室幼苗 (EB13);实验室酶活测试 (SAHA 12.07)'
+      },
+      result: {
+        en: 'EB13: disease index fell from 4.0 to 1.8 (palm oil mill effluent alone: 2.3). SAHA 12.07: chitinase broke down the Ganoderma cell wall',
+        ms: 'EB13: indeks penyakit turun daripada 4.0 kepada 1.8 (efluen kilang sawit sahaja: 2.3). SAHA 12.07: kitinase memecahkan dinding sel Ganoderma',
+        zh: 'EB13:病情指数由 4.0 降至 1.8(仅用棕油厂废水:2.3)。SAHA 12.07:几丁质酶可分解灵芝细胞壁'
+      },
+      note: {
+        en: 'Weaker evidence than Trichoderma, Pseudomonas or Streptomyces: abstracts only, no field trial. Worked when applied before infection. Close relative of B. velezensis.',
+        ms: 'Bukti lebih lemah berbanding Trichoderma, Pseudomonas atau Streptomyces: abstrak sahaja, tiada percubaan ladang. Berkesan apabila diberi sebelum jangkitan. Saudara dekat B. velezensis.',
+        zh: '证据弱于木霉、假单胞菌或链霉菌:仅有摘要,无田间试验。在感染前施用有效。与贝莱斯芽孢杆菌亲缘很近。'
+      },
+      sources: [
+        { label: { en: 'EB13 + palm oil mill effluent (IOP conference paper)', ms: 'EB13 + efluen kilang sawit (kertas persidangan IOP)', zh: 'EB13 + 棕油厂废水(IOP 会议论文)' }, url: 'https://ouci.dntb.gov.ua/works/42EJAnK7' },
+        { label: { en: 'Azizah et al. 2015 (SAHA 12.07)', ms: 'Azizah et al. 2015 (SAHA 12.07)', zh: 'Azizah 等 2015 (SAHA 12.07)' }, url: 'https://scialert.net/fulltext/?doi=jm.2015.452.465' },
+        { label: { en: 'Frontiers in Plant Science 2023 review', ms: 'Ulasan Frontiers in Plant Science 2023', zh: 'Frontiers in Plant Science 2023 综述' }, url: 'https://www.frontiersin.org/journals/plant-science/articles/10.3389/fpls.2023.1156869/full' }
+      ]
+    },
+    {
       id: 'ganoef',
       agent: {
         en: 'GanoEF — Hendersonia GanoEF1 (endophytic fungus) in fertiliser',
@@ -629,28 +658,30 @@
     {
       id: 'ganocare',
       agent: {
-        en: 'GanoCare® (EFB-based mineral product — not a microbe)',
-        ms: 'GanoCare® (produk mineral berasaskan TKS — bukan mikrob)',
-        zh: 'GanoCare®(以空果串为基础的矿物产品 — 非微生物)'
+        en: 'GanoCare™ (balanced fertiliser with EFB — not a microbe)',
+        ms: 'GanoCare™ (baja seimbang dengan TKS — bukan mikrob)',
+        zh: 'GanoCare™(含空果串的平衡肥料 — 非微生物)'
       },
       level: 3,
       setting: {
-        en: 'Nursery + 21-month bait-seedling field trial',
-        ms: 'Tapak semaian + percubaan ladang anak benih umpan selama 21 bulan',
-        zh: '苗圃 + 为期 21 个月的田间诱饵苗试验'
+        en: 'Nursery (artificial infection) + 21-month bait-seedling field trials (FELCRA estate, Seberang Perak)',
+        ms: 'Tapak semaian (jangkitan buatan) + percubaan ladang anak benih umpan 21 bulan (ladang FELCRA, Seberang Perak)',
+        zh: '苗圃(人工接种)+ 21 个月田间诱饵苗试验(FELCRA 园区,Seberang Perak)'
       },
       result: {
-        en: 'Field incidence 26.7% vs 100% control; dead seedlings 6.7% vs 93.3%; AUDPC reduction 82%',
-        ms: 'Insiden ladang 26.7% berbanding 100% kawalan; anak benih mati 6.7% berbanding 93.3%; pengurangan AUDPC 82%',
-        zh: '田间发病率 26.7%,对照为 100%;幼苗死亡 6.7%,对照为 93.3%;AUDPC 减少 82%'
+        en: 'Nursery: 40% infected vs 93% control (77.8% disease reduction). Field: 4.8% dead vs 83.3% (MPOB); peer-reviewed trial: 6.7% dead vs 93.3%, AUDPC −82%',
+        ms: 'Tapak semaian: 40% dijangkiti berbanding 93% kawalan (pengurangan penyakit 77.8%). Ladang: 4.8% mati berbanding 83.3% (MPOB); kajian disemak rakan sebidang: 6.7% mati berbanding 93.3%, AUDPC −82%',
+        zh: '苗圃:感染率 40%,对照 93%(病害减少 77.8%)。田间:死亡 4.8%,对照 83.3%(MPOB);同行评审试验:死亡 6.7%,对照 93.3%,AUDPC 减少 82%'
       },
       note: {
-        en: 'Useful nutrition-only comparison arm. Applied 30 g every 3 months.',
-        ms: 'Berguna sebagai rawatan perbandingan nutrisi sahaja. Diberi 30 g setiap 3 bulan.',
-        zh: '可作为仅营养处理的对比组。每 3 个月施用 30 g。'
+        en: 'By MPOB, UPM and FELCRA (patent PI 2012701060, launched 2015). Contains N, P, K, Mg, powdered EFB, Fe, Mn, Cu and Si (thickens root cell walls). OCSpecial 1 for nursery: 50 g per seedling monthly ×9. OCSpecial 2: 4 kg/palm/year in year 1; OCSpecial 3: 8 kg/palm/year in years 2–3 (every 3 months). Tested on young palms only. Contains copper — apply on a different day from microbial products.',
+        ms: 'Oleh MPOB, UPM dan FELCRA (paten PI 2012701060, dilancar 2015). Mengandungi N, P, K, Mg, serbuk TKS, Fe, Mn, Cu dan Si (menebalkan dinding sel akar). OCSpecial 1 untuk tapak semaian: 50 g setiap anak benih sebulan sekali ×9. OCSpecial 2: 4 kg/pokok/tahun pada tahun 1; OCSpecial 3: 8 kg/pokok/tahun pada tahun 2–3 (setiap 3 bulan). Diuji pada pokok muda sahaja. Mengandungi kuprum — beri pada hari berlainan daripada produk mikrob.',
+        zh: '由 MPOB、UPM 与 FELCRA 联合开发(专利 PI 2012701060,2015 年推出)。含氮、磷、钾、镁、空果串粉及铁、锰、铜、硅(硅可增厚根细胞壁)。OCSpecial 1 用于苗圃:每株 50 g,每月一次,共 9 次。OCSpecial 2:第 1 年每株每年 4 kg;OCSpecial 3:第 2–3 年每株每年 8 kg(每 3 个月施一次)。仅在幼龄棕树上测试过。含铜 — 请与微生物产品分开日期施用。'
       },
       sources: [
-        { label: { en: 'Rebitanim et al. 2020, BioMed Res Int', ms: 'Rebitanim et al. 2020, BioMed Res Int', zh: 'Rebitanim 等 2020, BioMed Res Int' }, url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7204346/' }
+        { label: { en: 'MPOB TT No. 564 (2015) — GanoCare OCSpecial', ms: 'MPOB TT No. 564 (2015) — GanoCare OCSpecial', zh: 'MPOB TT No. 564 (2015) — GanoCare OCSpecial' }, url: 'https://tot.mpob.gov.my/2020/02/17/tt-no-564-chemical-fertiliser-ganocaretm-as-preventive-treatment-in-controlling-ganoderma-disease-of-oil-palm/' },
+        { label: { en: 'Rebitanim et al. 2020, BioMed Res Int', ms: 'Rebitanim et al. 2020, BioMed Res Int', zh: 'Rebitanim 等 2020, BioMed Res Int' }, url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7204346/' },
+        { label: { en: 'UPM news — GanoCare commercialised (2015)', ms: 'Berita UPM — GanoCare dikomersialkan (2015)', zh: 'UPM 新闻 — GanoCare 商业化 (2015)' }, url: 'https://web.upm.edu.my/news/produk_kawal_penyakit_pangkal_batang_kelapa_sawit_ganocare_dikomersil-25101' }
       ]
     }
   ];
@@ -792,6 +823,24 @@
       },
       links: [
         { label: 'Shopee', url: 'https://shopee.com.my/product/713487412/26233535958' }
+      ]
+    },
+    {
+      id: 'ganocare_enquiry',
+      name: 'GanoCare™ OCSpecial / GanoCare organic',
+      for: ['ganocare'],
+      strainMatch: false,
+      company: 'MPOB / FELCRA Plantation Services Sdn Bhd',
+      mpob: true,
+      price: { en: 'No current seller found (Nov 2026) — ask MPOB or FELCRA', ms: 'Tiada penjual semasa ditemui (Nov 2026) — tanya MPOB atau FELCRA', zh: '目前未找到销售渠道(2026 年 11 月)— 请询问 MPOB 或 FELCRA' },
+      contact: 'MPOB 03-8769 4400 · Dr Idris Abu Seman, idris@mpob.gov.my · FELCRA Plantation Services, Wisma FELCRA, Jalan Rejang, Setapak, KL',
+      note: {
+        en: 'Last commercial news is the 2015 launch. Ask whether OCSpecial 1–4 is still produced and who supplies it.',
+        ms: 'Berita komersial terakhir ialah pelancaran 2015. Tanya sama ada OCSpecial 1–4 masih dikeluarkan dan siapa pembekalnya.',
+        zh: '最近的商业消息是 2015 年的推出。请询问 OCSpecial 1–4 是否仍在生产及由谁供应。'
+      },
+      links: [
+        { label: 'MPOB TT No. 564', url: 'https://tot.mpob.gov.my/2020/02/17/tt-no-564-chemical-fertiliser-ganocaretm-as-preventive-treatment-in-controlling-ganoderma-disease-of-oil-palm/' }
       ]
     },
     {
