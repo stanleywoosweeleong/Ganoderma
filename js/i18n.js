@@ -222,6 +222,7 @@
     },
 
     'update.ready': { en: 'A new version is ready.', ms: 'Versi baharu sedia.', zh: '新版本已就绪。' },
+    'update.dismiss': { en: 'Dismiss', ms: 'Tutup', zh: '关闭' },
     'update.reload': { en: 'Reload', ms: 'Muat semula', zh: '重新加载' }
   };
 

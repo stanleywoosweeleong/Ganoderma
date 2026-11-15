@@ -45,8 +45,16 @@ npm start
 
 Then open http://localhost:8080. To install it as an app with offline use,
 deploy all files to any HTTPS host (GitHub Pages, Cloudflare Pages,
-Netlify). When you ship changes, bump `CACHE_VERSION` in
-`service-worker.js`.
+Netlify).
+
+**Updates are automatic.** There is no version number to bump. On every
+launch, and whenever the app comes back to the foreground, the service
+worker re-checks every app file on the server. If anything changed, the
+app shows a "new version is ready" notice with **Reload** and ✕.
+
+**First launch** shows a language picker (English / Bahasa Melayu / 中文).
+The choice is remembered on the device, and the language menu in the
+header changes it later.
 
 ## Tests
 

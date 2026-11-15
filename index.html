@@ -108,7 +108,19 @@
   #toast { position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%); background: var(--text); color: var(--bg);
     padding: 10px 14px; border-radius: 10px; display: none; gap: 10px; align-items: center; z-index: 10; max-width: calc(100% - 32px); }
   #toast.show { display: flex; }
-  #toast button { font: inherit; font-weight: 700; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 6px; padding: 4px 10px; }
+  #toast button { font: inherit; font-weight: 700; background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+  #toast button.x { background: transparent; color: var(--bg); opacity: .75; padding: 4px 6px; }
+  #langpick { position: fixed; inset: 0; z-index: 20; background: var(--bg); display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 12px; padding: 24px 16px; text-align: center; }
+  #langpick[hidden] { display: none; }
+  #langpick:focus { outline: 0; }
+  #langpick img { width: 84px; height: 84px; border-radius: 20px; box-shadow: 0 6px 18px rgba(0,0,0,.2); }
+  #langpick .lptitle { margin: 4px 0 10px; font-size: 1.25rem; font-weight: 800; }
+  #langpick .lptitle span { display: block; margin-top: 4px; font-size: .85rem; font-weight: 500; color: var(--muted); }
+  #langpick button { width: min(320px, 100%); font: inherit; font-size: 1.1rem; font-weight: 700; padding: 14px; border-radius: 12px;
+    border: 2px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; }
+  #langpick button:hover, #langpick button:focus-visible { border-color: var(--accent); }
+  body.picking { overflow: hidden; }
   @media print {
     header, nav, .btn, .no-print, #toast { display: none !important; }
     body { background: #fff; color: #000; }
@@ -248,7 +260,16 @@
   </section>
 </main>
 
-<div id="toast" role="status"><span data-i18n="update.ready"></span><button id="toast-reload" data-i18n="update.reload"></button></div>
+<!-- first-launch language picker (onboarding) -->
+<div id="langpick" role="dialog" aria-modal="true" aria-label="English · Bahasa Melayu · 中文" tabindex="-1" hidden>
+  <img src="icon-192.png" alt="">
+  <p class="lptitle">Ganoderma BSR Manager<span>Pengurus Reput Pangkal Batang · 灵芝茎基腐病管理</span></p>
+  <button type="button" data-lang="en" lang="en">English</button>
+  <button type="button" data-lang="ms" lang="ms">Bahasa Melayu</button>
+  <button type="button" data-lang="zh" lang="zh-Hans">中文</button>
+</div>
+
+<div id="toast" role="status" aria-live="polite"><span data-i18n="update.ready"></span><button id="toast-reload" data-i18n="update.reload"></button><button id="toast-close" class="x" data-i18n-aria="update.dismiss" aria-label="Dismiss">✕</button></div>
 
 <script src="js/core.js"></script>
 <script src="js/i18n.js"></script>

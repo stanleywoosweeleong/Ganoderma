@@ -8,7 +8,7 @@
   const STORE_KEY = 'gbsr.v1';
 
   // ── State & storage (per-device; wrapped so the app works without it) ──
-  const state = { lang: 'en', tab: 'assess', plan: null, blocks: [] };
+  const state = { lang: 'en', langSaved: false, tab: 'assess', plan: null, blocks: [] };
 
   function load() {
     try {
@@ -16,7 +16,7 @@
       if (!raw) return;
       const d = JSON.parse(raw);
       if (d && typeof d === 'object') {
-        if (['en', 'ms', 'zh'].includes(d.lang)) state.lang = d.lang;
+        if (['en', 'ms', 'zh'].includes(d.lang)) { state.lang = d.lang; state.langSaved = true; }
         if (Array.isArray(d.blocks)) state.blocks = d.blocks.filter(validBlock);
         if (typeof d.tab === 'string') state.tab = d.tab;
       }
@@ -368,7 +368,16 @@
     renderAll();
     showTab(state.tab);
 
-    $('lang').addEventListener('change', function () { state.lang = this.value; I.setLang(state.lang); save(); renderAll(); });
+    $('lang').addEventListener('change', function () { setLanguage(this.value); });
+    $('langpick').addEventListener('click', function (e) {
+      const b = e.target.closest('[data-lang]');
+      if (!b) return;
+      setLanguage(b.dataset.lang);
+      showLangPick(false);
+      window.scrollTo(0, 0);
+    });
+    // First launch (no saved language): ask before showing the app.
+    if (!state.langSaved) { showLangPick(true); $('langpick').focus(); }
     document.querySelectorAll('nav [data-tab]').forEach(function (b) {
       b.addEventListener('click', function () { showTab(b.dataset.tab); if (b.dataset.tab === 'brew') renderBrew(); });
     });
@@ -395,15 +404,48 @@
     registerSW();
   }
 
-  // ── Service worker (offline + update prompt). Degrades silently. ──
-  function registerSW() {
-    if (!('serviceWorker' in navigator) || location.protocol === 'file:') return;
-    navigator.serviceWorker.addEventListener('message', function (ev) {
-      if (ev.data && ev.data.type === 'UPDATE_AVAILABLE') $('toast').classList.add('show');
+  // ── Language (saved until the user picks another) ──
+  function setLanguage(l) {
+    if (!['en', 'ms', 'zh'].includes(l)) return;
+    state.lang = l; state.langSaved = true;
+    I.setLang(l); save(); renderAll();
+  }
+
+  // ── First-launch language picker (onboarding) ──
+  function showLangPick(on) {
+    $('langpick').hidden = !on;
+    document.body.classList.toggle('picking', on);
+    ['header', 'nav', 'main'].forEach(function (sel) {
+      const el = document.querySelector(sel);
+      if (el) el.inert = on; // keep focus inside the picker
     });
+  }
+
+  // ── Offline + automatic updates. Degrades silently. ──
+  // The service worker serves the saved copy instantly. On every launch,
+  // and whenever the app comes back to the foreground, we ask it to check
+  // the server; if any app file changed it replies "updated" and we show a
+  // toast offering a reload.
+  function registerSW() {
     $('toast-reload').addEventListener('click', function () { location.reload(); });
-    window.addEventListener('load', function () {
-      navigator.serviceWorker.register('./service-worker.js').catch(function () { /* ignore */ });
+    $('toast-close').addEventListener('click', function () { $('toast').classList.remove('show'); });
+    if (!('serviceWorker' in navigator) || location.protocol === 'file:') return;
+    function askForUpdate() {
+      if (navigator.onLine === false) return;
+      navigator.serviceWorker.ready.then(function (reg) {
+        if (reg.active) reg.active.postMessage('check');
+      }).catch(function () { /* ignore */ });
+    }
+    navigator.serviceWorker.addEventListener('message', function (ev) {
+      // 'updated' from the current worker; {type:'UPDATE_AVAILABLE'} from older installs
+      if (ev.data === 'updated' || (ev.data && ev.data.type === 'UPDATE_AVAILABLE')) $('toast').classList.add('show');
+    });
+    function register() {
+      navigator.serviceWorker.register('./service-worker.js').then(askForUpdate).catch(function () { /* ignore */ });
+    }
+    if (document.readyState === 'complete') register(); else window.addEventListener('load', register);
+    document.addEventListener('visibilitychange', function () {
+      if (document.visibilityState === 'visible') askForUpdate();
     });
   }
 
