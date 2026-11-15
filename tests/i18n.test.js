@@ -71,3 +71,10 @@ test('restore: every error code parseBackup can return has a message', () => {
   ['json', 'noBlocks', 'block', 'name', 'role', 'censuses', 'date', 'dupDate', 'counts']
     .forEach(c => assert.ok(I.STRINGS['restore.err.' + c], 'missing restore.err.' + c));
 });
+
+test('provisional banner and basis kinds are translated; no unsourced 5 g AMF dose', () => {
+  ['plan.provisional', 'plan.provisional.h', 'basis.study', 'basis.label', 'basis.practice', 'basis.assumption']
+    .forEach(k => ['en', 'ms', 'zh'].forEach(l => assert.ok(I.STRINGS[k][l], k + ' ' + l)));
+  assert.ok(!/5 g/.test(I.STRINGS['step.amf.nursery'].en));
+  assert.ok(!/only stage/.test(I.STRINGS['warn.early'].en));
+});

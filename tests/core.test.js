@@ -342,7 +342,7 @@ test('products: items not tested against Ganoderma are flagged and listed last',
 
 test('evidence: weak-evidence badge on the thinly supported entries only', () => {
   const weak = G.EVIDENCE.filter(e => e.weak).map(e => e.id).sort();
-  assert.deepEqual(weak, ['bamyloliquefaciens', 'bvelezensis', 'ganoef']);
+  assert.deepEqual(weak, ['amf', 'bamyloliquefaciens', 'bvelezensis', 'ganoef']);
   // the field-trial-backed entries are never marked weak
   ['pseudomonas_amf', 'ganocare', 'trichoderma_mix'].forEach(id =>
     assert.ok(!G.EVIDENCE.find(e => e.id === id).weak, id));
@@ -417,4 +417,22 @@ test('parseBackup: duplicate census dates, unknown role, bad JSON and empty file
   assert.deepEqual(G.parseBackup(JSON.stringify({ blocks: [goodBlock('E', 'boss')] })).errors.map(e => e.code), ['role']);
   assert.deepEqual(G.parseBackup('{not json').errors.map(e => e.code), ['json']);
   assert.deepEqual(G.parseBackup(JSON.stringify({ blocks: [] })).errors.map(e => e.code), ['noBlocks']);
+});
+
+// ── Plans are provisional; every step states its basis (review) ──────────
+test('every step any plan can produce has a stated basis with all three languages', () => {
+  const steps = new Set();
+  [0, 1, 2, 3, 4].forEach(stage => G.buildPlan({ setting: 'mature', stage, startDate: '2027-01-04' }).batches.forEach(b => b.steps.forEach(s => steps.add(s))));
+  ['replant', 'nursery'].forEach(setting => G.buildPlan({ setting, startDate: '2027-01-04' }).batches.forEach(b => b.steps.forEach(s => steps.add(s))));
+  for (const s of steps) {
+    const b = G.stepBasis(s);
+    assert.ok(b, 'no basis for ' + s);
+    assert.ok(['study', 'label', 'practice', 'assumption'].includes(b.kind), s);
+    ['en', 'ms', 'zh'].forEach(l => assert.ok(b.text[l] && b.text[l].trim(), `${s} basis missing ${l}`));
+    b.sources.forEach(src => assert.match(src.url, /^https?:\/\//));
+  }
+});
+
+test('Trichoderma dose steps are labelled as app assumptions, not study results', () => {
+  ['tricho.ring', 'tricho.nursery', 'tricho.site', 'tricho.hole'].forEach(s => assert.equal(G.stepBasis(s).kind, 'assumption', s));
 });

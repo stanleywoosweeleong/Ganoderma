@@ -135,12 +135,21 @@
     }
   }
 
+  // What each plan step rests on (study / label / practice / app assumption).
+  function basisHtml(step) {
+    const b = G.stepBasis(step);
+    if (!b) return '';
+    return '<div class="basis basis-' + b.kind + '"><span class="tag">' + esc(t('basis.' + b.kind)) + '</span> ' + esc(loc(b.text)) +
+      (b.sources.length ? ' ' + b.sources.map(function (src) { return '<a href="' + esc(src.url) + '" target="_blank" rel="noopener">' + esc(src.label) + '</a>'; }).join(' · ') : '') + '</div>';
+  }
+
   function renderPlan() {
     const p = state.plan;
     if (!p) { $('p-out').innerHTML = ''; return; }
     const conflicts = G.findChemicalConflicts(p, state.chem || []);
     let html = '<div class="card"><h3>' + esc(t('setting.' + p.setting)) +
       (p.stage != null ? ' — ' + stagePill(p.stage) : '') + '</h3>';
+    html += '<div class="provisional"><b>' + esc(t('plan.provisional.h')) + '</b> ' + esc(t('plan.provisional')) + '</div>';
     p.warnings.forEach(function (w) { html += '<div class="warn">' + esc(t(w)) + '</div>'; });
     conflicts.forEach(function (c) {
       html += '<div class="bad">' + esc(t('plan.conflict')) + ' ' + esc(c.batchDate) + ' ↔ ' + esc(c.chemDate) +
@@ -150,7 +159,7 @@
       const title = b.number != null ? t('plan.batch', { n: b.number }) : t('kind.census');
       html += '<div class="batch ' + b.kind + '"><div class="head"><span>' + esc(title) + '</span><span>' +
         esc(b.date) + '</span><span class="kind">' + esc(t('plan.week', { n: b.week })) + ' · ' + esc(t('kind.' + b.kind)) +
-        '</span></div><ul>' + b.steps.map(function (s) { return '<li>' + esc(t('step.' + s)) + (s.indexOf('bact.drench') === 0 ? '<div class="warn safety">' + esc(t('safety.pseudomonas')) + '</div>' : '') + '</li>'; }).join('') + '</ul></div>';
+        '</span></div><ul>' + b.steps.map(function (s) { return '<li>' + esc(t('step.' + s)) + (s.indexOf('bact.drench') === 0 ? '<div class="warn safety">' + esc(t('safety.pseudomonas')) + '</div>' : '') + basisHtml(s) + '</li>'; }).join('') + '</ul></div>';
     });
     html += '</div>';
     $('p-out').innerHTML = html;

@@ -24,6 +24,15 @@ programme** backed by the published research.
 
 ### What the plans contain (planted palms)
 
+> **Provisional.** The plans are planning assumptions, not a tested programme.
+> The studies tested single preventive treatments on seedlings. The doses,
+> repeat intervals and combinations below have not been tested together. In
+> the app, every step shows its basis: *From a study*, *Product label*,
+> *Common practice* or *App assumption*, with links where a source exists.
+> The 28-day gap after hexaconazole and the 30% DIY failure allowance are
+> app assumptions.
+
+
 | Stage | Batch 1 (wk 0) | Batch 2 | Batch 3 | Afterwards |
 |---|---|---|---|---|
 | 0 Healthy (neighbours, prevention) | Trichoderma ring + EFB mulch | wk 6 bacterial drench | wk 12 Trichoderma | Trichoderma every 16 wk, census every 26 wk |
@@ -103,9 +112,10 @@ Data is stored only in the browser on that device (`localStorage`). Use
 
 ## Key sources
 
-- Sundram et al. 2015: *P. aeruginosa* UPMP3 + AMF, 80% BSR reduction in a field (bait-seedling) trial
-- JOPR 2018: Trichoderma mixture, 83–89% symptom reduction in seedlings
-- Rebitanim et al. 2020: GanoCare® field trial, incidence 26.7% vs 100%
+- Sundram et al. 2015: *P. aeruginosa* UPMP3 + two *Glomus* isolates on seedlings before exposure. The abstract says BSR was reduced "to 57 and 80%" (nursery and 20-month bait-seedling field trial); check the full tables for what those figures mean
+- Habu et al. 2018: Trichoderma mixture applied 2 weeks before artificial infection of 4-month-old seedlings in sterilised soil, about 83% (foliar) and 89% (bole) disease reduction
+- Asis et al. 2025: single application of local *T. virens* / *T. asperellum* to seedlings, 41.82–57.73% AUDPC-based disease reduction; combining the isolates did not help
+- Rebitanim et al. 2020: GanoCare® on bait seedlings (15 per treatment), 6.7% vs 93.3% dead after 21 months
 - Plant Disease 2022 and J Fungi 2024: reviews
 
 See the Evidence tab for the full list with links. Check the original

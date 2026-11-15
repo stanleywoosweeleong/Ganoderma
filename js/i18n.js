@@ -97,7 +97,7 @@
       zh: '按标签用量进行细菌处理:iM-bioGuard(每袋灌根约 0.5 L)或 EMBIO actinoPLUS(每袋约 50 g)。其他芽孢杆菌增强剂只作额外补充。'
     },
     'step.amf.hole': { en: 'Mycorrhiza (AMF, e.g. Glomus): label rate into the planting hole, touching the roots.', ms: 'Mikoriza (AMF, cth. Glomus): kadar label ke dalam lubang tanam, bersentuhan dengan akar.', zh: '菌根真菌(AMF,如球囊霉):按标签用量放入种植穴,接触根系。' },
-    'step.amf.nursery': { en: 'Mycorrhiza (AMF): ~5 g per polybag at transplanting.', ms: 'Mikoriza (AMF): ~5 g setiap polibag semasa pindah tanam.', zh: '菌根真菌(AMF):移栽时每袋约 5 g。' },
+    'step.amf.nursery': { en: 'Mycorrhiza (AMF): product label rate per polybag at transplanting.', ms: 'Mikoriza (AMF): kadar label produk setiap polibag semasa pindah tanam.', zh: '菌根真菌(AMF):移栽时每袋按产品标签用量。' },
     'step.efb.mulch': { en: 'Mulch with EFB compost around the base (carrier and food for Trichoderma).', ms: 'Sungkup kompos TKS di sekeliling pangkal (pembawa dan makanan Trichoderma).', zh: '树基周围覆盖空果串堆肥(木霉的载体和养分)。' },
     'step.sanitise.brackets': { en: 'Remove all Ganoderma brackets; bag and take them out of the field (they release spores).', ms: 'Buang semua jasad buah Ganoderma; masukkan dalam beg dan bawa keluar dari ladang (ia melepaskan spora).', zh: '摘除所有灵芝子实体,装袋带离田间(子实体会释放孢子)。' },
     'step.sanitise.surgery': { en: 'Scrape out rotten tissue at the trunk base until clean tissue shows; remove debris from the field.', ms: 'Korek tisu reput di pangkal batang sehingga tisu bersih kelihatan; buang sisa keluar dari ladang.', zh: '刮除树干基部腐烂组织直至露出健康组织,残渣带离田间。' },
@@ -109,13 +109,13 @@
 
     // Warnings
     'warn.prevention': { en: 'Prevention plan — best used on healthy palms in the 1–2 rings around any diseased palm, and at replanting.', ms: 'Pelan pencegahan — paling sesuai untuk pokok sihat dalam 1–2 lingkaran sekeliling pokok berpenyakit, dan semasa tanam semula.', zh: '预防方案 — 最适合病株周围 1–2 圈的健康棕树,以及重植时使用。' },
-    'warn.early': { en: 'Early stage is the only stage where Trichoderma has been shown to protect palms. Act now.', ms: 'Peringkat awal adalah satu-satunya peringkat Trichoderma terbukti melindungi pokok. Bertindak sekarang.', zh: '早期是唯一被证实木霉能保护棕树的阶段,请立即行动。' },
+    'warn.early': { en: 'Trichoderma studies applied it to seedlings BEFORE infection. A benefit for palms already showing symptoms has not been shown — sanitation and protecting neighbouring palms matter most.', ms: 'Kajian Trichoderma memberikannya kepada anak benih SEBELUM jangkitan. Manfaat untuk pokok yang sudah bersimptom belum dibuktikan — sanitasi dan melindungi pokok jiran paling penting.', zh: '木霉研究是在感染前施于幼苗。对已出现症状的棕树是否有效尚未证实 — 卫生措施和保护邻近棕树最重要。' },
     'warn.moderate': { en: 'Chance of recovery is low. The aim is to slow decline, keep the palm producing, and protect neighbours.', ms: 'Peluang pulih adalah rendah. Matlamatnya melambatkan kemerosotan, mengekalkan hasil dan melindungi pokok jiran.', zh: '康复机会低。目标是延缓衰退、维持产量并保护邻近棕树。' },
     'warn.severe': { en: 'No microbe can save this palm. Remove it properly so it stops infecting others.', ms: 'Tiada mikrob boleh menyelamatkan pokok ini. Buang dengan betul supaya ia berhenti menjangkiti pokok lain.', zh: '没有任何微生物能挽救这棵棕树。请正确清除,以免继续传染其他棕树。' },
     'warn.neighbours': { en: 'Also run the Healthy (prevention) plan on the 1–2 rings of palms around this one.', ms: 'Jalankan juga pelan Sihat (pencegahan) pada 1–2 lingkaran pokok di sekelilingnya.', zh: '同时对周围 1–2 圈棕树执行「健康(预防)」方案。' },
-    'warn.chemical': { en: 'If you also use hexaconazole trunk injection: it kills Trichoderma. Keep ≥4 weeks between injection and Trichoderma (app default) — enter injection dates to check.', ms: 'Jika anda juga menggunakan suntikan heksakonazol: ia membunuh Trichoderma. Jarakkan ≥4 minggu antara suntikan dan Trichoderma (lalai aplikasi) — masukkan tarikh suntikan untuk semak.', zh: '若同时使用己唑醇树干注射:它会杀死木霉。注射与施用木霉至少间隔 4 周(应用默认)— 输入注射日期可自动检查。' },
+    'warn.chemical': { en: 'If you also use hexaconazole trunk injection, it may harm Trichoderma. The 4-week gap checked here is an app assumption, not from a study — enter injection dates to check.', ms: 'Jika anda juga menggunakan suntikan heksakonazol, ia mungkin menjejaskan Trichoderma. Jarak 4 minggu yang disemak di sini ialah andaian aplikasi, bukan daripada kajian — masukkan tarikh suntikan untuk semak.', zh: '若同时使用己唑醇树干注射,可能会伤害木霉。此处检查的 4 周间隔为本应用假设,并非来自研究 — 输入注射日期可自动检查。' },
     'warn.replant': { en: 'Remove all old trunks and root masses before planting. Treat every planting hole.', ms: 'Buang semua batang dan akar lama sebelum menanam. Rawat setiap lubang tanam.', zh: '种植前清除所有旧树干和根团,每个种植穴都要处理。' },
-    'warn.nursery': { en: 'Nursery pre-treatment gave the strongest results in trials (Trichoderma/AMF/Pseudomonas). Keep treating after field planting.', ms: 'Pra-rawatan di tapak semaian memberi keputusan terbaik dalam percubaan (Trichoderma/AMF/Pseudomonas). Teruskan rawatan selepas tanam di ladang.', zh: '苗圃预处理在试验中效果最好(木霉/菌根/假单胞菌)。定植田间后继续处理。' },
+    'warn.nursery': { en: 'Most trial evidence comes from treating seedlings before infection (Trichoderma, AMF, Pseudomonas). Continuing treatment after field planting is an app assumption.', ms: 'Kebanyakan bukti percubaan datang daripada merawat anak benih sebelum jangkitan (Trichoderma, AMF, Pseudomonas). Meneruskan rawatan selepas tanam di ladang ialah andaian aplikasi.', zh: '大部分试验证据来自感染前处理幼苗(木霉、菌根、假单胞菌)。定植田间后继续处理为本应用假设。' },
 
     'safety.pseudomonas': {
       en: '⚠ Safety: iM-bioGuard contains Pseudomonas aeruginosa, an opportunistic human pathogen. Soil drench only — never spray on leaves or food crops. Wear gloves and eye protection; cover any cuts first. People with weak immunity, lung disease or open wounds should not handle it. Never brew or multiply it at home. See a doctor if a wound or eye becomes red or swollen after use.',
@@ -123,13 +123,20 @@
       zh: '⚠ 安全提示:iM-bioGuard 含铜绿假单胞菌,是人类机会性病原菌。仅限土壤灌根 — 切勿喷洒在叶面或食用作物上。请戴手套和护目镜,先包好伤口。免疫力低下、患肺病或有开放性伤口者不应接触。切勿自行培养或扩繁。使用后如伤口或眼睛红肿,请就医。'
     },
 
+    'plan.provisional.h': { en: 'Provisional plan.', ms: 'Pelan sementara.', zh: '暂定方案。' },
+    'plan.provisional': {
+      en: 'These are planning assumptions, not a tested programme. Studies tested single preventive treatments on seedlings; the doses, repeat intervals and combination of products here have not been tested together. Each step shows what it is based on.',
+      ms: 'Ini ialah andaian perancangan, bukan program yang telah diuji. Kajian menguji rawatan pencegahan tunggal pada anak benih; dos, selang ulangan dan gabungan produk di sini belum diuji bersama. Setiap langkah menunjukkan asasnya.',
+      zh: '这些是规划假设,并非经过测试的方案。研究测试的是对幼苗的单次预防处理;此处的用量、重复间隔和产品组合未曾一起测试。每个步骤都注明了依据。'
+    },
+    'basis.study': { en: 'From a study', ms: 'Daripada kajian', zh: '来自研究' },
+    'basis.label': { en: 'Product label', ms: 'Label produk', zh: '产品标签' },
+    'basis.practice': { en: 'Common practice', ms: 'Amalan biasa', zh: '常规做法' },
+    'basis.assumption': { en: 'App assumption', ms: 'Andaian aplikasi', zh: '本应用假设' },
+
     // Brew
     'brew.h': { en: 'Trichoderma brewing schedule', ms: 'Jadual penghasilan Trichoderma', zh: '木霉自制排程' },
-    'brew.intro': {
-      en: 'Rice-grain recipe (from AMIS): cook plain rice, cool, mix 1 g starter per 500 g rice, incubate in shade 5–7 days until green, shade-dry. Use within 2 months. About 30% of DIY batches fail — extra brews are included.',
-      ms: 'Resipi beras (daripada AMIS): masak nasi kosong, sejukkan, campur 1 g pemula setiap 500 g nasi, eram di tempat teduh 5–7 hari sehingga hijau, kering di tempat teduh. Guna dalam 2 bulan. Kira-kira 30% kelompok DIY gagal — kelompok tambahan sudah dikira.',
-      zh: '米粒配方(来自 AMIS):白米煮熟放凉,每 500 g 米拌 1 g 菌种,阴凉处培养 5–7 天至转绿,阴干。2 个月内用完。约 30% 自制批次会失败 — 已计入额外批次。'
-    },
+    'brew.intro': { en: 'Rice-grain recipe (from AMIS): cook plain rice, cool, mix 1 g starter per 500 g rice, incubate in shade 5–7 days until green, shade-dry. Use within 2 months. The 30% failure allowance is an assumption carried over from the AMIS recipe, not a measured rate — change it to match your own results.', ms: 'Resipi beras (daripada AMIS): masak nasi kosong, sejukkan, campur 1 g pemula setiap 500 g nasi, eram di tempat teduh 5–7 hari sehingga hijau, kering di tempat teduh. Guna dalam 2 bulan. Peruntukan kegagalan 30% ialah andaian daripada resipi AMIS, bukan kadar yang diukur — ubah mengikut keputusan anda sendiri.', zh: '米粒配方(来自 AMIS):白米煮熟放凉,每 500 g 米拌 1 g 菌种,阴凉处培养 5–7 天至转绿,阴干。2 个月内用完。30% 失败率是沿用 AMIS 配方的假设,并非实测 — 请按自己的结果调整。' },
     'brew.palms': { en: 'Number of palms / polybags', ms: 'Bilangan pokok / polibag', zh: '棕树 / 育苗袋数量' },
     'brew.batchKg': { en: 'Cooked rice per brew (kg)', ms: 'Nasi setiap kelompok (kg)', zh: '每批熟米 (kg)' },
     'brew.failure': { en: 'Expected failure rate (%)', ms: 'Kadar kegagalan dijangka (%)', zh: '预计失败率 (%)' },

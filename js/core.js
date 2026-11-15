@@ -320,6 +320,78 @@
   const SETTINGS = ['mature', 'replant', 'nursery'];
   const DEFAULT_HORIZON = { mature: 52, replant: 104, nursery: 52 };
 
+
+  // ───────────────────────────────────────────────────────────────────────
+  // Basis of each plan step (review fix). The plans are PROVISIONAL planning
+  // assumptions: studies tested single preventive treatments on seedlings,
+  // not this staged programme. Every step states what it rests on.
+  // kind: 'study' | 'label' | 'practice' | 'assumption'
+  // ───────────────────────────────────────────────────────────────────────
+  const SRC = {
+    habu: { label: 'Habu et al. 2018 (PDF)', url: 'https://jopr.mpob.gov.my/wp-content/uploads/2018/09/jopr2018inpress-habu.pdf' },
+    asis: { label: 'Asis et al., JOPR 2025 (PDF)', url: 'https://jopr.mpob.gov.my/files/2025/02/joprv38june2026-rashid.pdf' },
+    trichoshield: { label: 'MPOB SawitSecure — TrichoShield rates', url: 'http://sawitsecure.mpob.gov.my/disease-control-and-management/commercial-product-for-preventive-treatment/trichoshield/' },
+    sundram: { label: 'Sundram et al. 2015 (abstract)', url: 'https://agris.fao.org/search/en/records/65de6bf2b766d82b18fd663f' },
+    upm: { label: 'UPM eprint 32011', url: 'https://libmast.utm.my/Record/upm.eprints-32011/Description' }
+  };
+  const ASSUME = 'assumption', LABEL = 'label', PRACTICE = 'practice';
+  const SANITATION = {
+    kind: PRACTICE,
+    text: { en: 'Common BSR sanitation practice. Not checked against a specific source in this app.',
+            ms: 'Amalan sanitasi BSR yang biasa. Tidak disemak dengan sumber khusus dalam aplikasi ini.',
+            zh: '常见的茎基腐病卫生措施。本应用未核对具体来源。' },
+    sources: []
+  };
+  const STEP_BASIS = {
+    'tricho.ring': { kind: ASSUME,
+      text: { en: '0.5 kg of inoculant per palm is an app assumption. MPOB\'s TrichoShield label uses 5 kg of a 1:3 product–compost mix per mature palm every 6 months. Studies used measured spore suspensions on seedlings before infection.',
+              ms: '0.5 kg inokulum setiap pokok ialah andaian aplikasi. Label TrichoShield MPOB guna 5 kg campuran produk–kompos 1:3 setiap pokok matang setiap 6 bulan. Kajian guna ampaian spora tersukat pada anak benih sebelum jangkitan.',
+              zh: '每棵 0.5 kg 菌种为本应用的假设。MPOB 的 TrichoShield 标签:成龄棕树每 6 个月施 5 kg(产品与堆肥 1:3 混合)。研究使用的是在感染前施于幼苗的定量孢子悬液。' },
+      sources: [SRC.trichoshield, SRC.habu] },
+    'tricho.hole': { kind: ASSUME,
+      text: { en: '200–500 g is the AMIS farmer-recipe rate, not from a trial. MPOB\'s TrichoShield label: 1 kg per hole at field planting.',
+              ms: '200–500 g ialah kadar resipi petani AMIS, bukan daripada percubaan. Label TrichoShield MPOB: 1 kg setiap lubang semasa tanam di ladang.',
+              zh: '200–500 g 为 AMIS 农户配方用量,并非来自试验。MPOB 的 TrichoShield 标签:田间定植每穴 1 kg。' },
+      sources: [SRC.trichoshield] },
+    'tricho.site': { kind: ASSUME,
+      text: { en: 'App assumption — no study tested treating the position of a removed palm.',
+              ms: 'Andaian aplikasi — tiada kajian menguji rawatan tapak pokok yang telah dibuang.',
+              zh: '本应用假设 — 没有研究测试过处理已移除棕树的原位。' },
+      sources: [] },
+    'tricho.nursery': { kind: ASSUME,
+      text: { en: '~50 g per polybag is an app assumption. The 2025 study used a single 100 mL spore suspension per seedling.',
+              ms: '~50 g setiap polibag ialah andaian aplikasi. Kajian 2025 guna satu ampaian spora 100 mL setiap anak benih.',
+              zh: '每袋约 50 g 为本应用假设。2025 年的研究每株幼苗单次施用 100 mL 孢子悬液。' },
+      sources: [SRC.asis] },
+    'bact.drench': { kind: LABEL,
+      text: { en: 'Use the product label rate. No study tested these products on this schedule.',
+              ms: 'Guna kadar label produk. Tiada kajian menguji produk ini mengikut jadual ini.',
+              zh: '按产品标签用量。没有研究按此时间表测试过这些产品。' },
+      sources: [] },
+    'amf.hole': { kind: LABEL,
+      text: { en: 'Use the product label rate. The study pre-inoculated seedlings with specific Glomus isolates; any AMF product is not shown to match.',
+              ms: 'Guna kadar label produk. Kajian menginokulasi anak benih dengan isolat Glomus tertentu; produk AMF lain tidak terbukti sama.',
+              zh: '按产品标签用量。研究使用特定球囊霉菌株预先接种幼苗;其他菌根产品未证明等效。' },
+      sources: [SRC.sundram] },
+    'efb.mulch': { kind: PRACTICE,
+      text: { en: 'EFB compost was suggested as a Trichoderma carrier in UPM research. No tested mulching rate.',
+              ms: 'Kompos TKS dicadangkan sebagai pembawa Trichoderma dalam kajian UPM. Tiada kadar sungkupan yang diuji.',
+              zh: 'UPM 研究建议以空果串堆肥作为木霉载体。没有经过测试的覆盖用量。' },
+      sources: [SRC.upm] },
+    'sanitise.brackets': SANITATION, 'sanitise.surgery': SANITATION, 'mound': SANITATION,
+    'sanitise.fell': SANITATION, 'sanitise.bole': SANITATION, 'sanitise.chip': SANITATION,
+    'census': { kind: ASSUME,
+      text: { en: 'App method for tracking disease (0–4 scale, incidence, DSI, AUDPC).',
+              ms: 'Kaedah aplikasi untuk menjejak penyakit (skala 0–4, insiden, DSI, AUDPC).',
+              zh: '本应用的病害追踪方法(0–4 级、发病率、病情指数、AUDPC)。' },
+      sources: [] }
+  };
+  STEP_BASIS['bact.drench.nursery'] = STEP_BASIS['bact.drench'];
+  STEP_BASIS['amf.nursery'] = STEP_BASIS['amf.hole'];
+
+  /** What a plan step rests on: { kind, text:{en,ms,zh}, sources[] }. */
+  function stepBasis(step) { return STEP_BASIS[step] || null; }
+
   /**
    * Build a multi-batch treatment plan.
    * @param {object} opts
@@ -468,29 +540,29 @@
     {
       id: 'pseudomonas_amf',
       agent: {
-        en: 'Pseudomonas aeruginosa UPMP3 + Glomus intraradices / G. clarum (AMF)',
-        ms: 'Pseudomonas aeruginosa UPMP3 + Glomus intraradices / G. clarum (AMF)',
-        zh: '铜绿假单胞菌 (Pseudomonas aeruginosa) UPMP3 + 根内球囊霉 / 明球囊霉 (AMF 菌根真菌)'
+        en: 'Pseudomonas aeruginosa UPMP3 + Glomus intraradices UT126 + G. clarum BR152B (AMF)',
+        ms: 'Pseudomonas aeruginosa UPMP3 + Glomus intraradices UT126 + G. clarum BR152B (AMF)',
+        zh: '铜绿假单胞菌 (Pseudomonas aeruginosa) UPMP3 + 根内球囊霉 UT126 + 明球囊霉 BR152B (AMF 菌根真菌)'
       },
       level: 3,
       setting: {
-        en: 'Nursery + 20-month bait-seedling field trial',
-        ms: 'Tapak semaian + percubaan ladang anak benih umpan selama 20 bulan',
-        zh: '苗圃 + 为期 20 个月的田间诱饵苗试验'
+        en: 'Seedlings pre-inoculated before exposure: nursery + 20-month bait-seedling field trial (Sundram et al. 2015)',
+        ms: 'Anak benih diinokulasi lebih awal sebelum pendedahan: tapak semaian + percubaan ladang anak benih umpan 20 bulan (Sundram et al. 2015)',
+        zh: '幼苗在接触病菌前预先接种:苗圃 + 20 个月田间诱饵苗试验(Sundram 等 2015)'
       },
       result: {
-        en: 'BSR reduced by 57% (nursery) and 80% (field)',
-        ms: 'BSR berkurang 57% (tapak semaian) dan 80% (ladang)',
-        zh: '茎基腐病减少 57%(苗圃)和 80%(田间)'
+        en: 'Abstract: the combination "significantly improved biocontrol efficacy in both nursery and fields reducing BSR disease to 57 and 80%". Whether these are % reduction or % disease remaining needs the full tables. G. intraradices UT126 alone also reduced BSR development.',
+        ms: 'Abstrak: gabungan ini "meningkatkan keberkesanan kawalan biologi dengan ketara di tapak semaian dan ladang, mengurangkan penyakit BSR kepada 57 dan 80%". Sama ada ini % pengurangan atau % penyakit yang tinggal perlu disemak dalam jadual penuh. G. intraradices UT126 sahaja juga mengurangkan perkembangan BSR.',
+        zh: '摘要:该组合"在苗圃和田间均显著提高生防效果,使茎基腐病减少至 57% 和 80%"。这是减少的百分比还是剩余病害的百分比,需查阅全文表格确认。单用根内球囊霉 UT126 也能减缓病害发展。'
       },
       note: {
-        en: 'Best field result found for a microbial combination. P. aeruginosa is an opportunistic human pathogen — use only registered products, wear gloves/mask.',
-        ms: 'Keputusan ladang terbaik bagi gabungan mikrob. P. aeruginosa ialah patogen oportunis manusia — guna produk berdaftar sahaja, pakai sarung tangan/topeng.',
-        zh: '目前微生物组合中最好的田间结果。铜绿假单胞菌是人类机会性病原菌 — 只使用已登记产品,并戴手套/口罩。'
+        en: 'Applies to these specific strains, applied to seedlings before infection. No study shows that a commercial Pseudomonas/Bacillus product plus any AMF product reproduces this effect. P. aeruginosa is an opportunistic human pathogen — registered products only, gloves and eye protection.',
+        ms: 'Terpakai kepada strain khusus ini, diberi kepada anak benih sebelum jangkitan. Tiada kajian menunjukkan produk komersial Pseudomonas/Bacillus bersama mana-mana produk AMF menghasilkan kesan yang sama. P. aeruginosa ialah patogen oportunis manusia — produk berdaftar sahaja, sarung tangan dan pelindung mata.',
+        zh: '仅适用于这些特定菌株,且在感染前施用于幼苗。没有研究表明商业假单胞菌/芽孢杆菌产品加任意菌根产品能重现此效果。铜绿假单胞菌是人类机会性病原菌 — 只用已登记产品,戴手套和护目镜。'
       },
       sources: [
-        { label: { en: 'Sundram et al. 2015 (AGRIS)', ms: 'Sundram et al. 2015 (AGRIS)', zh: 'Sundram 等 2015 (AGRIS)' }, url: 'https://agris.fao.org/search/en/records/65de6bf2b766d82b18fd663f' },
-        { label: { en: 'MPOB iM-bioGuard field trial news', ms: 'Berita percubaan ladang iM-bioGuard MPOB', zh: 'MPOB iM-bioGuard 田间试验新闻' }, url: 'https://prestasisawit.mpob.gov.my/en/palmnews/news/36479' }
+        { label: { en: 'Sundram et al. 2015, Mycorrhiza 25:387–397 (publisher)', ms: 'Sundram et al. 2015, Mycorrhiza 25:387–397 (penerbit)', zh: 'Sundram 等 2015, Mycorrhiza 25:387–397(出版社)' }, url: 'https://link.springer.com/article/10.1007/s00572-014-0620-5' },
+        { label: { en: 'Abstract (AGRIS)', ms: 'Abstrak (AGRIS)', zh: '摘要 (AGRIS)' }, url: 'https://agris.fao.org/search/en/records/65de6bf2b766d82b18fd663f' }
       ]
     },
     {
@@ -501,20 +573,24 @@
         zh: '哈茨木霉 + 棘孢木霉 + 绿木霉(混合剂)'
       },
       level: 2,
-      setting: { en: 'Seedlings, glasshouse', ms: 'Anak benih, rumah kaca', zh: '幼苗,温室' },
+      setting: {
+        en: '4-month-old seedlings in sterilised soil; measured spore suspensions applied 2 weeks BEFORE artificial Ganoderma inoculation; 10 replicates per treatment (Habu et al. 2018)',
+        ms: 'Anak benih 4 bulan dalam tanah steril; ampaian spora tersukat diberi 2 minggu SEBELUM inokulasi Ganoderma buatan; 10 replikasi setiap rawatan (Habu et al. 2018)',
+        zh: '4 月龄幼苗,灭菌土壤;在人工接种灵芝前 2 周施用定量孢子悬液;每处理 10 个重复(Habu 等 2018)'
+      },
       result: {
-        en: 'Foliar symptoms −83%, bole symptoms −89%',
-        ms: 'Simptom daun −83%, simptom pangkal batang −89%',
-        zh: '叶部症状减少 83%,茎基症状减少 89%'
+        en: 'About 83% reduction in foliar symptoms and 89% in bole symptoms',
+        ms: 'Kira-kira 83% pengurangan simptom daun dan 89% simptom pangkal batang',
+        zh: '叶部症状减少约 83%,茎基症状减少约 89%'
       },
       note: {
-        en: 'Most-studied BCA group. Protects only at very early infection; field results inconsistent.',
-        ms: 'Kumpulan agen kawalan biologi paling banyak dikaji. Melindungi hanya pada jangkitan sangat awal; keputusan ladang tidak konsisten.',
-        zh: '研究最多的生防菌类群。仅在感染极早期有保护作用;田间结果不稳定。'
+        en: 'Shows preventive activity in a nursery. It does not test rice-grain inoculant doses, repeated applications, or treatment of mature palms that already have symptoms.',
+        ms: 'Menunjukkan aktiviti pencegahan di tapak semaian. Ia tidak menguji dos inokulum beras, aplikasi berulang, atau rawatan pokok matang yang sudah bersimptom.',
+        zh: '显示了苗圃条件下的预防作用。未测试米粒菌种用量、重复施用,或已出现症状的成龄棕树的治疗。'
       },
       sources: [
-        { label: { en: 'JOPR 2018, 30(3):403–415', ms: 'JOPR 2018, 30(3):403–415', zh: 'JOPR 2018, 30(3):403–415' }, url: 'https://jopr.mpob.gov.my/?p=8761' },
-        { label: { en: 'JOPR (Habu) — early-stage only', ms: 'JOPR (Habu) — peringkat awal sahaja', zh: 'JOPR (Habu) — 仅早期有效' }, url: 'https://jopr.mpob.gov.my/wp-content/uploads/2018/09/jopr2018inpress-habu.pdf' }
+        { label: { en: 'Habu et al. 2018, JOPR 30(3):403–415', ms: 'Habu et al. 2018, JOPR 30(3):403–415', zh: 'Habu 等 2018, JOPR 30(3):403–415' }, url: 'https://jopr.mpob.gov.my/?p=8761' },
+        { label: { en: 'Full text (PDF)', ms: 'Teks penuh (PDF)', zh: '全文 (PDF)' }, url: 'https://jopr.mpob.gov.my/wp-content/uploads/2018/09/jopr2018inpress-habu.pdf' }
       ]
     },
     {
@@ -525,21 +601,25 @@
         zh: '本地绿木霉 / 棘孢木霉菌株(单用或混用)'
       },
       level: 2,
-      setting: { en: 'Seedlings', ms: 'Anak benih', zh: '幼苗' },
+      setting: {
+        en: 'Seedlings, artificial inoculation; a single 100 mL application of a specified conidial suspension; followed for 9 months (Asis et al., JOPR, online 2025)',
+        ms: 'Anak benih, inokulasi buatan; satu aplikasi 100 mL ampaian konidia tertentu; dipantau 9 bulan (Asis et al., JOPR, dalam talian 2025)',
+        zh: '幼苗,人工接种;单次施用 100 mL 指定浓度的分生孢子悬液;观察 9 个月(Asis 等,JOPR,2025 年网络发表)'
+      },
       result: {
-        en: 'Disease reduced 42–58%, comparable to two commercial biocontrol products',
-        ms: 'Penyakit berkurang 42–58%, setanding dengan dua produk kawalan biologi komersial',
-        zh: '病害减少 42–58%,与两种商业生防产品相当'
+        en: 'Disease reduction 41.82–57.73% (calculated from AUDPC), on par with two commercial biocontrol products',
+        ms: 'Pengurangan penyakit 41.82–57.73% (dikira daripada AUDPC), setanding dengan dua produk kawalan biologi komersial',
+        zh: '病害减少 41.82–57.73%(按 AUDPC 计算),与两种商业生防产品相当'
       },
       note: {
-        en: 'Isolates T4RH (T. virens) and T8R (T. asperellum) selected from 20.',
-        ms: 'Isolat T4RH (T. virens) dan T8R (T. asperellum) dipilih daripada 20 isolat.',
-        zh: '菌株 T4RH(绿木霉)和 T8R(棘孢木霉)从 20 个菌株中筛选而出。'
+        en: 'Combining the two isolates did NOT improve the result. Does not show that repeated applications or combining more microbes work better. Isolates T4RH (T. virens) and T8R (T. asperellum) were selected from 20 in a 2024 screening study.',
+        ms: 'Menggabungkan dua isolat TIDAK memperbaiki keputusan. Tidak menunjukkan aplikasi berulang atau gabungan lebih banyak mikrob lebih berkesan. Isolat T4RH (T. virens) dan T8R (T. asperellum) dipilih daripada 20 dalam kajian saringan 2024.',
+        zh: '两个菌株混用并未提高效果。未证明重复施用或组合更多微生物效果更好。T4RH(绿木霉)与 T8R(棘孢木霉)系 2024 年筛选研究从 20 个菌株中选出。'
       },
       sources: [
-        { label: { en: 'JOPR 2025', ms: 'JOPR 2025', zh: 'JOPR 2025' }, url: 'https://jopr.mpob.gov.my/?p=14135' },
-        { label: { en: 'UMS eprint 43960', ms: 'UMS eprint 43960', zh: 'UMS 论文库 43960' }, url: 'https://eprints.ums.edu.my/id/eprint/43960' },
-        { label: { en: 'Sarhad J Agric 2024 (UMS)', ms: 'Sarhad J Agric 2024 (UMS)', zh: 'Sarhad J Agric 2024 (UMS)' }, url: 'https://eprints.ums.edu.my/id/eprint/42344' }
+        { label: { en: 'Asis et al., JOPR 38 (online 2025) — full text', ms: 'Asis et al., JOPR 38 (dalam talian 2025) — teks penuh', zh: 'Asis 等,JOPR 38(2025 网络发表)— 全文' }, url: 'https://jopr.mpob.gov.my/files/2025/02/joprv38june2026-rashid.pdf' },
+        { label: { en: 'JOPR article page', ms: 'Halaman artikel JOPR', zh: 'JOPR 文章页' }, url: 'https://jopr.mpob.gov.my/?p=14135' },
+        { label: { en: 'Isolate screening, Sarhad J Agric 2024 (UMS)', ms: 'Saringan isolat, Sarhad J Agric 2024 (UMS)', zh: '菌株筛选,Sarhad J Agric 2024 (UMS)' }, url: 'https://eprints.ums.edu.my/id/eprint/42344' }
       ]
     },
     {
@@ -615,24 +695,30 @@
     {
       id: 'amf',
       agent: {
-        en: 'Arbuscular mycorrhizal fungi (Glomus spp.) alone',
-        ms: 'Kulat mikoriza arbuskular (Glomus spp.) sahaja',
-        zh: '丛枝菌根真菌(球囊霉属 Glomus)单独使用'
+        en: 'Arbuscular mycorrhizal fungi (AMF) alone',
+        ms: 'Kulat mikoriza arbuskular (AMF) sahaja',
+        zh: '丛枝菌根真菌 (AMF) 单独使用'
       },
       level: 2,
-      setting: { en: 'Nursery (24 months)', ms: 'Tapak semaian (24 bulan)', zh: '苗圃(24 个月)' },
+      weak: true,
+      setting: {
+        en: 'Seedlings inoculated with AMF before Ganoderma: pot trial (9 months) and a small field comparison (60 + 60 seedlings, 10 months) — MPOB article; G. intraradices UT126 in Sundram et al. 2015',
+        ms: 'Anak benih diinokulasi AMF sebelum Ganoderma: percubaan pasu (9 bulan) dan perbandingan ladang kecil (60 + 60 anak benih, 10 bulan) — artikel MPOB; G. intraradices UT126 dalam Sundram et al. 2015',
+        zh: '幼苗先接种菌根再接触灵芝:盆栽试验(9 个月)及小型田间对比(60 + 60 株,10 个月)— MPOB 文章;Sundram 等 2015 中的根内球囊霉 UT126'
+      },
       result: {
-        en: 'Lowest DSI 51% at 5 g AMF/bag; growth differences not significant early on',
-        ms: 'DSI terendah 51% pada 5 g AMF/beg; perbezaan pertumbuhan tidak ketara pada awalnya',
-        zh: '每袋 5 g 菌根真菌时病情指数最低,为 51%;前期生长差异不显著'
+        en: 'Pot trial: all non-mycorrhizal palms diseased vs 20% of mycorrhizal palms with symptoms (10% died). Field: 5 of 60 uninoculated vs 2 of 60 mycorrhizal palms died. Sundram: G. intraradices UT126 alone reduced BSR development.',
+        ms: 'Percubaan pasu: semua pokok tanpa mikoriza berpenyakit berbanding 20% pokok bermikoriza bersimptom (10% mati). Ladang: 5 daripada 60 pokok tanpa inokulasi berbanding 2 daripada 60 pokok bermikoriza mati. Sundram: G. intraradices UT126 sahaja mengurangkan perkembangan BSR.',
+        zh: '盆栽:无菌根棕树全部发病,有菌根的仅 20% 出现症状(10% 死亡)。田间:未接种 60 株中死亡 5 株,接种菌根 60 株中死亡 2 株。Sundram:单用根内球囊霉 UT126 能减缓茎基腐发展。'
       },
       note: {
-        en: 'Works better in combinations than alone.',
-        ms: 'Lebih berkesan dalam gabungan berbanding digunakan sendiri.',
-        zh: '组合使用比单独使用效果更好。'
+        en: 'The MPOB article is a popular summary: it names no AMF species, gives no doses and no statistics. No source found for a specific dose per polybag.',
+        ms: 'Artikel MPOB ialah ringkasan umum: tiada spesies AMF, dos atau statistik dinyatakan. Tiada sumber ditemui untuk dos khusus setiap polibag.',
+        zh: 'MPOB 文章为科普摘要:未注明菌根种类、用量及统计分析。未找到每袋具体用量的来源。'
       },
       sources: [
-        { label: { en: 'MPOB — Ganoderma versus mycorrhiza', ms: 'MPOB — Ganoderma lawan mikoriza', zh: 'MPOB — 灵芝 vs 菌根真菌' }, url: 'https://opb.mpob.gov.my/ganoderma-versus-mycorrhiza/' }
+        { label: { en: 'MPOB — Ganoderma versus mycorrhiza', ms: 'MPOB — Ganoderma lawan mikoriza', zh: 'MPOB — 灵芝 vs 菌根真菌' }, url: 'https://opb.mpob.gov.my/ganoderma-versus-mycorrhiza/' },
+        { label: { en: 'Sundram et al. 2015 (abstract, AGRIS)', ms: 'Sundram et al. 2015 (abstrak, AGRIS)', zh: 'Sundram 等 2015(摘要,AGRIS)' }, url: 'https://agris.fao.org/search/en/records/65de6bf2b766d82b18fd663f' }
       ]
     },
     {
@@ -646,9 +732,9 @@
         zh: '橡胶树(近缘病原菌 G. pseudoferreum)'
       },
       result: {
-        en: 'SF305: ~70% curative, >90% preventive efficacy against red root rot',
-        ms: 'SF305: keberkesanan ~70% merawat, >90% mencegah penyakit reput akar merah',
-        zh: 'SF305:对红根腐病治疗效果约 70%,预防效果超过 90%'
+        en: 'RUBBER TREES, G. pseudoferreum (red root rot) — not oil palm BSR: SF305 ~70% curative, >90% preventive efficacy',
+        ms: 'POKOK GETAH, G. pseudoferreum (reput akar merah) — bukan BSR kelapa sawit: SF305 ~70% merawat, >90% mencegah',
+        zh: '橡胶树,G. pseudoferreum(红根病)— 非油棕茎基腐病:SF305 治疗效果约 70%,预防效果超过 90%'
       },
       note: {
         en: 'No direct data on G. boninense in oil palm found.',
@@ -727,23 +813,23 @@
       },
       level: 3,
       setting: {
-        en: 'Nursery (artificial infection) + 21-month bait-seedling field trials (FELCRA estate, Seberang Perak)',
-        ms: 'Tapak semaian (jangkitan buatan) + percubaan ladang anak benih umpan 21 bulan (ladang FELCRA, Seberang Perak)',
-        zh: '苗圃(人工接种)+ 21 个月田间诱饵苗试验(FELCRA 园区,Seberang Perak)'
+        en: 'Two separate studies, both on SEEDLINGS (not infected mature palms). (1) Rebitanim et al. 2020, peer-reviewed: nursery with artificial infection; field with 15 bait seedlings per treatment, pretreated 6 months, planted next to infected palms, followed 21 months. (2) MPOB TT No. 564 (2015, OCSpecial): nursery 18 seedlings per treatment, 8 months; field 42 bait seedlings per treatment, 21 months.',
+        ms: 'Dua kajian berasingan, kedua-duanya pada ANAK BENIH (bukan pokok matang berpenyakit). (1) Rebitanim et al. 2020, disemak rakan sebidang: tapak semaian dengan jangkitan buatan; ladang dengan 15 anak benih umpan setiap rawatan, pra-rawat 6 bulan, ditanam di sebelah pokok berpenyakit, dipantau 21 bulan. (2) MPOB TT No. 564 (2015, OCSpecial): tapak semaian 18 anak benih setiap rawatan, 8 bulan; ladang 42 anak benih umpan setiap rawatan, 21 bulan.',
+        zh: '两项独立研究,均针对幼苗(非已感染的成龄棕树)。(1) Rebitanim 等 2020(同行评审):苗圃人工接种;田间每处理 15 株诱饵苗,预处理 6 个月,种在病株旁,观察 21 个月。(2) MPOB TT No. 564(2015,OCSpecial):苗圃每处理 18 株,8 个月;田间每处理 42 株诱饵苗,21 个月。'
       },
       result: {
-        en: 'Nursery: 40% infected vs 93% control (77.8% disease reduction). Field: 4.8% dead vs 83.3% (MPOB); peer-reviewed trial: 6.7% dead vs 93.3%, AUDPC −82%',
-        ms: 'Tapak semaian: 40% dijangkiti berbanding 93% kawalan (pengurangan penyakit 77.8%). Ladang: 4.8% mati berbanding 83.3% (MPOB); kajian disemak rakan sebidang: 6.7% mati berbanding 93.3%, AUDPC −82%',
-        zh: '苗圃:感染率 40%,对照 93%(病害减少 77.8%)。田间:死亡 4.8%,对照 83.3%(MPOB);同行评审试验:死亡 6.7%,对照 93.3%,AUDPC 减少 82%'
+        en: '(1) Rebitanim 2020 — nursery: incidence 72.2% vs 100% (77.8% reduction based on AUDPC, not final incidence). Field: incidence 26.7% vs 100%, dead 6.7% vs 93.3% (82.4% AUDPC-based reduction). (2) MPOB TT 564 — nursery: 40% vs 93% infected, 36% vs 90% dead. Field: 4.8% vs 83.3% dead.',
+        ms: '(1) Rebitanim 2020 — tapak semaian: insiden 72.2% berbanding 100% (pengurangan 77.8% berasaskan AUDPC, bukan insiden akhir). Ladang: insiden 26.7% berbanding 100%, mati 6.7% berbanding 93.3% (pengurangan 82.4% berasaskan AUDPC). (2) MPOB TT 564 — tapak semaian: 40% berbanding 93% dijangkiti, 36% berbanding 90% mati. Ladang: 4.8% berbanding 83.3% mati.',
+        zh: '(1) Rebitanim 2020 — 苗圃:发病率 72.2%,对照 100%(按 AUDPC 计算减少 77.8%,非最终发病率)。田间:发病率 26.7%,对照 100%;死亡 6.7%,对照 93.3%(按 AUDPC 减少 82.4%)。(2) MPOB TT 564 — 苗圃:感染 40%,对照 93%;死亡 36%,对照 90%。田间:死亡 4.8%,对照 83.3%。'
       },
       note: {
-        en: 'By MPOB, UPM and FELCRA (patent PI 2012701060, launched 2015). Contains N, P, K, Mg, powdered EFB, Fe, Mn, Cu and Si (thickens root cell walls). OCSpecial 1 for nursery: 50 g per seedling monthly ×9. OCSpecial 2: 4 kg/palm/year in year 1; OCSpecial 3: 8 kg/palm/year in years 2–3 (every 3 months). Tested on young palms only. Contains copper — apply on a different day from microbial products.',
-        ms: 'Oleh MPOB, UPM dan FELCRA (paten PI 2012701060, dilancar 2015). Mengandungi N, P, K, Mg, serbuk TKS, Fe, Mn, Cu dan Si (menebalkan dinding sel akar). OCSpecial 1 untuk tapak semaian: 50 g setiap anak benih sebulan sekali ×9. OCSpecial 2: 4 kg/pokok/tahun pada tahun 1; OCSpecial 3: 8 kg/pokok/tahun pada tahun 2–3 (setiap 3 bulan). Diuji pada pokok muda sahaja. Mengandungi kuprum — beri pada hari berlainan daripada produk mikrob.',
-        zh: '由 MPOB、UPM 与 FELCRA 联合开发(专利 PI 2012701060,2015 年推出)。含氮、磷、钾、镁、空果串粉及铁、锰、铜、硅(硅可增厚根细胞壁)。OCSpecial 1 用于苗圃:每株 50 g,每月一次,共 9 次。OCSpecial 2:第 1 年每株每年 4 kg;OCSpecial 3:第 2–3 年每株每年 8 kg(每 3 个月施一次)。仅在幼龄棕树上测试过。含铜 — 请与微生物产品分开日期施用。'
+        en: 'By MPOB, UPM and FELCRA (patent PI 2012701060, launched 2015). Contains N, P, K, Mg, powdered EFB, Fe, Mn, Cu and Si. MPOB rates — OCSpecial 1 (nursery): 50 g per seedling monthly ×9; OCSpecial 2: 4 kg/palm/year in year 1; OCSpecial 3: 8 kg/palm/year in years 2–3. Contains copper — apply on a different day from microbial products.',
+        ms: 'Oleh MPOB, UPM dan FELCRA (paten PI 2012701060, dilancar 2015). Mengandungi N, P, K, Mg, serbuk TKS, Fe, Mn, Cu dan Si. Kadar MPOB — OCSpecial 1 (tapak semaian): 50 g setiap anak benih sebulan sekali ×9; OCSpecial 2: 4 kg/pokok/tahun pada tahun 1; OCSpecial 3: 8 kg/pokok/tahun pada tahun 2–3. Mengandungi kuprum — beri pada hari berlainan daripada produk mikrob.',
+        zh: '由 MPOB、UPM 与 FELCRA 联合开发(专利 PI 2012701060,2015 年推出)。含氮、磷、钾、镁、空果串粉及铁、锰、铜、硅。MPOB 用量 — OCSpecial 1(苗圃):每株 50 g,每月一次,共 9 次;OCSpecial 2:第 1 年每株每年 4 kg;OCSpecial 3:第 2–3 年每株每年 8 kg。含铜 — 请与微生物产品分开日期施用。'
       },
       sources: [
+        { label: { en: 'Rebitanim et al. 2020, BioMed Res Int (methods, Table 4)', ms: 'Rebitanim et al. 2020, BioMed Res Int (kaedah, Jadual 4)', zh: 'Rebitanim 等 2020, BioMed Res Int(方法,表 4)' }, url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7204346/' },
         { label: { en: 'MPOB TT No. 564 (2015) — GanoCare OCSpecial', ms: 'MPOB TT No. 564 (2015) — GanoCare OCSpecial', zh: 'MPOB TT No. 564 (2015) — GanoCare OCSpecial' }, url: 'https://tot.mpob.gov.my/2020/02/17/tt-no-564-chemical-fertiliser-ganocaretm-as-preventive-treatment-in-controlling-ganoderma-disease-of-oil-palm/' },
-        { label: { en: 'Rebitanim et al. 2020, BioMed Res Int', ms: 'Rebitanim et al. 2020, BioMed Res Int', zh: 'Rebitanim 等 2020, BioMed Res Int' }, url: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7204346/' },
         { label: { en: 'UPM news — GanoCare commercialised (2015)', ms: 'Berita UPM — GanoCare dikomersialkan (2015)', zh: 'UPM 新闻 — GanoCare 商业化 (2015)' }, url: 'https://web.upm.edu.my/news/produk_kawal_penyakit_pangkal_batang_kelapa_sawit_ganocare_dikomersil-25101' }
       ]
     }
@@ -794,9 +880,9 @@
       price: { en: 'No online price — order direct', ms: 'Tiada harga dalam talian — pesan terus', zh: '无网上标价 — 请直接订购' },
       contact: '+603-8066 2875 · info@ibgbiofert.com.my',
       note: {
-        en: 'Liquid with Pseudomonas aeruginosa + Bacillus subtilis — the same two bacteria as the best field result. Pair with an AMF product.',
-        ms: 'Cecair mengandungi Pseudomonas aeruginosa + Bacillus subtilis — dua bakteria yang sama seperti keputusan ladang terbaik. Gandingkan dengan produk AMF.',
-        zh: '含铜绿假单胞菌 + 枯草芽孢杆菌的液剂 — 与最佳田间结果相同的两种细菌。建议搭配菌根 (AMF) 产品使用。'
+        en: 'Liquid with Pseudomonas aeruginosa + Bacillus subtilis, developed with MPOB for Ganoderma prevention (field trial started 2024; results not found published). Strain not stated — not shown to be the UPMP3 strain from the study, and not tested together with an AMF product.',
+        ms: 'Cecair mengandungi Pseudomonas aeruginosa + Bacillus subtilis, dibangunkan bersama MPOB untuk pencegahan Ganoderma (percubaan ladang bermula 2024; keputusan belum ditemui diterbitkan). Strain tidak dinyatakan — tidak terbukti sama dengan strain UPMP3 dalam kajian, dan tidak diuji bersama produk AMF.',
+        zh: '含铜绿假单胞菌 + 枯草芽孢杆菌的液剂,与 MPOB 联合开发用于预防灵芝病(2024 年开始田间试验;未找到已发表结果)。未注明菌株 — 未证明是研究中的 UPMP3 菌株,也未与菌根产品一起测试。'
       },
       links: [
         { label: 'ibgbiofert.com.my', url: 'https://ibgbiofert.com.my/contact/' }
@@ -1101,6 +1187,7 @@
     summariseBlock: summariseBlock,
     compareTrial: compareTrial,
     buildPlan: buildPlan,
+    stepBasis: stepBasis,
     findChemicalConflicts: findChemicalConflicts,
     planBrews: planBrews,
     blocksToCsv: blocksToCsv,
