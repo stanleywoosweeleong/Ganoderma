@@ -14,6 +14,14 @@ programme** backed by the published research.
 
 ## Features
 
+The app is organised as a four-step treatment test, shown as numbered
+tabs and as a "How the treatment test works" guide on the first screen:
+**① Assess → ② Plan the batches → ③ Brew Trichoderma → ④ Track the test**.
+The plan is built as soon as the Plan tab opens. A batch timeline and a
+progress bar sit at the top, and each treatment batch has a **Done**
+tick. Plans and ticks are saved on the device so a test can be followed
+over months. The app always uses a light colour scheme.
+
 | Tab | What it does |
 |---|---|
 | **Assess** | Scores a palm on a 0–4 scale (Healthy / Early / Moderate / Severe / Dead) from four observations: brackets, rotten share of the trunk-base circumference, leaf symptoms, dead. |

@@ -8,7 +8,7 @@
   const STORE_KEY = 'gbsr.v1';
 
   // ── State & storage (per-device; wrapped so the app works without it) ──
-  const state = { lang: 'en', langSaved: false, tab: 'assess', plan: null, blocks: [] };
+  const state = { lang: 'en', langSaved: false, tab: 'assess', plan: null, blocks: [], planOpts: null, done: {} };
 
   function load() {
     try {
@@ -19,12 +19,14 @@
         if (['en', 'ms', 'zh'].includes(d.lang)) { state.lang = d.lang; state.langSaved = true; }
         if (Array.isArray(d.blocks)) state.blocks = d.blocks.filter(validBlock);
         if (typeof d.tab === 'string') state.tab = d.tab;
+        if (d.planOpts && typeof d.planOpts === 'object') state.planOpts = d.planOpts;
+        if (d.done && typeof d.done === 'object') state.done = d.done;
       }
     } catch (e) { /* storage unavailable or corrupt — start fresh */ }
   }
   function save() {
     try {
-      localStorage.setItem(STORE_KEY, JSON.stringify({ lang: state.lang, tab: state.tab, blocks: state.blocks }));
+      localStorage.setItem(STORE_KEY, JSON.stringify({ lang: state.lang, tab: state.tab, blocks: state.blocks, planOpts: state.planOpts, done: state.done }));
     } catch (e) { /* ignore */ }
   }
   function validBlock(b) {
@@ -95,6 +97,11 @@
       b.setAttribute('aria-selected', String(b.dataset.tab === name));
     });
     document.querySelectorAll('main > section').forEach(function (s) { s.hidden = s.id !== 'tab-' + name; });
+    if (name === 'plan' && !state.plan) makePlan(); // show the batches straight away
+    // The general disclaimer shows where amounts are chosen; the Plan tab has
+    // its own fuller "Provisional plan" notice, so the batches start higher up.
+    const disc = document.querySelector('main > .disclaimer');
+    if (disc) disc.hidden = !(name === 'assess' || name === 'brew');
     save();
   }
 
@@ -133,11 +140,43 @@
       const chem = $('p-chem').value.split(/[,\s]+/).filter(Boolean);
       chem.forEach(G.parseDate); // throws on bad dates
       state.chem = chem;
+      state.planOpts = { setting: setting, stage: $('p-stage').value, start: $('p-start').value,
+        horizon: $('p-horizon').value, chem: $('p-chem').value };
+      save();
       renderPlan();
     } catch (e) {
       state.plan = null;
       $('p-out').innerHTML = '<div class="bad">' + esc(errText(e)) + '</div>';
+      $('p-settings').open = true;
     }
+  }
+
+  // A plan is identified by its options, so ticks survive reloads but a
+  // different plan (other stage / start date) starts with none.
+  function planKey() {
+    const p = state.plan;
+    return p ? [p.setting, p.stage, p.batches.length ? p.batches[0].date : '', p.horizonWeeks].join('|') : '';
+  }
+  function restorePlanForm() {
+    const o = state.planOpts;
+    if (!o) return false;
+    $('p-setting').value = o.setting; syncPlanForm();
+    if (o.stage != null) $('p-stage').value = o.stage;
+    if (o.start) $('p-start').value = o.start;
+    if (o.horizon) $('p-horizon').value = o.horizon;
+    $('p-chem').value = o.chem || '';
+    return true;
+  }
+  function onDoneToggle(ev) {
+    const box = ev.target.closest('[data-done]');
+    if (!box) return;
+    const key = planKey();
+    state.done[key] = state.done[key] || {};
+    if (box.checked) state.done[key][box.dataset.done] = today(); else delete state.done[key][box.dataset.done];
+    save();
+    const y = window.scrollY;
+    renderPlan();
+    window.scrollTo(0, y);
   }
 
   // What each plan step rests on (study / label / practice / app assumption).
@@ -150,10 +189,22 @@
 
   function renderPlan() {
     const p = state.plan;
-    if (!p) { $('p-out').innerHTML = ''; return; }
+    if (!p) { $('p-out').innerHTML = ''; $('p-summary').textContent = ''; return; }
     const conflicts = G.findChemicalConflicts(p, state.chem || []);
+    $('p-summary').textContent = t('plan.start') + ': ' + (p.batches.length ? p.batches[0].date : '') + ' · ' + p.horizonWeeks + ' ' + t('plan.weeks');
     let html = '<div class="card"><h3>' + esc(t('setting.' + p.setting)) +
       (p.stage != null ? ' — ' + stagePill(p.stage) : '') + '</h3>';
+    // Batch timeline + progress (ticks saved per plan on this device)
+    const key = planKey();
+    const done = state.done[key] || {};
+    const treat = p.batches.filter(function (b) { return b.number != null; });
+    const nDone = treat.filter(function (b) { return done[b.date]; }).length;
+    html += '<div class="progress">' + esc(t('plan.progress', { d: nDone, n: treat.length })) +
+      '<div class="bar"><i style="width:' + (treat.length ? Math.round(nDone / treat.length * 100) : 0) + '%"></i></div></div>';
+    html += '<div class="timeline" role="list">' + treat.map(function (b) {
+      return '<a role="listitem" href="#b-' + esc(b.date) + '" class="' + b.kind + (done[b.date] ? ' done' : '') + '"><b>' +
+        esc(t('plan.batch', { n: b.number })) + '</b>' + esc(t('plan.week', { n: b.week })) + '<br>' + esc(b.date) + '</a>';
+    }).join('') + '</div>';
     html += '<div class="provisional"><b>' + esc(t('plan.provisional.h')) + '</b> ' + sci(t('plan.provisional')) + '</div>';
     p.warnings.forEach(function (w) { html += '<div class="warn">' + sci(t(w)) + '</div>'; });
     conflicts.forEach(function (c) {
@@ -162,9 +213,11 @@
     });
     p.batches.forEach(function (b) {
       const title = b.number != null ? t('plan.batch', { n: b.number }) : t('kind.census');
-      html += '<div class="batch ' + b.kind + '"><div class="head"><span>' + esc(title) + '</span><span>' +
-        esc(b.date) + '</span><span class="kind">' + esc(t('plan.week', { n: b.week })) + ' · ' + esc(t('kind.' + b.kind)) +
-        '</span></div><ul>' + b.steps.map(function (s) { return '<li>' + sci(t('step.' + s)) + (s.indexOf('bact.drench') === 0 ? '<div class="warn safety">' + sci(t('safety.pseudomonas')) + '</div>' : '') + basisHtml(s) + '</li>'; }).join('') + '</ul></div>';
+      const isDone = !!done[b.date];
+      html += '<div class="batch ' + b.kind + (isDone ? ' is-done' : '') + '" id="b-' + esc(b.date) + '"><div class="head"><span>' + esc(title) + '</span><span>' +
+        esc(b.date) + '</span><span class="kind">' + esc(t('plan.week', { n: b.week })) + ' · ' + esc(t('kind.' + b.kind)) + '</span>' +
+        (b.number != null ? '<label class="donebox"><input type="checkbox" data-done="' + esc(b.date) + '"' + (isDone ? ' checked' : '') + '> ' + esc(t('plan.done')) + '</label>' : '') +
+        '</div><ul>' + b.steps.map(function (s) { return '<li>' + sci(t('step.' + s)) + (s.indexOf('bact.drench') === 0 ? '<div class="warn safety">' + sci(t('safety.pseudomonas')) + '</div>' : '') + basisHtml(s) + '</li>'; }).join('') + '</ul></div>';
     });
     html += '</div>';
     $('p-out').innerHTML = html;
@@ -404,6 +457,9 @@
     $('p-start').value = today();
     syncPlanForm();
     renderAll();
+    // Bring back the saved plan (and its done ticks) so the test can be
+    // followed over months; stage options exist only after renderAll().
+    if (restorePlanForm()) makePlan();
     showTab(state.tab);
 
     $('langs').addEventListener('click', function (e) {
@@ -430,10 +486,17 @@
     $('a-toplan').addEventListener('click', function () {
       $('p-setting').value = 'mature'; syncPlanForm();
       $('p-stage').value = String(lastClass);
-      makePlan(); showTab('plan');
+      makePlan(); showTab('plan'); window.scrollTo(0, 0);
     });
     $('p-setting').addEventListener('change', syncPlanForm);
-    $('p-make').addEventListener('click', makePlan);
+    $('p-out').addEventListener('change', onDoneToggle);
+    document.querySelectorAll('[data-go]').forEach(function (b) {
+      b.addEventListener('click', function () { showTab(b.dataset.go); if (b.dataset.go === 'brew') renderBrew(); window.scrollTo(0, 0); });
+    });
+    $('p-make').addEventListener('click', function () {
+      makePlan();
+      if (state.plan) { $('p-settings').open = false; $('p-out').scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    });
     $('p-print').addEventListener('click', function () { window.print(); });
     $('b-make').addEventListener('click', renderBrew);
     $('t-add').addEventListener('click', addBlock);

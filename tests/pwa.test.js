@@ -49,3 +49,17 @@ test('back-to-top button exists, starts hidden and has a translated label', () =
   const html = read('index.html');
   assert.match(html, /<button[^>]*id="totop"[^>]*data-i18n-aria="totop"[^>]*hidden>/);
 });
+
+test('light mode only: no dark colour scheme rules', () => {
+  const html = read('index.html');
+  assert.ok(!/prefers-color-scheme:\s*dark/.test(html));
+  assert.ok(!/data-theme="dark"/.test(html));
+  assert.match(html, /<meta name="color-scheme" content="light">/);
+});
+
+test('tabs are numbered as protocol steps 1–4 and the first screen links all four', () => {
+  const html = read('index.html');
+  const nums = [...html.matchAll(/data-tab="(\w+)"[^>]*><span class="stepno">(\d)<\/span>/g)].map(m => m[1] + m[2]);
+  assert.deepEqual(nums, ['assess1', 'plan2', 'brew3', 'track4']);
+  assert.deepEqual([...html.matchAll(/data-go="(\w+)"/g)].map(m => m[1]), ['assess', 'plan', 'brew', 'track']);
+});

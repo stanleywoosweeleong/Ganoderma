@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ganoderma BSR Manager</title>
 <meta name="description" content="Assess oil palms for Ganoderma basal stem rot, plan multi-batch biocontrol, schedule Trichoderma brewing and track field trials.">
-<meta name="theme-color" content="#2d7a4f">
+<meta name="theme-color" content="#163323">
+<meta name="color-scheme" content="light">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -19,24 +20,7 @@
     --s0: #2d7a4f; --s1: #b7a000; --s2: #d97706; --s3: #c2410c; --s4: #6b7280;
     --radius: 10px;
   }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #121714; --surface: #1b221e; --surface-2: #222c26; --text: #e5ece7; --muted: #9aa8a0;
-      --border: #2f3a33; --accent: #4fae78; --accent-ink: #0d1510; --warn-bg: #3a2b10; --warn: #f5c46b;
-      --bad-bg: #3b1717; --bad: #fca5a5;
-      --head-bg: #0f2117; --head-ink: #e5ece7; --head-muted: rgba(229,236,231,.72); --brand: #c8702f; --brand-lite: #e8a050;
-      --tex: rgba(229,236,231,.035); --pick-line: rgba(79,174,120,.4); --toast-bg: #0d1510; --toast-ink: #e5ece7;
-      --s0: #4fae78; --s1: #d8c33a; --s2: #f59e0b; --s3: #fb7f45; --s4: #9ca3af;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #121714; --surface: #1b221e; --surface-2: #222c26; --text: #e5ece7; --muted: #9aa8a0;
-    --border: #2f3a33; --accent: #4fae78; --accent-ink: #0d1510; --warn-bg: #3a2b10; --warn: #f5c46b;
-    --bad-bg: #3b1717; --bad: #fca5a5;
-    --head-bg: #0f2117; --head-ink: #e5ece7; --head-muted: rgba(229,236,231,.72); --brand: #c8702f; --brand-lite: #e8a050;
-    --tex: rgba(229,236,231,.035); --pick-line: rgba(79,174,120,.4); --toast-bg: #0d1510; --toast-ink: #e5ece7;
-    --s0: #4fae78; --s1: #d8c33a; --s2: #f59e0b; --s3: #fb7f45; --s4: #9ca3af;
-  }
+  :root { color-scheme: light; }
   * { box-sizing: border-box; }
   html, body { margin: 0; }
   body {
@@ -92,6 +76,34 @@
   .s3 { background: var(--s3); } .s4 { background: var(--s4); }
   .result { font-size: 1.1rem; margin-top: 12px; }
   .warn { background: var(--warn-bg); color: var(--warn); border-radius: 8px; padding: 8px 10px; margin: 6px 0; font-size: .92rem; }
+  .stepno { display: inline-flex; align-items: center; justify-content: center; width: 1.45em; height: 1.45em; margin-right: 6px;
+    border-radius: 50%; background: var(--brand); color: #fff; font-size: .78em; font-weight: 800; vertical-align: .08em; }
+  nav button[aria-selected="false"] .stepno { background: var(--muted); }
+  .flowlist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  @media (min-width: 640px) { .flowlist { grid-template-columns: repeat(4, 1fr); } }
+  .flowlist button { width: 100%; text-align: left; font: inherit; color: var(--text); background: var(--surface-2);
+    border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; cursor: pointer; display: block; }
+  .flowlist button:active { transform: scale(.98); }
+  .flowlist b { display: inline; }
+  .flowlist span:not(.stepno) { display: block; margin-top: 4px; font-size: .85rem; color: var(--muted); }
+  .timeline { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 10px; margin: 0 0 6px; -webkit-overflow-scrolling: touch; }
+  .timeline a { flex: none; text-decoration: none; color: var(--text); background: var(--surface-2); border: 1.5px solid var(--border);
+    border-radius: 10px; padding: 6px 10px; font-size: .82rem; line-height: 1.3; text-align: center; min-width: 76px; }
+  .timeline a b { display: block; font-size: .9rem; }
+  .timeline a.done { border-color: var(--accent); background: var(--surface); }
+  .timeline a.done b::before { content: "✓ "; color: var(--accent); }
+  .timeline a.maintenance { border-style: dashed; }
+  .progress { font-weight: 700; margin: 8px 0 4px; }
+  .progress .bar { height: 8px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); overflow: hidden; margin-top: 6px; }
+  .progress .bar i { display: block; height: 100%; background: var(--accent); }
+  .batch .donebox { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; color: var(--accent); }
+  .batch .donebox input { width: 20px; height: 20px; }
+  .batch.is-done { opacity: .75; }
+  .batch { scroll-margin-top: 70px; }
+  #p-settings summary { cursor: pointer; font-weight: 700; color: var(--accent); padding: 6px 0; }
+  #p-settings[open] summary { margin-bottom: 4px; }
+  #p-summary { margin: 0 0 6px; }
+  .disclaimer[hidden] { display: none; }
   .provisional { border: 2px dashed var(--warn); color: var(--text); background: var(--warn-bg); border-radius: 8px; padding: 10px 12px; margin: 4px 0 10px; font-size: .92rem; }
   .provisional b { color: var(--warn); }
   .basis { margin: 4px 0 6px; font-size: .8rem; color: var(--muted); line-height: 1.45; }
@@ -197,10 +209,10 @@
 
 <nav>
   <div class="tabs" role="tablist">
-    <button role="tab" data-tab="assess" aria-selected="true" data-i18n="tab.assess">Assess</button>
-    <button role="tab" data-tab="plan" aria-selected="false" data-i18n="tab.plan">Plan</button>
-    <button role="tab" data-tab="brew" aria-selected="false" data-i18n="tab.brew">Brew</button>
-    <button role="tab" data-tab="track" aria-selected="false" data-i18n="tab.track">Track</button>
+    <button role="tab" data-tab="assess" aria-selected="true" ><span class="stepno">1</span><span data-i18n="tab.assess">Assess</span></button>
+    <button role="tab" data-tab="plan" aria-selected="false" ><span class="stepno">2</span><span data-i18n="tab.plan">Plan</span></button>
+    <button role="tab" data-tab="brew" aria-selected="false" ><span class="stepno">3</span><span data-i18n="tab.brew">Brew</span></button>
+    <button role="tab" data-tab="track" aria-selected="false" ><span class="stepno">4</span><span data-i18n="tab.track">Track</span></button>
     <button role="tab" data-tab="evidence" aria-selected="false" data-i18n="tab.evidence">Evidence</button>
   </div>
 </nav>
@@ -210,6 +222,15 @@
 
   <!-- ASSESS -->
   <section id="tab-assess">
+    <div class="card flow">
+      <h2 data-i18n="flow.h">How the treatment test works</h2>
+      <ol class="flowlist">
+        <li><button type="button" data-go="assess"><span class="stepno">1</span><b data-i18n="flow.1.t"></b><span data-i18n="flow.1.d"></span></button></li>
+        <li><button type="button" data-go="plan"><span class="stepno">2</span><b data-i18n="flow.2.t"></b><span data-i18n="flow.2.d"></span></button></li>
+        <li><button type="button" data-go="brew"><span class="stepno">3</span><b data-i18n="flow.3.t"></b><span data-i18n="flow.3.d"></span></button></li>
+        <li><button type="button" data-go="track"><span class="stepno">4</span><b data-i18n="flow.4.t"></b><span data-i18n="flow.4.d"></span></button></li>
+      </ol>
+    </div>
     <div class="card">
       <h2 data-i18n="assess.h"></h2>
       <label class="check"><input type="checkbox" id="a-dead"> <span data-i18n="assess.dead"></span></label>
@@ -232,6 +253,9 @@
   <section id="tab-plan" hidden>
     <div class="card no-print">
       <h2 data-i18n="plan.h"></h2>
+      <p class="muted" id="p-summary"></p>
+      <details id="p-settings">
+      <summary data-i18n="plan.settings">Change plan settings</summary>
       <div class="grid2">
         <div>
           <label for="p-setting" data-i18n="plan.setting"></label>
@@ -258,6 +282,7 @@
       <input type="text" id="p-chem" placeholder="2027-02-15, 2027-08-15" data-i18n-ph="plan.chem.ph">
       <button class="btn" id="p-make" data-i18n="plan.make"></button>
       <button class="btn secondary" id="p-print" data-i18n="plan.print"></button>
+      </details>
     </div>
     <div id="p-out"></div>
   </section>
