@@ -93,6 +93,13 @@
   .timeline a.done { border-color: var(--accent); background: var(--surface); }
   .timeline a.done b::before { content: "✓ "; color: var(--accent); }
   .timeline a.maintenance { border-style: dashed; }
+  .agents { display: flex; flex-wrap: wrap; gap: 3px; justify-content: center; margin-top: 5px; }
+  .batch .head .agents { justify-content: flex-start; margin-top: 0; flex-basis: 100%; }
+  .agent { display: inline-block; font-size: .7rem; font-weight: 700; line-height: 1.2; padding: 2px 6px; border-radius: 999px; white-space: nowrap; }
+  .agent-tricho { background: #dcefe2; color: #1f5c38; }
+  .agent-bacteria { background: #e3ecf8; color: #1d4a7a; }
+  .agent-amf { background: #f6ead9; color: #7a4a12; }
+  .agent-sanitation { background: #ececec; color: #4a4a4a; }
   .progress { font-weight: 700; margin: 8px 0 4px; }
   .progress .bar { height: 8px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--border); overflow: hidden; margin-top: 6px; }
   .progress .bar i { display: block; height: 100%; background: var(--accent); }

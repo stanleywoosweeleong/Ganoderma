@@ -459,3 +459,18 @@ test('every scientific name in the evidence library gets italicised somewhere', 
   for (const name of ['Pseudomonas aeruginosa', 'Glomus intraradices', 'Trichoderma harzianum', 'T. asperellum', 'T. virens', 'Bacillus velezensis', 'Bacillus amyloliquefaciens', 'Hendersonia'])
     assert.ok(out.includes('<i>' + name), name);
 });
+
+// ── Batch labels: which microbe group each batch uses ────────────────────
+test('batchAgents labels the early-stage plan: clean-up+Trichoderma, bacteria, Trichoderma, clean-up', () => {
+  const p = G.buildPlan({ setting: 'mature', stage: 1, startDate: '2027-01-04', horizonWeeks: 24 });
+  const treat = p.batches.filter(b => b.number != null);
+  assert.deepEqual(treat.slice(0, 4).map(b => G.batchAgents(b.steps)),
+    [['sanitation', 'tricho'], ['bacteria'], ['tricho'], ['sanitation']]);
+  assert.deepEqual(G.batchAgents(treat[4].steps), ['tricho', 'bacteria']); // week 24 maintenance
+});
+
+test('batchAgents: replant and nursery start with Trichoderma + mycorrhiza; census-only batches have none', () => {
+  assert.deepEqual(G.batchAgents(G.buildPlan({ setting: 'replant', startDate: '2027-01-04' }).batches[0].steps), ['tricho', 'amf']);
+  assert.deepEqual(G.batchAgents(G.buildPlan({ setting: 'nursery', startDate: '2027-01-04' }).batches[0].steps), ['tricho', 'amf']);
+  assert.deepEqual(G.batchAgents(['census']), []);
+});

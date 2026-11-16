@@ -459,6 +459,25 @@
     };
   }
 
+
+  /**
+   * Which kinds of treatment a batch involves, for labelling the timeline:
+   * 'sanitation' (clean-up / mounding / felling, no microbe), 'tricho'
+   * (Trichoderma), 'bacteria' (Pseudomonas + Bacillus or Streptomyces
+   * products), 'amf' (mycorrhiza). Order is fixed so labels read the same.
+   */
+  const AGENT_ORDER = ['sanitation', 'tricho', 'bacteria', 'amf'];
+  function batchAgents(steps) {
+    const found = {};
+    (steps || []).forEach(function (s) {
+      if (s.indexOf('tricho.') === 0) found.tricho = true;
+      else if (s.indexOf('bact.') === 0) found.bacteria = true;
+      else if (s.indexOf('amf.') === 0) found.amf = true;
+      else if (s.indexOf('sanitise.') === 0 || s === 'mound') found.sanitation = true;
+    });
+    return AGENT_ORDER.filter(function (a) { return found[a]; });
+  }
+
   /**
    * Find Trichoderma batches that fall too close to a chemical
    * (e.g. hexaconazole trunk injection) — azole fungicides kill Trichoderma.
@@ -1214,6 +1233,7 @@
     summariseBlock: summariseBlock,
     compareTrial: compareTrial,
     buildPlan: buildPlan,
+    batchAgents: batchAgents,
     stepBasis: stepBasis,
     findChemicalConflicts: findChemicalConflicts,
     planBrews: planBrews,

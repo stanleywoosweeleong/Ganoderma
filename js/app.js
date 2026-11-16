@@ -179,6 +179,13 @@
     window.scrollTo(0, y);
   }
 
+  // Small labels showing which microbe group (or clean-up) a batch uses.
+  function agentTags(steps) {
+    return G.batchAgents(steps).map(function (a) {
+      return '<span class="agent agent-' + a + '">' + sci(t('agent.' + a)) + '</span>';
+    }).join('');
+  }
+
   // What each plan step rests on (study / label / practice / app assumption).
   function basisHtml(step) {
     const b = G.stepBasis(step);
@@ -203,7 +210,8 @@
       '<div class="bar"><i style="width:' + (treat.length ? Math.round(nDone / treat.length * 100) : 0) + '%"></i></div></div>';
     html += '<div class="timeline" role="list">' + treat.map(function (b) {
       return '<a role="listitem" href="#b-' + esc(b.date) + '" class="' + b.kind + (done[b.date] ? ' done' : '') + '"><b>' +
-        esc(t('plan.batch', { n: b.number })) + '</b>' + esc(t('plan.week', { n: b.week })) + '<br>' + esc(b.date) + '</a>';
+        esc(t('plan.batch', { n: b.number })) + '</b>' + esc(t('plan.week', { n: b.week })) + '<br>' + esc(b.date) +
+        '<span class="agents">' + agentTags(b.steps) + '</span></a>';
     }).join('') + '</div>';
     html += '<div class="provisional"><b>' + esc(t('plan.provisional.h')) + '</b> ' + sci(t('plan.provisional')) + '</div>';
     p.warnings.forEach(function (w) { html += '<div class="warn">' + sci(t(w)) + '</div>'; });
@@ -216,6 +224,7 @@
       const isDone = !!done[b.date];
       html += '<div class="batch ' + b.kind + (isDone ? ' is-done' : '') + '" id="b-' + esc(b.date) + '"><div class="head"><span>' + esc(title) + '</span><span>' +
         esc(b.date) + '</span><span class="kind">' + esc(t('plan.week', { n: b.week })) + ' · ' + esc(t('kind.' + b.kind)) + '</span>' +
+        '<span class="agents">' + agentTags(b.steps) + '</span>' +
         (b.number != null ? '<label class="donebox"><input type="checkbox" data-done="' + esc(b.date) + '"' + (isDone ? ' checked' : '') + '> ' + esc(t('plan.done')) + '</label>' : '') +
         '</div><ul>' + b.steps.map(function (s) { return '<li>' + sci(t('step.' + s)) + (s.indexOf('bact.drench') === 0 ? '<div class="warn safety">' + sci(t('safety.pseudomonas')) + '</div>' : '') + basisHtml(s) + '</li>'; }).join('') + '</ul></div>';
     });
