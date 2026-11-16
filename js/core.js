@@ -901,9 +901,9 @@
       price: { en: 'No online price — order direct', ms: 'Tiada harga dalam talian — pesan terus', zh: '无网上标价 — 请直接订购' },
       contact: '+603-8066 2875 · info@ibgbiofert.com.my',
       note: {
-        en: 'Liquid with Pseudomonas aeruginosa + Bacillus subtilis, developed with MPOB for Ganoderma prevention (field trial started 2024; results not found published). Strain not stated — not shown to be the UPMP3 strain from the study, and not tested together with an AMF product.',
-        ms: 'Cecair mengandungi Pseudomonas aeruginosa + Bacillus subtilis, dibangunkan bersama MPOB untuk pencegahan Ganoderma (percubaan ladang bermula 2024; keputusan belum ditemui diterbitkan). Strain tidak dinyatakan — tidak terbukti sama dengan strain UPMP3 dalam kajian, dan tidak diuji bersama produk AMF.',
-        zh: '含铜绿假单胞菌 + 枯草芽孢杆菌的液剂,与 MPOB 联合开发用于预防灵芝病(2024 年开始田间试验;未找到已发表结果)。未注明菌株 — 未证明是研究中的 UPMP3 菌株,也未与菌根产品一起测试。'
+        en: 'Liquid containing Pseudomonas aeruginosa + Bacillus subtilis, developed with MPOB for Ganoderma prevention. Field trial started 2024 (MPOB). The strain is not stated in the product information.',
+        ms: 'Cecair mengandungi Pseudomonas aeruginosa + Bacillus subtilis, dibangunkan bersama MPOB untuk pencegahan Ganoderma. Percubaan ladang bermula 2024 (MPOB). Strain tidak dinyatakan dalam maklumat produk.',
+        zh: '含铜绿假单胞菌 + 枯草芽孢杆菌的液剂,与 MPOB 联合开发用于预防灵芝病。2024 年开始田间试验(MPOB)。产品资料未注明菌株。'
       },
       links: [
         { label: 'ibgbiofert.com.my', url: 'https://ibgbiofert.com.my/contact/' }
@@ -988,9 +988,9 @@
       price: { en: 'See Shopee listing', ms: 'Lihat senarai Shopee', zh: '见 Shopee 商品页' },
       contact: '',
       note: {
-        en: '"Endophytic Trichoderma" — species and spore count not stated; claims are the seller’s own.',
-        ms: '"Trichoderma endofit" — spesies dan kiraan spora tidak dinyatakan; dakwaan daripada penjual sendiri.',
-        zh: '「内生木霉」— 未注明菌种和孢子数;功效为卖家自述。'
+        en: 'Described by the seller as endophytic Trichoderma. Species and spore count are not stated on the listing.',
+        ms: 'Diterangkan oleh penjual sebagai Trichoderma endofit. Spesies dan kiraan spora tidak dinyatakan dalam senarai.',
+        zh: '卖家描述为内生木霉。商品页未注明菌种和孢子数。'
       },
       links: [
         { label: 'Shopee', url: 'https://shopee.com.my/product/713487412/26233535958' }
@@ -1024,9 +1024,9 @@
       price: { en: 'Ask your fertiliser shop or an SNT representative', ms: 'Tanya kedai baja anda atau wakil SNT', zh: '请向肥料店或 SNT 代表询问' },
       contact: '',
       note: {
-        en: 'Liquid microbial fertiliser (plant & soil booster) containing Bacillus velezensis + B. amyloliquefaciens. Strains and CFU not stated. Sold for soil health, not tested against Ganoderma. Source: local supplier information, not found online.',
-        ms: 'Baja mikrob cecair (penggalak tanaman & tanah) mengandungi Bacillus velezensis + B. amyloliquefaciens. Strain dan CFU tidak dinyatakan. Dijual untuk kesihatan tanah, belum diuji terhadap Ganoderma. Sumber: maklumat pembekal tempatan, tiada dalam talian.',
-        zh: '液体微生物肥料(植物与土壤增强剂),含贝莱斯芽孢杆菌 + 解淀粉芽孢杆菌。未注明菌株与菌落数。用于改良土壤,未针对灵芝病测试。来源:本地供应商信息,网上未查到。'
+        en: 'Liquid microbial fertiliser (plant & soil booster) containing Bacillus velezensis + B. amyloliquefaciens. Strains and CFU not stated. Sold as a soil-health product; no Ganoderma trial listed. Source: local supplier information, not found online.',
+        ms: 'Baja mikrob cecair (penggalak tanaman & tanah) mengandungi Bacillus velezensis + B. amyloliquefaciens. Strain dan CFU tidak dinyatakan. Dijual sebagai produk kesihatan tanah; tiada percubaan Ganoderma disenaraikan. Sumber: maklumat pembekal tempatan, tiada dalam talian.',
+        zh: '液体微生物肥料(植物与土壤增强剂),含贝莱斯芽孢杆菌 + 解淀粉芽孢杆菌。未注明菌株与菌落数。作为土壤健康产品销售;未列出灵芝病试验。来源:本地供应商信息,网上未查到。'
       },
       links: []
     },
@@ -1056,9 +1056,9 @@
       price: { en: 'Ask your agrochemical shop or Bayer Malaysia', ms: 'Tanya kedai racun anda atau Bayer Malaysia', zh: '请向农药店或 Bayer 马来西亚询问' },
       contact: '',
       note: {
-        en: 'B. amyloliquefaciens QST 713 (formerly B. subtilis), a registered biofungicide in many countries. Malaysian registration not confirmed online. Not tested against Ganoderma.',
-        ms: 'B. amyloliquefaciens QST 713 (dahulu B. subtilis), racun kulat biologi berdaftar di banyak negara. Pendaftaran Malaysia belum disahkan dalam talian. Belum diuji terhadap Ganoderma.',
-        zh: '解淀粉芽孢杆菌 QST 713(旧称枯草芽孢杆菌),多国登记的生物杀菌剂。网上未能确认马来西亚登记。未针对灵芝病测试。'
+        en: 'B. amyloliquefaciens QST 713 (formerly B. subtilis), a registered biofungicide in many countries. Malaysian registration not confirmed online — check with the supplier. No Ganoderma trial listed.',
+        ms: 'B. amyloliquefaciens QST 713 (dahulu B. subtilis), racun kulat biologi berdaftar di banyak negara. Pendaftaran Malaysia belum disahkan dalam talian — semak dengan pembekal. Tiada percubaan Ganoderma disenaraikan.',
+        zh: '解淀粉芽孢杆菌 QST 713(旧称枯草芽孢杆菌),多国登记的生物杀菌剂。网上未能确认马来西亚登记 — 请向供应商确认。未列出灵芝病试验。'
       },
       links: []
     },

@@ -487,3 +487,8 @@ test('commercial-product evidence (GanoEF) is stated factually: no weak badge, f
   assert.ok(!e.weak && !e.weakWhy);
   ['setting', 'result', 'note'].forEach(f => ['en', 'ms', 'zh'].forEach(l => assert.match(e[f][l], /MPOB/, `${f}.${l}`)));
 });
+
+test('product notes describe facts, not judgements about named products', () => {
+  const judgemental = /claims are the seller|not shown to be|results not found|not tested against|not proven/i;
+  for (const p of G.PRODUCTS) assert.ok(!judgemental.test(p.note.en), p.id + ': ' + p.note.en);
+});

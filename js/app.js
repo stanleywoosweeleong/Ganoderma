@@ -424,7 +424,7 @@
     html += items.map(function (p) {
       return '<div class="product"><b>' + sci(p.name) + '</b>' +
         (p.strainMatch ? ' <span class="level muted-level">' + esc(t('buy.strainMatch')) + '</span>' : '') +
-        (p.untested ? ' <span class="level lv1">' + sci(t('buy.untested')) + '</span>' : '') +
+        (p.untested ? ' <span class="level muted-level">' + sci(t('buy.untested')) + '</span>' : '') +
         '<div class="muted">' + esc(p.company) + (p.mpob ? ' · ' + esc(t('buy.withMpob')) : '') + '</div>' +
         '<div>' + sci(loc(p.price)) + '</div>' +
         (p.contact ? '<div>' + esc(t('buy.contact')) + ': ' + esc(p.contact) + '</div>' : '') +

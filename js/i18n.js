@@ -261,7 +261,7 @@
     'buy.none': { en: 'No product found for sale in Malaysia (Nov 2026).', ms: 'Tiada produk ditemui untuk dijual di Malaysia (Nov 2026).', zh: '未找到在马来西亚销售的产品(2026 年 11 月)。' },
     'buy.strainMatch': { en: 'Same strain', ms: 'Strain sama', zh: '相同菌株' },
     'buy.withMpob': { en: 'developed with MPOB', ms: 'dibangunkan bersama MPOB', zh: '与 MPOB 联合开发' },
-    'buy.untested': { en: 'Not tested against Ganoderma', ms: 'Belum diuji terhadap Ganoderma', zh: '未针对灵芝病测试' },
+    'buy.untested': { en: 'No Ganoderma trial listed', ms: 'Tiada percubaan Ganoderma disenaraikan', zh: '未列出灵芝病试验' },
     'buy.contact': { en: 'Contact', ms: 'Hubungi', zh: '联系' },
     'buy.disclaimer': {
       en: 'Products and prices from a web search in November 2026 and may change. This app is not linked to any seller. Before buying, ask for the product registration number and spore/CFU count.',
