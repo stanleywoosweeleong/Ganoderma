@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ganoderma BSR Manager</title>
 <meta name="description" content="Assess oil palms for Ganoderma basal stem rot, plan multi-batch biocontrol, schedule Trichoderma brewing and track field trials.">
-<meta name="theme-color" content="#163323">
+<meta name="theme-color" content="#faf7f0">
 <meta name="color-scheme" content="light">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
@@ -16,7 +16,7 @@
     --bg: #efebe1; --surface: #faf7f0; --surface-2: #f1ede3; --text: #1d2a22; --muted: #57645b;
     --border: #ddd6c7; --accent: #2d7a4f; --accent-ink: #faf7f0; --warn-bg: #fbefd8; --warn: #85500a;
     --bad-bg: #fde8e8; --bad: #9b1c1c;
-    --head-bg: #163323; --head-ink: #eef3ef; --head-muted: rgba(238,243,239,.78); --brand: #c8702f; --brand-lite: #e8a050;
+    --head-bg: #faf7f0; --head-ink: #1f5c38; --head-muted: #57645b; --brand: #c8702f; --brand-lite: #e8a050; --brand-text: #9a5418;
     --tex: rgba(29,42,34,.045); --pick-line: rgba(45,122,79,.35); --toast-bg: #1d2a22; --toast-ink: #eef3ef;
     --s0: #2d7a4f; --s1: #b7a000; --s2: #d97706; --s3: #c2410c; --s4: #6b7280;
     --radius: 10px;
@@ -30,19 +30,19 @@
   }
   /* header (EM Brew style: dark band, accent stripe, pill language toggle) */
   header { background: var(--head-bg); color: var(--head-ink);
-    padding: calc(18px + env(safe-area-inset-top, 0px)) 16px 16px; border-bottom: 4px solid var(--brand); }
+    padding: calc(18px + env(safe-area-inset-top, 0px)) 16px 16px; border-bottom: 3px solid var(--brand); }
   header .row { display: flex; align-items: flex-start; gap: 12px; justify-content: space-between; max-width: 900px; margin: 0 auto; }
   header h1 { font-size: 30px; line-height: 1.05; margin: 0; font-weight: 800; letter-spacing: -.02em; }
   header h1 .en { display: block; font-size: 12px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase;
-    color: var(--brand-lite); margin-top: 7px; }
+    color: var(--brand-text); margin-top: 7px; }
   header p { margin: 10px auto 0; max-width: 900px; font-size: .82rem; font-weight: 500; color: var(--head-muted); }
   .langs { flex: none; display: flex; gap: 2px; padding: 2px; border-radius: 999px;
-    background: rgba(232,160,80,.14); border: 1.5px solid var(--brand); }
-  .langbtn { background: transparent; color: var(--brand-lite); border: 0; border-radius: 999px; cursor: pointer;
+    background: rgba(45,122,79,.06); border: 1.5px solid var(--accent); }
+  .langbtn { background: transparent; color: var(--accent); border: 0; border-radius: 999px; cursor: pointer;
     font: inherit; font-size: 13px; font-weight: 800; line-height: 1; padding: 8px 11px; letter-spacing: .05em; }
-  .langbtn:active { background: rgba(255,255,255,.12); }
-  .langbtn[aria-pressed="true"] { background: var(--brand-lite); color: var(--head-bg); }
-  .langbtn:focus-visible { outline: 3px solid var(--brand-lite); outline-offset: 2px; }
+  .langbtn:active { background: rgba(45,122,79,.12); }
+  .langbtn[aria-pressed="true"] { background: var(--accent); color: var(--surface); }
+  .langbtn:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   nav { position: sticky; top: 0; z-index: 5; background: var(--surface); border-bottom: 1px solid var(--border); }
   nav .tabs { display: flex; max-width: 900px; margin: 0 auto; overflow-x: auto; }
   nav button {
@@ -187,12 +187,12 @@
 
   /* back-to-top button: appears after scrolling, sits above the update toast */
   .totop { position: fixed; z-index: 9; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px));
-    width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--brand); background: var(--head-bg);
-    color: var(--brand-lite); font: inherit; font-size: 22px; font-weight: 800; line-height: 1; cursor: pointer;
-    box-shadow: 0 6px 16px rgba(0,0,0,.3); }
+    width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--accent); background: var(--surface);
+    color: var(--accent); font: inherit; font-size: 22px; font-weight: 800; line-height: 1; cursor: pointer;
+    box-shadow: 0 4px 12px rgba(29,42,34,.18); }
   .totop[hidden] { display: none; }
   .totop:active { transform: scale(.94); }
-  .totop:focus-visible { outline: 3px solid var(--brand-lite); outline-offset: 2px; }
+  .totop:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
   body.has-toast .totop { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
   @media print { .totop { display: none !important; } }
   /* Phones: a fixed bottom tab bar — all five tabs visible, no sideways
