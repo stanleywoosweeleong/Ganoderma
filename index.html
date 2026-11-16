@@ -194,6 +194,27 @@
   .totop:focus-visible { outline: 3px solid var(--brand-lite); outline-offset: 2px; }
   body.has-toast .totop { bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
   @media print { .totop { display: none !important; } }
+  /* Phones: a fixed bottom tab bar — all five tabs visible, no sideways
+     scrolling, within thumb reach. Wider screens keep the top bar. */
+  @media (max-width: 640px) {
+    nav { position: fixed; top: auto; bottom: 0; left: 0; right: 0; z-index: 8;
+      border-bottom: 0; border-top: 1px solid var(--border); box-shadow: 0 -4px 14px rgba(0,0,0,.08);
+      padding-bottom: env(safe-area-inset-bottom, 0px); }
+    nav .tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); overflow: visible; }
+    nav button { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+      min-width: 0; padding: 7px 2px 8px; font-size: 11.5px; line-height: 1.15;
+      border-bottom: 0; border-top: 3px solid transparent; }
+    nav button > span:last-child { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    nav button[aria-selected="true"] { border-top-color: var(--accent); }
+    nav button .stepno { margin: 0; width: 24px; height: 24px; font-size: 13px; }
+    body { padding-bottom: calc(66px + env(safe-area-inset-bottom, 0px)); }
+    .totop { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+    body.has-toast .totop { bottom: calc(146px + env(safe-area-inset-bottom, 0px)); }
+    #toast { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+    .batch { scroll-margin-top: 12px; }
+  }
+  .stepno.evi svg { display: block; }
+
   @media print {
     header, nav, .btn, .no-print, #toast { display: none !important; }
     body { background: #fff; color: #000; }
@@ -220,7 +241,7 @@
     <button role="tab" data-tab="plan" aria-selected="false" ><span class="stepno">2</span><span data-i18n="tab.plan">Plan</span></button>
     <button role="tab" data-tab="brew" aria-selected="false" ><span class="stepno">3</span><span data-i18n="tab.brew">Brew</span></button>
     <button role="tab" data-tab="track" aria-selected="false" ><span class="stepno">4</span><span data-i18n="tab.track">Track</span></button>
-    <button role="tab" data-tab="evidence" aria-selected="false" data-i18n="tab.evidence">Evidence</button>
+    <button role="tab" data-tab="evidence" aria-selected="false"><span class="stepno evi" aria-hidden="true"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/></svg></span><span data-i18n="tab.evidence">Evidence</span></button>
   </div>
 </nav>
 

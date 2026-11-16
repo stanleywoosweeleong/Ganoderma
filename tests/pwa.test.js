@@ -63,3 +63,12 @@ test('tabs are numbered as protocol steps 1–4 and the first screen links all f
   assert.deepEqual(nums, ['assess1', 'plan2', 'brew3', 'track4']);
   assert.deepEqual([...html.matchAll(/data-go="(\w+)"/g)].map(m => m[1]), ['assess', 'plan', 'brew', 'track']);
 });
+
+test('phones get a fixed bottom tab bar with five equal columns', () => {
+  const html = read('index.html');
+  const m = html.match(/@media \(max-width: 640px\) \{([\s\S]*?)\n  \}/);
+  assert.ok(m, 'mobile media block');
+  assert.match(m[1], /nav \{ position: fixed;[^}]*bottom: 0/);
+  assert.match(m[1], /grid-template-columns: repeat\(5, minmax\(0, 1fr\)\)/);
+  assert.match(html, /data-tab="evidence"[^>]*><span class="stepno evi"/);
+});
