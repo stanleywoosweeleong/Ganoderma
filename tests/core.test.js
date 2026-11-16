@@ -342,7 +342,7 @@ test('products: items not tested against Ganoderma are flagged and listed last',
 
 test('evidence: weak-evidence badge on the thinly supported entries only', () => {
   const weak = G.EVIDENCE.filter(e => e.weak).map(e => e.id).sort();
-  assert.deepEqual(weak, ['amf', 'bamyloliquefaciens', 'bvelezensis', 'ganoef']);
+  assert.deepEqual(weak, ['amf', 'bamyloliquefaciens', 'bvelezensis']);
   // the field-trial-backed entries are never marked weak
   ['pseudomonas_amf', 'ganocare', 'trichoderma_mix'].forEach(id =>
     assert.ok(!G.EVIDENCE.find(e => e.id === id).weak, id));
@@ -480,5 +480,10 @@ test('every weak-evidence entry says why, in all three languages', () => {
     assert.ok(e.weakWhy, e.id + ' has no reason');
     ['en', 'ms', 'zh'].forEach(l => assert.ok(e.weakWhy[l] && e.weakWhy[l].trim(), `${e.id}.weakWhy.${l}`));
   }
-  assert.match(G.EVIDENCE.find(e => e.id === 'ganoef').weakWhy.en, /no untreated comparison/i);
+});
+
+test('commercial-product evidence (GanoEF) is stated factually: no weak badge, figures attributed to MPOB', () => {
+  const e = G.EVIDENCE.find(x => x.id === 'ganoef');
+  assert.ok(!e.weak && !e.weakWhy);
+  ['setting', 'result', 'note'].forEach(f => ['en', 'ms', 'zh'].forEach(l => assert.match(e[f][l], /MPOB/, `${f}.${l}`)));
 });

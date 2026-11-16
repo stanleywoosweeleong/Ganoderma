@@ -799,8 +799,6 @@
     },
     {
       id: 'ganoef',
-      weak: true,
-      weakWhy: { en: 'No untreated comparison reported; MPOB and maker figures only, not peer-reviewed', ms: 'Tiada perbandingan tanpa rawatan dilaporkan; angka MPOB dan pengeluar sahaja, tidak disemak rakan sebidang', zh: '未报告未处理对照;仅有 MPOB 与厂商数据,未经同行评审' },
       agent: {
         en: 'GanoEF — Hendersonia GanoEF1 (endophytic fungus) in fertiliser',
         ms: 'GanoEF — Hendersonia GanoEF1 (kulat endofit) dalam baja',
@@ -808,19 +806,19 @@
       },
       level: 3,
       setting: {
-        en: 'Field trial with treated seedlings, 36 months (MPOB)',
-        ms: 'Percubaan ladang dengan anak benih dirawat, 36 bulan (MPOB)',
-        zh: '处理幼苗的田间试验,36 个月(MPOB)'
+        en: 'Field trial with treated seedlings, 36 months, as reported by MPOB',
+        ms: 'Percubaan ladang dengan anak benih dirawat, 36 bulan, seperti dilaporkan oleh MPOB',
+        zh: '处理幼苗的田间试验,36 个月,据 MPOB 报告'
       },
       result: {
-        en: 'Only 5% of treated palms died from Ganoderma after 36 months',
-        ms: 'Hanya 5% pokok dirawat mati akibat Ganoderma selepas 36 bulan',
-        zh: '36 个月后,处理过的棕树仅 5% 死于灵芝病'
+        en: 'MPOB reports 5% of treated palms died from Ganoderma after 36 months',
+        ms: 'MPOB melaporkan 5% pokok dirawat mati akibat Ganoderma selepas 36 bulan',
+        zh: 'MPOB 报告:36 个月后,处理过的棕树有 5% 死于灵芝病'
       },
       note: {
-        en: 'Developed by MPOB with All Cosmos. Figures come from MPOB and the maker; no independent peer-reviewed field study found.',
-        ms: 'Dibangunkan oleh MPOB bersama All Cosmos. Angka daripada MPOB dan pengeluar; tiada kajian ladang bebas yang disemak rakan sebidang ditemui.',
-        zh: '由 MPOB 与 All Cosmos 联合开发。数据来自 MPOB 及厂商;未找到独立的同行评审田间研究。'
+        en: 'Developed by MPOB with All Cosmos. Figures as reported by MPOB SawitSecure.',
+        ms: 'Dibangunkan oleh MPOB bersama All Cosmos. Angka seperti dilaporkan oleh MPOB SawitSecure.',
+        zh: '由 MPOB 与 All Cosmos 联合开发。数据引自 MPOB SawitSecure。'
       },
       sources: [
         { label: { en: 'MPOB SawitSecure — GanoEF', ms: 'MPOB SawitSecure — GanoEF', zh: 'MPOB SawitSecure — GanoEF' }, url: 'http://sawitsecure.mpob.gov.my/disease-control-and-management/commercial-product-for-preventive-treatment/ganoef-biofertilizer-2/' },
