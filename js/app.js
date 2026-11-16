@@ -423,7 +423,7 @@
     if (!items.length) return html + '<p class="muted">' + esc(t('buy.none')) + '</p></div>';
     html += items.map(function (p) {
       return '<div class="product"><b>' + sci(p.name) + '</b>' +
-        (p.strainMatch ? ' <span class="level lv3">' + esc(t('buy.strainMatch')) + '</span>' : '') +
+        (p.strainMatch ? ' <span class="level muted-level">' + esc(t('buy.strainMatch')) + '</span>' : '') +
         (p.untested ? ' <span class="level lv1">' + sci(t('buy.untested')) + '</span>' : '') +
         '<div class="muted">' + esc(p.company) + (p.mpob ? ' · ' + esc(t('buy.withMpob')) : '') + '</div>' +
         '<div>' + sci(loc(p.price)) + '</div>' +
@@ -436,10 +436,11 @@
   }
 
   function renderEvidence() {
-    const list = G.EVIDENCE.slice().sort(function (a, b) { return b.level - a.level; });
+    // Strongest first; within a level, weak-evidence entries go last.
+    const list = G.EVIDENCE.slice().sort(function (a, b) { return (b.level - a.level) || (Number(!!a.weak) - Number(!!b.weak)); });
     $('e-out').innerHTML = list.map(function (e) {
-      return '<div class="card ev"><h3>' + sci(loc(e.agent)) + '</h3><span class="level lv' + e.level + '">' + esc(t('ev.level.' + e.level)) + '</span>' +
-        (e.weak ? ' <span class="level weak">' + esc(t('ev.weak')) + '</span>' : '') +
+      return '<div class="card ev"><h3>' + sci(loc(e.agent)) + '</h3><span class="level lv' + e.level + (e.weak ? ' muted-level' : '') + '">' + esc(t('ev.level.' + e.level)) + '</span>' +
+        (e.weak ? ' <span class="level weak">' + esc(t('ev.weak')) + (e.weakWhy ? ': ' + sci(loc(e.weakWhy)) : '') + '</span>' : '') +
         '<p><b>' + esc(t('ev.setting')) + ':</b> ' + sci(loc(e.setting)) + '</p><p><b>' + esc(t('ev.result')) + ':</b> ' + sci(loc(e.result)) + '</p>' +
         (loc(e.note) ? '<p class="muted">' + sci(loc(e.note)) + '</p>' : '') +
         '<p>' + e.sources.map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + sci(loc(s.label)) + '</a>'; }).join(' · ') + '</p>' +

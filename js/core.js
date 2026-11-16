@@ -720,6 +720,7 @@
       },
       level: 2,
       weak: true,
+      weakWhy: { en: 'Popular summary only — no species, doses or statistics', ms: 'Ringkasan umum sahaja — tiada spesies, dos atau statistik', zh: '仅为科普摘要 — 无菌种、用量及统计数据' },
       setting: {
         en: 'Seedlings inoculated with AMF before Ganoderma: pot trial (9 months) and a small field comparison (60 + 60 seedlings, 10 months) — MPOB article; G. intraradices UT126 in Sundram et al. 2015',
         ms: 'Anak benih diinokulasi AMF sebelum Ganoderma: percubaan pasu (9 bulan) dan perbandingan ladang kecil (60 + 60 anak benih, 10 bulan) — artikel MPOB; G. intraradices UT126 dalam Sundram et al. 2015',
@@ -743,6 +744,7 @@
     {
       id: 'bvelezensis',
       weak: true,
+      weakWhy: { en: 'Different host and pathogen (rubber tree, G. pseudoferreum)', ms: 'Perumah dan patogen berbeza (pokok getah, G. pseudoferreum)', zh: '寄主与病原菌不同(橡胶树,G. pseudoferreum)' },
       agent: { en: 'Bacillus velezensis', ms: 'Bacillus velezensis', zh: '贝莱斯芽孢杆菌 (Bacillus velezensis)' },
       level: 1,
       setting: {
@@ -767,6 +769,7 @@
     {
       id: 'bamyloliquefaciens',
       weak: true,
+      weakWhy: { en: 'One greenhouse result, abstract only, no field trial', ms: 'Satu keputusan rumah hijau, abstrak sahaja, tiada percubaan ladang', zh: '仅一项温室结果,只有摘要,无田间试验' },
       agent: {
         en: 'Bacillus amyloliquefaciens (EB13, SAHA 12.07)',
         ms: 'Bacillus amyloliquefaciens (EB13, SAHA 12.07)',
@@ -797,6 +800,7 @@
     {
       id: 'ganoef',
       weak: true,
+      weakWhy: { en: 'No untreated comparison reported; MPOB and maker figures only, not peer-reviewed', ms: 'Tiada perbandingan tanpa rawatan dilaporkan; angka MPOB dan pengeluar sahaja, tidak disemak rakan sebidang', zh: '未报告未处理对照;仅有 MPOB 与厂商数据,未经同行评审' },
       agent: {
         en: 'GanoEF — Hendersonia GanoEF1 (endophytic fungus) in fertiliser',
         ms: 'GanoEF — Hendersonia GanoEF1 (kulat endofit) dalam baja',

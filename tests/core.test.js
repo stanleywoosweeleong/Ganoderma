@@ -474,3 +474,11 @@ test('batchAgents: replant and nursery start with Trichoderma + mycorrhiza; cens
   assert.deepEqual(G.batchAgents(G.buildPlan({ setting: 'nursery', startDate: '2027-01-04' }).batches[0].steps), ['tricho', 'amf']);
   assert.deepEqual(G.batchAgents(['census']), []);
 });
+
+test('every weak-evidence entry says why, in all three languages', () => {
+  for (const e of G.EVIDENCE.filter(x => x.weak)) {
+    assert.ok(e.weakWhy, e.id + ' has no reason');
+    ['en', 'ms', 'zh'].forEach(l => assert.ok(e.weakWhy[l] && e.weakWhy[l].trim(), `${e.id}.weakWhy.${l}`));
+  }
+  assert.match(G.EVIDENCE.find(e => e.id === 'ganoef').weakWhy.en, /no untreated comparison/i);
+});
