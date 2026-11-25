@@ -80,6 +80,10 @@
     document.querySelectorAll('#langs [data-lang]').forEach(function (b) {
       b.setAttribute('aria-pressed', String(b.dataset.lang === state.lang));
     });
+    // share card: the WhatsApp message follows the chosen language
+    $('share-url').textContent = G.APP_URL;
+    $('share-wa').href = G.whatsappLink(t('share.message'));
+    $('share-status').textContent = '';
     // stage select
     const sel = $('p-stage');
     const cur = sel.value;
@@ -518,6 +522,29 @@
     });
     $('t-restore-btn').addEventListener('click', function () { $('t-restore').click(); });
     $('t-restore').addEventListener('change', function () { if (this.files[0]) restore(this.files[0]); this.value = ''; });
+
+    // Share card: copy the app address to the clipboard.
+    $('share-copy').addEventListener('click', function () {
+      const status = $('share-status');
+      function done(ok) {
+        status.textContent = t(ok ? 'share.copied' : 'share.copyFail');
+        clearTimeout(done.timer);
+        if (ok) done.timer = setTimeout(function () { status.textContent = ''; }, 3000);
+      }
+      // Older browsers and non-secure pages have no async clipboard: copy via a hidden field.
+      function legacy() {
+        const ta = document.createElement('textarea');
+        ta.value = G.APP_URL; ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        ta.remove(); done(ok);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(G.APP_URL).then(function () { done(true); }, legacy);
+      } else legacy();
+    });
 
     // Back-to-top button: shown once the page is scrolled past one screen.
     const totop = $('totop');

@@ -72,3 +72,16 @@ test('phones get a fixed bottom tab bar with five equal columns', () => {
   assert.match(m[1], /grid-template-columns: repeat\(5, minmax\(0, 1fr\)\)/);
   assert.match(html, /data-tab="evidence"[^>]*><span class="stepno evi"/);
 });
+
+test('share card: inline QR code, WhatsApp link and copy button, hidden when printing', () => {
+  const html = read('index.html');
+  const start = html.indexOf('id="share"');
+  assert.ok(start > 0);
+  const block = html.slice(start, html.indexOf('</main>', start));
+  assert.match(html.slice(start - 40, start), /class="card no-print share"/);
+  assert.match(block, /<svg id="share-qr"[^>]*data-i18n-aria="share\.qrAlt"/);
+  assert.ok(!/<img|src=/.test(block), 'QR is inline, so it needs no network or cache entry');
+  assert.match(block, /<a class="btn" id="share-wa" target="_blank" rel="noopener"/);
+  assert.match(block, /<button type="button" class="btn secondary" id="share-copy"/);
+  assert.match(block, /id="share-status" role="status" aria-live="polite"/);
+});

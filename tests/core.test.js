@@ -492,3 +492,11 @@ test('product notes describe facts, not judgements about named products', () => 
   const judgemental = /claims are the seller|not shown to be|results not found|not tested against|not proven/i;
   for (const p of G.PRODUCTS) assert.ok(!judgemental.test(p.note.en), p.id + ': ' + p.note.en);
 });
+
+test('share: app address is the GitHub Pages site and the WhatsApp link carries message + address', () => {
+  assert.equal(G.APP_URL, 'https://stanleywoosweeleong.github.io/Ganoderma/');
+  const link = G.whatsappLink('Try this: 灵芝');
+  assert.ok(link.startsWith('https://wa.me/?text='));
+  assert.equal(decodeURIComponent(link.split('text=')[1]), 'Try this: 灵芝 ' + G.APP_URL);
+  assert.equal(decodeURIComponent(G.whatsappLink('').split('text=')[1]), G.APP_URL);
+});

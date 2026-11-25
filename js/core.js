@@ -1218,7 +1218,21 @@
     return String(escapedHtml).replace(SCI_RE, function (m) { return '<i>' + m + '</i>'; });
   }
 
+  // ───────────────────────────────────────────────────────────────────────
+  // Sharing
+  // ───────────────────────────────────────────────────────────────────────
+  /** Public address of the app. The QR code in index.html encodes this exact text. */
+  const APP_URL = 'https://stanleywoosweeleong.github.io/Ganoderma/';
+
+  /** WhatsApp link that opens a chat picker with `message` and the app address filled in. */
+  function whatsappLink(message) {
+    const text = (message ? String(message).trim() + ' ' : '') + APP_URL;
+    return 'https://wa.me/?text=' + encodeURIComponent(text);
+  }
+
   return {
+    APP_URL: APP_URL,
+    whatsappLink: whatsappLink,
     STAGES: STAGES,
     italicizeSci: italicizeSci,
     ERROR_CODES: ERROR_CODES,

@@ -269,6 +269,23 @@
       zh: '产品与价格来自 2026 年 11 月的网络搜索,可能有变。本应用与任何卖家无关。购买前请索取产品登记号及孢子/菌落数 (CFU)。'
     },
 
+    'share.h': { en: 'Share this app', ms: 'Kongsi aplikasi ini', zh: '分享本应用' },
+    'share.intro': {
+      en: 'Scan the QR code with a phone camera, or send the link.',
+      ms: 'Imbas kod QR dengan kamera telefon, atau hantar pautan.',
+      zh: '用手机相机扫描二维码,或发送链接。'
+    },
+    'share.whatsapp': { en: 'Share on WhatsApp', ms: 'Kongsi di WhatsApp', zh: '用 WhatsApp 分享' },
+    'share.copy': { en: 'Copy link', ms: 'Salin pautan', zh: '复制链接' },
+    'share.copied': { en: 'Link copied', ms: 'Pautan disalin', zh: '链接已复制' },
+    'share.copyFail': { en: 'Could not copy — press and hold the link to copy it.', ms: 'Tidak dapat menyalin — tekan dan tahan pautan untuk menyalinnya.', zh: '无法复制 — 请长按链接来复制。' },
+    'share.qrAlt': { en: 'QR code for this app', ms: 'Kod QR untuk aplikasi ini', zh: '本应用的二维码' },
+    'share.message': {
+      en: 'Ganoderma BSR Manager — a free app to assess oil palms, plan biocontrol and track trials for basal stem rot:',
+      ms: 'Pengurus BSR Ganoderma — aplikasi percuma untuk menilai pokok sawit, merancang kawalan biologi dan menjejak percubaan bagi reput pangkal batang:',
+      zh: '灵芝茎基腐病管理 — 免费应用,可评估油棕、规划生物防治并追踪试验:'
+    },
+
     'update.ready': { en: 'A new version is ready.', ms: 'Versi baharu sedia.', zh: '新版本已就绪。' },
     'totop': { en: 'Back to top', ms: 'Kembali ke atas', zh: '回到顶部' },
     'update.dismiss': { en: 'Dismiss', ms: 'Tutup', zh: '关闭' },
